@@ -18,5 +18,5 @@ MonoBehaviour:
   AttackDistance: 3
   TowerSprite: {fileID: 206573143220537689, guid: 7af366591a8ed0c4fa4f6df48288982b, type: 3}
   TowerHealth: 50
-  Audio: {fileID: 8300000, guid: 8fed6ecc47337a2468656eede0b13de7, type: 3}
+  Audio: {fileID: 8300000, guid: d2c92ed130f44f045ad529478c6d4982, type: 3}
   Cost: 180
