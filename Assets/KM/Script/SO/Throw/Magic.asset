@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be0e12dfcc195914a9b948b76ee5b979, type: 3}
+  m_Name: Magic
+  m_EditorClassIdentifier: 
+  Name: Magic
+  Speed: 7
+  Sprite: {fileID: 4255731279939393707, guid: 579d66f7b4dc2614db70ca011f4bcbc5, type: 3}
+  ThrowCount: 2
+  Audio: {fileID: 8300000, guid: 96f65d12938b16e4a9e8144415980cc4, type: 3}
+  HitEffect: {fileID: 5821549190899430897, guid: e6ed8cdcdd0e9b942975f8172e893069, type: 3}
