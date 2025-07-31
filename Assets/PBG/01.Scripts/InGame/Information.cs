@@ -35,5 +35,8 @@ public class Information : MonoBehaviour
         }
     }
 
-
+    public void CloseStat()
+    {
+        panel.SetActive(false);
+    }
 }
