@@ -7,23 +7,20 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SpriteRenderer))]
 public class MoneyTower : MonoBehaviour
 {
-    [Header("SO")]
-    [field : SerializeField] public MoneyTowerSO TowerSO { get; private set; }
+    [field : SerializeField, Header("SO")] public MoneyTowerSO TowerSO { get; private set; }
     [SerializeField] private int extraMoney = 0;
     [Header("조건 만족 시 버는 돈 증가")]
     [SerializeField] private bool isMoneyMulty;
     [Header("조건 만족 시 쿨타임 감소")]
     [SerializeField] private bool isShorterTime;
 
-    [Header("Itself")]
-    [field : SerializeField] public SpriteRenderer Renderer { get; private set; }
+    [field : SerializeField, Header("Itself")] public SpriteRenderer Renderer { get; private set; }
     [field : SerializeField] public LayerMask WhatIsTower { get; private set; }
 
     [Header("Event")]
     public UnityEvent OnGainMoney;
 
-    [Header("Else")]
-    [field: SerializeField] public Transform CoolTime { get; private set; }
+    [field: SerializeField, Header("Else")] public Transform CoolTime { get; private set; }
     [field: SerializeField] public float CoolTimeXSize { get; private set; }
     [field: SerializeField] public bool IsEnabled { get; private set; }
 
