@@ -2,6 +2,7 @@ using Unity.Hierarchy;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.InputSystem.XR.TrackedPoseDriver;
 
 public class Arrow : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class Arrow : MonoBehaviour
 
     private void MoveBullet()
     {
-        core = GameObject.Find("Core");
+        core = GameObject.FindGameObjectWithTag("Core");
         Vector2 target = (core.transform.position - transform.position);
         float rotZ = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotZ);
@@ -28,7 +29,7 @@ public class Arrow : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Tower"))
+        if (collision.gameObject.CompareTag("Core"))
         {
             gameObject.SetActive(false);
         }

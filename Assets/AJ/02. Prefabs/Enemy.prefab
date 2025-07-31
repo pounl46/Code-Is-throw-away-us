@@ -68,8 +68,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.57, y: -0.21, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 762625892239421419}
   m_Father: {fileID: 0}
@@ -327,8 +327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fae7d7c94e6a0c42877ec1be6cb5294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  core: {fileID: 2105533699891250527, guid: 660bb09ec0b22ca48901e539af936999, type: 3}
   SO: {fileID: 6277461956085959337}
+  attackingType: 0
   detectionDistance: 2
   avoidanceForce: 3
   obstacleLayerMask:

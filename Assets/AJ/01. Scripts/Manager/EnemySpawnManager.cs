@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemySpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private GameObject[] _enemyPrefab;
     private float _currentTime;
     private float _createTime;
     [SerializeField] private float _minTime = 0.5f;
@@ -13,7 +13,7 @@ public class EnemyManager : MonoBehaviour
     private GameObject[] _enemyPool;
     public int _enemyCount = 10;
 
-    public static EnemyManager Instance { get; private set; }
+    public static EnemySpawnManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -46,11 +46,18 @@ public class EnemyManager : MonoBehaviour
         {
             if (!_enemyPool[i].activeSelf)
             {
+                int index = Random.Range(0, _spawnPoints.Length);
                 _enemyPool[i].SetActive(true);
-                _enemyPool[i].transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Length)].position;
-                break;
+                _enemyPool[i].transform.position = _spawnPoints[index].position;
+
+                var coinSteal = _enemyPool[i].GetComponent<CoinSteal>();
+                if (coinSteal != null)
+                {
+                    coinSteal.SetSpawnPoint(_spawnPoints[index]);
+                }
             }
         }
+
     }
 
     private void CreateEnemyPool()
@@ -58,7 +65,7 @@ public class EnemyManager : MonoBehaviour
         _enemyPool = new GameObject[_enemyCount];
         for (int i = 0; i < _enemyCount; i++)
         {
-            _enemyPool[i] = Instantiate(_enemyPrefab, transform);
+            _enemyPool[i] = Instantiate(_enemyPrefab[UnityEngine.Random.Range(0, _enemyPrefab.Length)], transform);
             _enemyPool[i].SetActive(false);
         }
     }

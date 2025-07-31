@@ -3,6 +3,15 @@ using System;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
+public enum ChooseAttakingType
+{
+    None = -1,
+
+    Core = 0,
+    Tower,
+
+    Max,
+}
 public class EnemyMovement : MonoBehaviour
 {
     public EnemyTypeSetting SO;
@@ -12,22 +21,24 @@ public class EnemyMovement : MonoBehaviour
     public float detectionDistance = 2f;
     public float avoidanceForce = 5f;
     public LayerMask obstacleLayerMask = -1;
-    private GameObject core;
+    private GameObject target;
 
     private bool isSkeletonStopped = false;
     private EnemyShoot enemyShoot;
     private Vector3 avoidanceDirection = Vector3.zero; private Vector3 smoothedDirection = Vector3.zero;
     private float directionSmoothTime = 0.2f;
 
+    private Vector3 originalScale;
     private void Start()
     {
         FindCore();
         enemyShoot = GetComponent<EnemyShoot>();
+        originalScale = transform.localScale;
     }
 
     private void Update()
     {
-        if (core == null)
+        if (target == null)
         {
             FindCore();
             return;
@@ -39,7 +50,7 @@ public class EnemyMovement : MonoBehaviour
             if (towerCollider != null)
             {
                 isSkeletonStopped = true;
-                LookAtTarget(core.transform.position);
+                LookAtTarget(target.transform.position);
                 return;
             }
             else
@@ -57,9 +68,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void MoveToCore()
     {
-        Vector3 coreDirection = (core.transform.position - transform.position).normalized;
+        Vector3 coreDirection = (target.transform.position - transform.position).normalized;
 
-        // 회피 방향이 있으면 합치고, 없으면 코어 방향만 사용
         Vector3 targetDirection;
         if (avoidanceDirection.magnitude > 0.1f)
         {
@@ -70,10 +80,8 @@ public class EnemyMovement : MonoBehaviour
             targetDirection = coreDirection;
         }
 
-        // 방향을 부드럽게 변경 (지터링 방지)
         smoothedDirection = Vector3.Lerp(smoothedDirection, targetDirection, directionSmoothTime);
 
-        // 실제 이동할 방향을 바라보기 (너무 자주 회전하지 않도록)
         if (Vector3.Angle(transform.up, smoothedDirection) > 10f)
         {
             LookAtTarget(transform.position + smoothedDirection);
@@ -82,18 +90,21 @@ public class EnemyMovement : MonoBehaviour
         transform.position += smoothedDirection * SO.enemySO.enemySpeed * Time.deltaTime;
     }
 
-    private void FindCore()
+    public void FindCore()
     {
-        core = GameObject.FindGameObjectWithTag(attackingType.ToString());
-        if (core == null)
+        target = GameObject.FindGameObjectWithTag(attackingType.ToString());
+        if (target == null && attackingType == ChooseAttakingType.None)
         {
-            Debug.LogWarning("core is null!");
+            Debug.LogWarning($"{attackingType} is null!");
         }
     }
-
+    public void SetTarget(GameObject newTarget)
+    {
+        target = newTarget;
+    }
     private void ObstacleFrontEnemy()
     {
-        Vector3 forward = (core.transform.position - transform.position).normalized;
+        Vector3 forward = (target.transform.position - transform.position).normalized;
 
         // 고정된 방향으로 레이캐스트 (월드 좌표 기준)
         Vector3 rightDirection = Vector3.right;
@@ -173,12 +184,12 @@ public class EnemyMovement : MonoBehaviour
 
         if (angle > 90 || angle < -90)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
             transform.rotation = Quaternion.Euler(0, 0, angle + 180);
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }
     }
@@ -186,7 +197,7 @@ public class EnemyMovement : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Vector3 forward = (core != null) ? (core.transform.position - transform.position).normalized : transform.right;
+        Vector3 forward = (target != null) ? (target.transform.position - transform.position).normalized : transform.right;
         Gizmos.DrawRay(transform.position, forward * detectionDistance);
 
         if (avoidanceDirection != Vector3.zero)
@@ -195,13 +206,4 @@ public class EnemyMovement : MonoBehaviour
             Gizmos.DrawRay(transform.position, avoidanceDirection);
         }
     }
-}
-public enum ChooseAttakingType
-{
-    None = -1,
-
-    Core = 0,
-    Tower,
-
-    Max,
 }
