@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Arrow
   m_EditorClassIdentifier: 
   Name: Arrow
-  Damage: 25
   Speed: 3
   Sprite: {fileID: 6121632091145085984, guid: 623ce6942792d5f48bfe1cfeabb6a4c8, type: 3}
   ThrowCount: 1
-  Audio: {fileID: 8300000, guid: 96f65d12938b16e4a9e8144415980cc4, type: 3}
+  Audio: {fileID: 8300000, guid: 9ea23557e4635e14cb47470b98d806ad, type: 3}
   HitEffect: {fileID: 5821549190899430897, guid: e6ed8cdcdd0e9b942975f8172e893069, type: 3}
