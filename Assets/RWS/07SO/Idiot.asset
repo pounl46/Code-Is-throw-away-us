@@ -16,6 +16,7 @@ MonoBehaviour:
   <TowerName>k__BackingField: Idiot
   <Sprite>k__BackingField: {fileID: 2884534533757969471, guid: 7826168e2bb6f5d419722d4598c3902d, type: 3}
   <Distance>k__BackingField: 1
-  <Money>k__BackingField: 20
+  <Cost>k__BackingField: 100
+  <Money>k__BackingField: 200
   <MoneyMultiplier>k__BackingField: 1
   <WaitTime>k__BackingField: 360

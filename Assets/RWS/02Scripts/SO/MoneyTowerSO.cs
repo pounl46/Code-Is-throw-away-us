@@ -8,6 +8,7 @@ public class MoneyTowerSO : ScriptableObject
     [field : SerializeField] public string TowerName { get; private set; }
     [field : SerializeField] public Sprite Sprite { get; private set; }
     [field: SerializeField, Range(1, 3)] public int Distance { get; private set; } = 1;
+    [field: SerializeField] public int Cost { get; private set; }
     [field: SerializeField] public int Money { get; private set; } = 1;             //버는 돈
     [field: SerializeField] public float MoneyMultiplier { get; private set; }      //조건 만족 시 증폭 계수
     [field: SerializeField] public float WaitTime { get; private set; }
