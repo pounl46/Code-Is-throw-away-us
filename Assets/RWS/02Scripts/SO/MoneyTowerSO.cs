@@ -8,7 +8,20 @@ public class MoneyTowerSO : ScriptableObject
     [field : SerializeField] public string TowerName { get; private set; }
     [field : SerializeField] public Sprite Sprite { get; private set; }
     [field: SerializeField, Range(1, 3)] public int Distance { get; private set; } = 1;
-    [field: SerializeField] public int Money { get; private set; } = 1;     //¹ö´Â µ·
+    [field: SerializeField] public int Money { get; private set; } = 1;             //¹ö´Â µ·
+    [field: SerializeField] public float MoneyMultiplier { get; private set; }      //Á¶°Ç ¸¸Á· ½Ã ÁõÆø °è¼ö
+    [field: SerializeField] public float WaitTime { get; private set; }
+
+    public int GetDirectionCount()
+    {
+        int count = 0;
+        for (int i = 0; i < 8; i++)
+        {
+            if ((Direction & (Direction8)(1 << i)) != 0)
+                count++;
+        }
+        return count;
+    }
 }
 
 [Flags, Serializable]
