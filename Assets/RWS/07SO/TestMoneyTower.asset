@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8966100025532514ea75c7fb05442fac, type: 3}
+  m_Name: TestMoneyTower
+  m_EditorClassIdentifier: 
+  <Direction>k__BackingField: 170
+  <TowerName>k__BackingField: Bishop
+  <Sprite>k__BackingField: {fileID: -5122684229198130270, guid: 8f71e25e0f6f5d44a87c87fc0d48cfa6, type: 3}
+  <Distance>k__BackingField: 1
+  <Money>k__BackingField: 1
