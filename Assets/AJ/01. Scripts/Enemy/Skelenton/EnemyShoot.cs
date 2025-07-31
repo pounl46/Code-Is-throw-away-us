@@ -22,6 +22,11 @@ public class EnemyShoot : MonoBehaviour
 
     private void Start()
     {
+        InitializeArrowPool();
+    }
+
+    private void InitializeArrowPool()
+    {
         arrowParent = GameObject.FindGameObjectWithTag("BulletTransform").transform;
         _arrowPool = new GameObject[_bulletCount];
         for (int i = 0; i < _bulletCount; i++)
@@ -30,6 +35,7 @@ public class EnemyShoot : MonoBehaviour
             _arrowPool[i].SetActive(false);
         }
     }
+
     private void Update()
     {
         if(_canFire && IsTowerNearby()) Fire();

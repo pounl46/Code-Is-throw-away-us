@@ -359,7 +359,17 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      chess pieces_0: -650517862024266325
+      chess pieces_1: -3850564729132929338
+      chess pieces_2: -2368360533026937623
+      chess pieces_3: -4851611443628960507
+      chess pieces_4: -8593854955757590946
+      chess pieces_5: 900151559341354416
+      chess pieces_6: -5590637269028187137
+      chess pieces_7: -1955974323913242728
+      chess pieces_8: -2131653744642292409
+      chess pieces_9: 857079921831273240
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

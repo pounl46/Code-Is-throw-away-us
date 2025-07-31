@@ -65,7 +65,7 @@ public class EnemySpawnManager : MonoBehaviour
         _enemyPool = new GameObject[_enemyCount];
         for (int i = 0; i < _enemyCount; i++)
         {
-            _enemyPool[i] = Instantiate(_enemyPrefab[UnityEngine.Random.Range(0, _enemyPrefab.Length)], transform);
+            _enemyPool[i] = Instantiate(_enemyPrefab[Random.Range(0, _enemyPrefab.Length)], transform);
             _enemyPool[i].SetActive(false);
         }
     }

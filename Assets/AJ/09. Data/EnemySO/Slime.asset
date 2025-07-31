@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: 
   enemyHealth: 10
+  enemySpeed: 0.5
+  Damage: 0
   enemyName: Slime
   spriteAsset: {fileID: 7108339969198208228, guid: ffaf7dfe9c69b614e99d4a69ca4c1737, type: 3}
   enemyType: 4

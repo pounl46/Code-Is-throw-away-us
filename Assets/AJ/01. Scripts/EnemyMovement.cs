@@ -44,7 +44,7 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        if (SO.enemySO.enemyType == EnemyType.Skelenton)
+        if (SO.enemySO.enemyType == EnemyType.Skelenton || SO.enemySO.enemyType == EnemyType.Demon)
         {
             Collider2D towerCollider = Physics2D.OverlapCircle(transform.position, enemyShoot.detectionRange, enemyShoot.towerLayerMask);
             if (towerCollider != null)
@@ -182,7 +182,36 @@ public class EnemyMovement : MonoBehaviour
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        if (angle > 90 || angle < -90)
+        if (angle < 0) angle += 360;
+
+        if ((angle >= 315 || angle <= 45) || (angle >= 135 && angle <= 225))
+        {
+            if (angle > 90 && angle < 270)
+            {
+                transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
+                transform.rotation = Quaternion.Euler(0, 0, angle + 180);
+            }
+            else
+            {
+                transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
+                transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
+        }
+        else
+        {
+            if (angle > 45 && angle < 135) 
+            {
+                transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
+                transform.rotation = Quaternion.Euler(0, 0, 0); 
+            }
+            else if (angle > 225 && angle < 315)
+            {
+                transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+        }
+        //무조건 왼쪽 오른쪽만 보게
+        /*if (angle > 90 || angle < -90)
         {
             transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
             transform.rotation = Quaternion.Euler(0, 0, angle + 180);
@@ -191,7 +220,7 @@ public class EnemyMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
             transform.rotation = Quaternion.Euler(0, 0, angle);
-        }
+        }*/
     }
 
     private void OnDrawGizmosSelected()

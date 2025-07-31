@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.U2D.Animation;
-[CreateAssetMenu(fileName = "EnemySO", menuName = "EnemyTypeSetting/EnemySO")]
+[CreateAssetMenu(fileName = "EnemySO", menuName = "Scriptable Objects/EnemySO")]
 public class EnemySO : ScriptableObject
 {
     public int enemyHealth;
@@ -22,6 +22,8 @@ public enum EnemyType
     Slime,
     Goblin,
     BigSlime,
+    Ghost,
+    KingSlime,
 
     Max,
 }

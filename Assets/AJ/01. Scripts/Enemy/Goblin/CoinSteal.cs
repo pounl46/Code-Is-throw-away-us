@@ -13,7 +13,6 @@ public class CoinSteal : MonoBehaviour
     private GameObject targetTower;
     private Vector3 fleeDirection;
     private EnemyMovement enemyMovement;
-    private float stealStartTime;
     private Vector3 originalScale; 
     private Transform spawnPointTarget; 
 
@@ -125,7 +124,7 @@ public class CoinSteal : MonoBehaviour
         if (targetTower == null) return;
 
         // CoinTower 코인 훔치기
-        Debug.Log("코인을 훔침!");
+        Debug.Log($"{gameObject.name}가 코인을 훔침!");
     }
 
     private void StartFleeing()

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Skelenton
   m_EditorClassIdentifier: 
   enemyHealth: 10
-  enemySpeed: 1
+  enemySpeed: 2
+  Damage: 0
   enemyName: Skelenton
   spriteAsset: {fileID: 7108339969198208228, guid: 94d13556e79c5be4e98a92f2aa41b90e, type: 3}
   enemyType: 0
