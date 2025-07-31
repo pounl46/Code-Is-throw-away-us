@@ -10,6 +10,10 @@ public class MoneyTower : MonoBehaviour
     [Header("SO")]
     [field : SerializeField] public MoneyTowerSO TowerSO { get; private set; }
     [SerializeField] private int extraMoney = 0;
+    [Header("조건 만족 시 버는 돈 증가")]
+    [SerializeField] private bool isMoneyMulty;
+    [Header("조건 만족 시 쿨타임 감소")]
+    [SerializeField] private bool isShorterTime;
 
     [Header("Itself")]
     [field : SerializeField] public SpriteRenderer Renderer { get; private set; }
@@ -76,7 +80,7 @@ public class MoneyTower : MonoBehaviour
     public void GainMoney()
     {
         OnGainMoney?.Invoke();
-        MoneyManager.Instance.ModifyMoney(Mathf.FloorToInt((TowerSO.Money + extraMoney) * (_isDetected ? TowerSO.MoneyMultiplier : 1)));
+        MoneyManager.Instance.ModifyMoney(Mathf.FloorToInt((TowerSO.Money + extraMoney) * (_isDetected && isMoneyMulty ? TowerSO.MoneyMultiplier : 1)));
     }
 
     public List<Vector2> GetDirectionVectors()
@@ -98,18 +102,18 @@ public class MoneyTower : MonoBehaviour
     private IEnumerator MoneyLoop()
     {
         Detect();
-        CurrentTime = 0;
+        //CurrentTime = 0;
 
         while (IsEnabled)
         {
             CurrentTime += Time.deltaTime;
 
-            float t = Mathf.InverseLerp(0f, TowerSO.WaitTime, CurrentTime);
+            float t = Mathf.InverseLerp(0f, _isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime, CurrentTime);
             CoolTime.localScale = new Vector3(Mathf.Lerp(0, CoolTimeXSize, t), 0.2f, 1);
 
-            if (CurrentTime >= TowerSO.WaitTime)
+            if (CurrentTime >= (_isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime))
             {
-                CurrentTime -= TowerSO.WaitTime;
+                CurrentTime -= _isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime;
                 CoolTime.localScale = Vector3.zero;
                 GainMoney();
             }
@@ -133,7 +137,7 @@ public class MoneyTower : MonoBehaviour
         {
             StopCoroutine(_moneyCoroutine);
             _moneyCoroutine = null;
-            CoolTime.localScale = Vector3.zero;
+            //CoolTime.localScale = Vector3.zero;
         }
     }
 

@@ -4942,6 +4942,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TowerSO>k__BackingField: {fileID: 11400000, guid: aa6800cf10f8fe140bcf87f3eb11ea30, type: 2}
   extraMoney: 9
+  isMoneyMulty: 1
+  isShorterTime: 1
   <Renderer>k__BackingField: {fileID: 5331455283009617969}
   <WhatIsTower>k__BackingField:
     serializedVersion: 2
@@ -5219,7 +5221,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.430509, g: 0.5245282, b: 0.43286118, a: 1}
+  m_Color: {r: 1, g: 1, b: 0.47058824, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

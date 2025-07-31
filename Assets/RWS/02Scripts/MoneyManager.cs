@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using static UnityEngine.Rendering.DebugUI;
 
 public class MoneyManager : MonoBehaviour
 {
@@ -31,13 +32,22 @@ public class MoneyManager : MonoBehaviour
     {
         if (!MoneyTowers.Contains(tower))
             MoneyTowers.Add(tower);
+
+        foreach (MoneyTower t in MoneyTowers)
+        {
+            t.Detect();
+        }
     }
 
     public void ModifyMoney(int value)
     {
         Debug.Log($"+ {value}!");
         Money += value;
-        PlayMoneySound();
+
+        if (value > 0)
+        {
+            PlayMoneySound();
+        }
 
         if (MoneyText != null)
         {
