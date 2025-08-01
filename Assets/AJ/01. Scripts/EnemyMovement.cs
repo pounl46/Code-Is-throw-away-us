@@ -31,6 +31,7 @@ public class EnemyMovement : MonoBehaviour
     [Header("Search Settings")]
     public bool useUnlimitedRange = true; // 무제한 범위 검색 여부
     public float maxSearchDistance = 100f; // 최대 검색 거리 (무제한이 아닐 때)
+    public bool stuckPrevention;
 
     public GameObject target { get; set; }
     private bool isSkeletonStopped = false;
@@ -40,8 +41,20 @@ public class EnemyMovement : MonoBehaviour
     private float directionSmoothTime = 0.2f;
     private Vector3 originalScale;
 
+    private Collider2D enemyCollider;
+
+    private void Awake()
+    {
+        enemyCollider = GetComponent<Collider2D>();
+    }
     private void Start()
     {
+        if (enemyCollider != null && stuckPrevention)
+        {
+            enemyCollider.isTrigger = false;
+        }
+        if (!stuckPrevention) enemyCollider.isTrigger = true;
+
         FindTarget();
         enemyShoot = GetComponent<EnemyShoot>();
         originalScale = transform.localScale;
@@ -57,31 +70,51 @@ public class EnemyMovement : MonoBehaviour
 
         if (SO.enemySO.enemyType == EnemyType.Skelenton || SO.enemySO.enemyType == EnemyType.Demon)
         {
-            Collider2D towerCollider = Physics2D.OverlapCircle(transform.position, enemyShoot.detectionRange, enemyShoot.towerLayerMask);
-            if (towerCollider != null)
+            if (attackingType == ChooseAttakingType.Tower)
             {
-                isSkeletonStopped = true;
-                FindTarget();
-                LookAtTarget(target.transform.position);
-                return;
+                Collider2D towerCollider = Physics2D.OverlapCircle(transform.position, enemyShoot.detectionRange, enemyShoot.towerLayerMask);
+                if (towerCollider != null)
+                {
+                    isSkeletonStopped = true;
+                    FindTarget();
+                    LookAtTarget(target.transform.position);
+                    return;
+                }
+                else
+                {
+                    isSkeletonStopped = false;
+                }
             }
-            else
+            else if (attackingType == ChooseAttakingType.Core)
             {
-                isSkeletonStopped = false;
+                Collider2D coreCollider = Physics2D.OverlapCircle(transform.position, enemyShoot.detectionRange, enemyShoot.coreLayerMask);
+                if (coreCollider != null)
+                {
+                    isSkeletonStopped = true;
+                    FindTarget();
+                    LookAtTarget(target.transform.position);
+                    return;
+                }
+                else
+                {
+                    isSkeletonStopped = false;
+                }
             }
         }
 
         if (!isSkeletonStopped)
         {
             FindTarget();
-            ObstacleFrontEnemy();
+            if (stuckPrevention)
+            {
+                ObstacleFrontEnemy();
+            }
             MoveToTarget();
         }
     }
     public void FindTarget()
     {
         GameObject closestTarget = null;
-        float closestDistance = Mathf.Infinity;
 
         LayerMask targetLayerMask = GetTargetLayerMask();
 
@@ -233,11 +266,37 @@ public class EnemyMovement : MonoBehaviour
         Vector3 upDirection = Vector3.up;
         Vector3 downDirection = Vector3.down;
 
+        // 로컬 방향
+        Vector3 localrightDirection = Vector3.Cross(Vector3.forward, forward).normalized;
+        Vector3 localleftDirection = -localrightDirection;
+        Vector3 localupDirection = forward;
+        Vector3 localdownDirection = -forward;
+
+        // 대각선 방향
+        Vector3 diagonalUR = (localupDirection + localrightDirection).normalized; // 타겟 기준 우상
+        Vector3 diagonalUL = (localupDirection + localleftDirection).normalized;  // 타겟 기준 좌상
+        Vector3 diagonalDR = (localdownDirection + localrightDirection).normalized; // 타겟 기준 우하
+        Vector3 diagonalDL = (localdownDirection + localleftDirection).normalized;  // 타겟 기준 좌하
+
         RaycastHit2D forwardHit = Physics2D.Raycast(transform.position, forward, detectionDistance, obstacleLayerMask);
+
+        // 글로벌
         RaycastHit2D rightHit = Physics2D.Raycast(transform.position, rightDirection, detectionDistance * 0.8f, obstacleLayerMask);
         RaycastHit2D leftHit = Physics2D.Raycast(transform.position, leftDirection, detectionDistance * 0.8f, obstacleLayerMask);
         RaycastHit2D upHit = Physics2D.Raycast(transform.position, upDirection, detectionDistance * 0.8f, obstacleLayerMask);
         RaycastHit2D downHit = Physics2D.Raycast(transform.position, downDirection, detectionDistance * 0.8f, obstacleLayerMask);
+        
+        // 로컬
+        RaycastHit2D localrightHit = Physics2D.Raycast(transform.position, localrightDirection, detectionDistance * 0.8f, obstacleLayerMask);
+        RaycastHit2D localleftHit = Physics2D.Raycast(transform.position, localleftDirection, detectionDistance * 0.8f, obstacleLayerMask);
+        RaycastHit2D localupHit = Physics2D.Raycast(transform.position, localupDirection, detectionDistance * 0.8f, obstacleLayerMask);
+        RaycastHit2D localdownHit = Physics2D.Raycast(transform.position, localdownDirection, detectionDistance * 0.8f, obstacleLayerMask);
+        
+        // 대각선
+        RaycastHit2D diagonalURHit = Physics2D.Raycast(transform.position, diagonalUR, detectionDistance * 0.7f, obstacleLayerMask);
+        RaycastHit2D diagonalULHit = Physics2D.Raycast(transform.position, diagonalUL, detectionDistance * 0.7f, obstacleLayerMask);
+        RaycastHit2D diagonalDRHit = Physics2D.Raycast(transform.position, diagonalDR, detectionDistance * 0.7f, obstacleLayerMask);
+        RaycastHit2D diagonalDLHit = Physics2D.Raycast(transform.position, diagonalDL, detectionDistance * 0.7f, obstacleLayerMask);
 
         Debug.DrawRay(transform.position, forward * detectionDistance, Color.red);
         Debug.DrawRay(transform.position, rightDirection * detectionDistance * 0.8f, Color.yellow);
@@ -245,39 +304,81 @@ public class EnemyMovement : MonoBehaviour
         Debug.DrawRay(transform.position, upDirection * detectionDistance * 0.8f, Color.blue);
         Debug.DrawRay(transform.position, downDirection * detectionDistance * 0.8f, Color.blue);
 
+        Debug.DrawRay(transform.position, localrightDirection * detectionDistance * 0.8f, Color.green);
+        Debug.DrawRay(transform.position, localleftDirection * detectionDistance * 0.8f, Color.green);
+
+        Debug.DrawRay(transform.position, diagonalUR * detectionDistance * 0.7f, Color.cyan);
+        Debug.DrawRay(transform.position, diagonalUL * detectionDistance * 0.7f, Color.cyan);
+        Debug.DrawRay(transform.position, diagonalDR * detectionDistance * 0.7f, Color.magenta);
+        Debug.DrawRay(transform.position, diagonalDL * detectionDistance * 0.7f, Color.magenta);
+
         Vector3 newAvoidDirection = Vector3.zero;
 
         // 앞에 장애물이 있을 때만 회피 계산
         if (forwardHit.collider != null)
         {
-            // 4방향 중 가장 비어있는 방향 찾기
+            // 방향별 비어있는 방향 찾기
             bool rightClear = rightHit.collider == null;
             bool leftClear = leftHit.collider == null;
             bool upClear = upHit.collider == null;
             bool downClear = downHit.collider == null;
 
-            // 우선순위: 좌우 > 상하
-            if (rightClear && !leftClear)
+            bool localrightClear = localrightHit.collider == null;
+            bool localleftClear = localleftHit.collider == null;
+            bool localupClear = localupHit.collider == null;
+            bool localdownClear = localdownHit.collider == null;
+
+            bool diagonalURClear = diagonalURHit.collider == null;
+            bool diagonalULClear = diagonalULHit.collider == null;
+            bool diagonalDRClear = diagonalDRHit.collider == null;
+            bool diagonalDLClear = diagonalDLHit.collider == null;
+
+            // 우선순위: 로컬 좌우
+            if (localrightClear && !localleftClear)
             {
                 newAvoidDirection = Vector3.right;
             }
-            else if (leftClear && !rightClear)
+            else if (localleftClear && !localrightClear)
             {
                 newAvoidDirection = Vector3.left;
             }
-            else if (rightClear && leftClear)
+            else if (localrightClear && localleftClear)
             {
-                // 둘 다 비어있으면 코어와 수직인 방향으로
-                Vector3 perpendicular = Vector3.Cross(forward, Vector3.forward).normalized;
-                newAvoidDirection = perpendicular;
+                newAvoidDirection = UnityEngine.Random.value > 0.5f ? localrightDirection : localleftDirection;
             }
+            // 우선순위 3: 글로벌 좌우
+            if (diagonalURClear)
+            {
+                newAvoidDirection = diagonalUR;
+            }
+            else if (diagonalULClear)
+            {
+                newAvoidDirection = diagonalUL;
+            }
+            else if (diagonalDRClear)
+            {
+                newAvoidDirection = diagonalDR;
+            }
+            else if (diagonalDLClear)
+            {
+                newAvoidDirection = diagonalDL;
+            }
+            else if (rightClear && !leftClear)
+            {
+                newAvoidDirection = rightDirection;
+            }
+            else if (leftClear && !rightClear)
+            {
+                newAvoidDirection = leftDirection;
+            }
+            // 우선순위 4: 글로벌 상하
             else if (upClear)
             {
-                newAvoidDirection = Vector3.up;
+                newAvoidDirection = upDirection;
             }
             else if (downClear)
             {
-                newAvoidDirection = Vector3.down;
+                newAvoidDirection = downDirection;
             }
             else
             {

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: 1000
   enemySpeed: 0.2
-  Damage: 0
+  Damage: 40
   enemyName: BigSlime
   spriteAsset: {fileID: 7108339969198208228, guid: 36db04bd8012cd64c8759c2612f2aa4f, type: 3}
   enemyType: 6

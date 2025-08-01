@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -105,6 +105,8 @@ MonoBehaviour:
   bulletSpeed: 10
   rotateSpeed: 2
   fireRemainingTime: 1
+  bulletDamage: 0
+  enemymv: {fileID: 4473691529630805216, guid: 6360d584531e66846bb5f87fbc90f4dd, type: 3}
   enemyTypeSetting: {fileID: 6277461956085959337, guid: 6360d584531e66846bb5f87fbc90f4dd, type: 3}
   enemyShoot: {fileID: 2022462540230621447, guid: 6360d584531e66846bb5f87fbc90f4dd, type: 3}
 --- !u!50 &1996338816678344269
