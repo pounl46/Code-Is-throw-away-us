@@ -53,7 +53,7 @@ public class MoneyTower : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Color color = Gizmos.color;
         Gizmos.color = Color.red;
