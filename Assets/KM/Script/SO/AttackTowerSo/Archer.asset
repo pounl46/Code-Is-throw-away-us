@@ -26,6 +26,7 @@ MonoBehaviour:
     selectedSynergies: 0000000000000000
     ChangeHealth: 1.5
     ChangeDamage: 1
+    IsCompleted: 0
     BulletSpeed: 1
     AttacingSpeed: 0.75
     Slow: 0
@@ -33,6 +34,7 @@ MonoBehaviour:
     selectedSynergies: 000000000000000001000000
     ChangeHealth: 1.5
     ChangeDamage: 1
+    IsCompleted: 0
     BulletSpeed: 1
     AttacingSpeed: 0.75
     Slow: 1
@@ -40,6 +42,7 @@ MonoBehaviour:
     selectedSynergies: 000000000000000004000000
     ChangeHealth: 1
     ChangeDamage: 0.9
+    IsCompleted: 0
     BulletSpeed: 1
     AttacingSpeed: 0.25
     Slow: 0

@@ -6,30 +6,27 @@ using Script.SO;
 
 public class TowerAttack : MonoBehaviour
 {
-    [Header("SO & 설정")]
+    public static List<TowerAttack> AllTowers = new();
+
     [SerializeField] private ThrowObjectSO _objectSO;
     [SerializeField] private GameObject _baseObj;
     [SerializeField] private LayerMask _targetMask;
     [SerializeField] private LayerMask towerLayer;
-    [SerializeField] private List<GameObject> RayDir = new();
     public AttakTowerSetting attakTower;
     private TowerSetting attakTowerSetting;
 
-    [Header("상태")]
     public bool IsAlreadySynergy = false;
+    public bool CanBeUsedAsIngredient = true;
     private float fireSpeed;
     private float count;
     private string nameObj;
     private bool isCanAttack = true;
     private AudioSource fire;
 
-    [Header("투사체")]
     public Stack<GameObject> throws = new();
 
-    [Header("실행 중 시너지 상태 (읽기 전용)")]
     [SerializeField] private List<SynergyGroup> runtimeSynergies = new();
 
-    // 시너지 추적
     private Dictionary<TowerAttack, (int groupIndex, int synergyIndex)> givenSynergies = new();
     private (TowerAttack from, int groupIndex, int synergyIndex)? receivedSynergy = null;
 
@@ -51,13 +48,41 @@ public class TowerAttack : MonoBehaviour
             throws.Push(throwObj);
         }
 
-        // SO 시너지 복사
         runtimeSynergies = attakTower.Synergies
             .Select(group => new SynergyGroup
             {
                 SynergyName = group.SynergyName,
-                selectedSynergies = new List<Synergy>(group.selectedSynergies)
+                selectedSynergies = new List<Synergy>(group.selectedSynergies),
+                IsCompleted = false
             }).ToList();
+
+        TryApplySelfSynergy();
+    }
+
+    private void OnEnable() => AllTowers.Add(this);
+
+    private void OnDisable()
+    {
+        AllTowers.Remove(this);
+
+        ResetGivenSynergies();
+
+        if (receivedSynergy.HasValue)
+        {
+            var (from, groupIdx, synergyIdx) = receivedSynergy.Value;
+            if (from != null && from.runtimeSynergies.Count > groupIdx)
+            {
+                var group = from.runtimeSynergies[groupIdx];
+                group.selectedSynergies[synergyIdx] = from.attakTower.synergy;
+                group.IsCompleted = false;
+                from.givenSynergies.Remove(this);
+                from.IsAlreadySynergy = false;
+            }
+        }
+
+        receivedSynergy = null;
+        IsAlreadySynergy = false;
+        CanBeUsedAsIngredient = true;
     }
 
     private void FixedUpdate()
@@ -74,24 +99,13 @@ public class TowerAttack : MonoBehaviour
 
     public void ProcessSynergy()
     {
-        foreach (var direction in RayDir)
+        foreach (var other in AllTowers)
         {
-            if (direction == null) continue;
+            if (other == this) continue;
+            if (givenSynergies.ContainsKey(other)) continue;
+            if (!other.CanBeUsedAsIngredient) continue;
+            if (!IsInSight(other)) continue;
 
-            Vector2 origin = transform.position;
-            Vector2 target = direction.transform.position;
-            Vector2 dir = (target - origin).normalized;
-            float dist = Vector2.Distance(origin, target);
-            RaycastHit2D hit = Physics2D.Raycast(origin, dir, dist, towerLayer);
-            Debug.DrawRay(origin, dir * dist, Color.yellow, 0.2f);
-
-            TowerAttack hitTowerAttack = hit.collider?.GetComponent<TowerAttack>();
-            TowerSetting hitTowerSetting = hit.collider?.GetComponent<TowerSetting>();
-
-            if (hitTowerAttack == null || hitTowerSetting == null) continue;
-            if (givenSynergies.ContainsKey(hitTowerAttack)) continue;
-            if (hitTowerAttack.IsAlreadySynergy) continue;
-            Debug.Log(hit.collider.gameObject.name);
             for (int g = 0; g < runtimeSynergies.Count; g++)
             {
                 var synergyGroup = runtimeSynergies[g];
@@ -99,24 +113,87 @@ public class TowerAttack : MonoBehaviour
 
                 if (synergyList.All(s => s == Synergy.Ready)) continue;
 
-                int matchIndex = synergyList.FindIndex(s => s != Synergy.Ready && s == hitTowerSetting.TowerType);
+                int matchIndex = synergyList.FindIndex(s => s != Synergy.Ready && s == other.attakTower.synergy);
+
                 if (matchIndex != -1)
                 {
                     synergyList[matchIndex] = Synergy.Ready;
 
-                    Debug.Log($"[Synergy Added] '{synergyGroup.SynergyName}'에 '{hitTowerSetting.TowerType}' 추가됨");
-
-                    if (synergyList.All(s => s == Synergy.Ready))
+                    givenSynergies[other] = (g, matchIndex);
+                    other.receivedSynergy = (this, g, matchIndex);
+                    Debug.Log("AAAAAA");
+                    if (synergyList.All(s => s == Synergy.Ready) && !synergyGroup.IsCompleted)
                     {
-                        Debug.Log($"[Synergy Complete] {synergyGroup.SynergyName} 완성!! 🎉");
+                        synergyGroup.IsCompleted = true;
+                        IsAlreadySynergy = true;
+                        Debug.Log(synergyGroup.SynergyName);
                     }
 
-                    givenSynergies[hitTowerAttack] = (g, matchIndex);
-                    hitTowerAttack.receivedSynergy = (this, g, matchIndex);
-                    hitTowerAttack.IsAlreadySynergy = true;
-                    break;
+                    return;
                 }
             }
+        }
+    }
+
+    private void TryApplySelfSynergy()
+    {
+        for (int g = 0; g < runtimeSynergies.Count; g++)
+        {
+            var group = runtimeSynergies[g];
+            var synergyList = group.selectedSynergies;
+
+            bool appliedSelf = false;
+            for (int i = 0; i < synergyList.Count; i++)
+            {
+                if (synergyList[i] != Synergy.Ready && synergyList[i] == attakTower.synergy && !appliedSelf)
+                {
+                    synergyList[i] = Synergy.Ready;
+                    appliedSelf = true;
+                }
+            }
+
+            if (synergyList.All(s => s == Synergy.Ready) && !group.IsCompleted)
+            {
+                group.IsCompleted = true;
+                IsAlreadySynergy = true;
+            }
+        }
+    }
+
+    private bool IsInSight(TowerAttack target)
+    {
+        Vector2 origin = transform.position;
+        Vector2 targetPos = target.transform.position;
+        float dist = Vector2.Distance(origin, targetPos);
+
+        if (dist > attakTowerSetting.attackDistance)
+            return false;
+
+        Vector2 dir = (targetPos - origin).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(origin, dir, dist, towerLayer);
+        Debug.DrawRay(origin, dir * dist, Color.yellow, 0.2f);
+        return hit && hit.collider.gameObject == target.gameObject;
+    }
+
+    private void ResetGivenSynergies()
+    {
+        var toRemove = new List<TowerAttack>(givenSynergies.Keys);
+        foreach (var target in toRemove)
+        {
+            if (target == null) continue;
+
+            var (groupIdx, synergyIdx) = givenSynergies[target];
+            if (target.runtimeSynergies.Count > groupIdx)
+            {
+                var group = target.runtimeSynergies[groupIdx];
+                group.selectedSynergies[synergyIdx] = target.attakTower.synergy;
+                group.IsCompleted = false;
+
+                target.IsAlreadySynergy = false;
+                target.receivedSynergy = null;
+            }
+
+            givenSynergies.Remove(target);
         }
     }
 
@@ -139,27 +216,12 @@ public class TowerAttack : MonoBehaviour
         isCanAttack = true;
     }
 
-    private void OnDisable()
+    [ContextMenu("Synergy/Reset")]
+    public void ResetSynergies()
     {
-        // 시너지 제거: 내가 준 경우
-        foreach (var kvp in givenSynergies)
-        {
-            TowerAttack target = kvp.Key;
-            var (groupIdx, synergyIdx) = kvp.Value;
+        IsAlreadySynergy = false;
+        CanBeUsedAsIngredient = true;
 
-            if (target != null && target.runtimeSynergies.Count > groupIdx)
-            {
-                var group = target.runtimeSynergies[groupIdx];
-                group.selectedSynergies[synergyIdx] = target.attakTower.synergy;
-
-                target.IsAlreadySynergy = false;
-                target.receivedSynergy = null;
-
-                Debug.Log($"[Synergy Removed] '{target.name}' → '{group.SynergyName}' 해제됨");
-            }
-        }
-
-        // 시너지 제거: 내가 받은 경우
         if (receivedSynergy.HasValue)
         {
             var (from, groupIdx, synergyIdx) = receivedSynergy.Value;
@@ -167,21 +229,13 @@ public class TowerAttack : MonoBehaviour
             {
                 var group = from.runtimeSynergies[groupIdx];
                 group.selectedSynergies[synergyIdx] = from.attakTower.synergy;
+                group.IsCompleted = false;
                 from.givenSynergies.Remove(this);
-
-                Debug.Log($"[Synergy Removed] '{name}' 제거로 '{from.name}' 조합 해제");
+                from.IsAlreadySynergy = false;
             }
         }
 
-        givenSynergies.Clear();
-        receivedSynergy = null;
-    }
-
-    [ContextMenu("Synergy/Reset")]
-    public void ResetSynergies()
-    {
-        IsAlreadySynergy = false;
-        givenSynergies.Clear();
+        ResetGivenSynergies();
         receivedSynergy = null;
 
         foreach (var group in runtimeSynergies)
@@ -191,18 +245,8 @@ public class TowerAttack : MonoBehaviour
                 if (group.selectedSynergies[i] == Synergy.Ready)
                     group.selectedSynergies[i] = attakTower.synergy;
             }
-        }
 
-        Debug.Log($"[Synergy Reset] {name} 초기화 완료");
-    }
-
-    [ContextMenu("Synergy/Log Current State")]
-    public void LogSynergyState()
-    {
-        foreach (var group in runtimeSynergies)
-        {
-            string status = string.Join(", ", group.selectedSynergies.Select(s => s.ToString()));
-            Debug.Log($"[Synergy Status] {group.SynergyName} : {status}");
+            group.IsCompleted = false;
         }
     }
 
@@ -216,7 +260,6 @@ public class TowerAttack : MonoBehaviour
                 if (group.selectedSynergies[i] != Synergy.Ready)
                 {
                     group.selectedSynergies[i] = Synergy.Ready;
-                    Debug.Log($"[Synergy Dummy] {group.SynergyName} 항목 {i} 강제 Ready");
                     break;
                 }
             }

@@ -22,6 +22,7 @@ namespace Script.SO
         [Header("Multiply Changes")]
         public float ChangeHealth;
         public float ChangeDamage;
+        [HideInInspector] public bool IsCompleted = false;
         public float BulletSpeed;
         public float AttacingSpeed;
         public bool Slow;
