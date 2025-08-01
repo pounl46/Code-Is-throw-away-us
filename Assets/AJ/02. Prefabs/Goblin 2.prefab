@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4473691529630805216}
   - component: {fileID: -3444019680316121142}
   - component: {fileID: 5001933902944035953}
-  - component: {fileID: 1306004485428756584}
+  - component: {fileID: -2650702472072985675}
   m_Layer: 6
-  m_Name: KingSlime
+  m_Name: Goblin 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.57, y: -0.21, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 0.65, y: 0.65, z: 0.65}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_SortingLayerID: -1627259601
   m_SortingLayer: 1
   m_SortingOrder: 2
-  m_Sprite: {fileID: -8105978246849763698, guid: aa5f1e31f3f7820478aa6aa4cdfb3bf6, type: 3}
+  m_Sprite: {fileID: -1348310311444785571, guid: 240ab6b51d0f094428c5d3653df17cb6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c61a8f6d0112bd45bc6aa5fcf6e8b72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySO: {fileID: 11400000, guid: e02f47215ce967b4dace25a1cb579296, type: 2}
+  enemySO: {fileID: 11400000, guid: ea1f48037d3b0f24c9cb85f33e855beb, type: 2}
 --- !u!61 &5428357632264773561
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -142,21 +142,21 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.00522238, y: -0.19383925}
+  m_Offset: {x: 0.00656569, y: -0.13304108}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 1.375}
+    oldSize: {x: 1.375, y: 1}
     newSize: {x: 0.08, y: 0.07}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.7883812, y: 1.0172079}
+  m_Size: {x: 1.1430638, y: 0.76371086}
   m_EdgeRadius: 0
 --- !u!50 &2875052316351199118
 Rigidbody2D:
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 884e0c1191a888f48b54153de81c22af, type: 3}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: da95c4d1054954c49abeb7cf1b77d199, type: 3}
 --- !u!114 &5521656565288348153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,10 +288,11 @@ MonoBehaviour:
   towerLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  targetSearchRadius: 1.96
+  targetSearchRadius: 10
   useUnlimitedRange: 1
   maxSearchDistance: 100
   stuckPrevention: 0
+  speedMagnification: 1
 --- !u!114 &-3444019680316121142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,9 +306,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackingType: 1
-  blade: {fileID: 0}
-  attackInterval: 5
-  attackRange: 1.15
+  attackRange: 0.6
+  rushToTarget: 10
+  backingTime: 1
 --- !u!114 &5001933902944035953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,8 +323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 0
   enemyTypeSetting: {fileID: 6277461956085959337}
-  slimePrefab: {fileID: 7191856211952930755, guid: 829e87ad12b1ac64a81f305305022968, type: 3}
---- !u!114 &1306004485428756584
+  slimePrefab: {fileID: 0}
+--- !u!114 &-2650702472072985675
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -332,6 +333,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7191856211952930755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60663f26780682642bceb94c735951ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d86ececaf2c74c4db916e550cb6f295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

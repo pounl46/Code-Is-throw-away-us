@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KingSlime
   m_EditorClassIdentifier: 
   enemyHealth: 1500
-  enemySpeed: 0.1
+  enemySpeed: 0.3
   Damage: 50
   enemyName: KingSlime
   spriteAsset: {fileID: 7108339969198208228, guid: 884e0c1191a888f48b54153de81c22af, type: 3}

@@ -83,20 +83,16 @@ public class EnemyShoot : MonoBehaviour
                     _arrowPool[i].SetActive(false);
                     break;
                 }
-                else
+                _arrowPool[i].SetActive(true);
+                _arrowPool[i].transform.position = firePos.position;
+
+                Arrow arrow = _arrowPool[i].GetComponent<Arrow>();
+                if (arrow != null)
                 {
-                    _arrowPool[i].SetActive(true);
-                    _arrowPool[i].transform.position = firePos.position;
-
-                    Arrow arrow = _arrowPool[i].GetComponent<Arrow>();
-                    if (arrow != null)
-                    {
-                        arrow.enemyShoot = this;
-                        arrow.SetTarget(currentTarget);
-                    }
-                    break;
+                    arrow.enemyShoot = this;
+                    arrow.SetTarget(currentTarget);
                 }
-
+                break;
             }
         }
 

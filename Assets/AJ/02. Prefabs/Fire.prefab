@@ -245,6 +245,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4070535138163289347, guid: 6910ce9881f33fe4cab41686c54131d9, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070535138163289347, guid: 6910ce9881f33fe4cab41686c54131d9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070535138163289347, guid: 6910ce9881f33fe4cab41686c54131d9, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1627259601
+      objectReference: {fileID: 0}
+    - target: {fileID: 5268479702447450681, guid: 6910ce9881f33fe4cab41686c54131d9, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8355830225887205364, guid: 6910ce9881f33fe4cab41686c54131d9, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8355830225887205364, guid: 6910ce9881f33fe4cab41686c54131d9, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 1

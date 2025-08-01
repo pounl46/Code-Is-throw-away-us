@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Demon
   m_EditorClassIdentifier: 
   enemyHealth: 700
-  enemySpeed: 3
+  enemySpeed: 4
   Damage: 60
   enemyName: Demon
   spriteAsset: {fileID: 7108339969198208228, guid: ffd69c6be7dddc44eb6ea9613084f8c1, type: 3}
