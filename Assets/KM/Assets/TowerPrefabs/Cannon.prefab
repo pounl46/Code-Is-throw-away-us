@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 7257673271388049062}
   - component: {fileID: 6959449644068584152}
   - component: {fileID: 4398202167124733736}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Cannon
-  m_TagString: Untagged
+  m_TagString: Core
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,13 +97,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 4164857684776503533, guid: 2a6915194fa3bf44b9b27400c102300b, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 2a6915194fa3bf44b9b27400c102300b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.75, y: 1.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -136,8 +136,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 8fed6ecc47337a2468656eede0b13de7, type: 3}
-  m_Resource: {fileID: 8300000, guid: 8fed6ecc47337a2468656eede0b13de7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d3ea1168220f45543a2badba1c2d669a, type: 3}
+  m_Resource: {fileID: 8300000, guid: d3ea1168220f45543a2badba1c2d669a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
