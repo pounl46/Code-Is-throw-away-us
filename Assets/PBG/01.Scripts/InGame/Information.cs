@@ -9,9 +9,11 @@ public class Information : MonoBehaviour
     [SerializeField] private TMP_Text delay;
     [SerializeField] private GameObject panel;
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private GameObject deleyParent;
 
     private TowerHealthManager currentHealthManager;
     private TowerSetting currentTowerSetting;
+    private MoneyTower currentMoneyTower;
 
     void Start()
     {
@@ -29,13 +31,26 @@ public class Information : MonoBehaviour
             {
                 currentHealthManager = hit.collider.GetComponent<TowerHealthManager>();
                 currentTowerSetting = hit.collider.GetComponent<TowerSetting>();
+                currentMoneyTower = hit.collider.GetComponent<MoneyTower>();
+                string objName = hit.collider.name;
+                string cleanName = objName.Replace("(Clone)", "");
 
                 if (currentHealthManager != null && currentTowerSetting != null)
                 {
                     panel.SetActive(true);
-                    towerName.text = hit.collider.name;
+                    // deleyParent.SetActive(true);
+                    towerName.text = cleanName;
                     str.text = "Str : " + currentTowerSetting.attackDamage.ToString();
                     delay.text = "delay : " + currentTowerSetting.attackDelay.ToString() + "/s";
+                }
+
+
+                else if (currentMoneyTower != null)
+                {
+                    panel.SetActive(true);
+                    towerName.text = cleanName;
+                    hp.text = "Money : " + currentMoneyTower.TowerSO.Money.ToString();
+                    deleyParent.SetActive(false);
                 }
             }
         }
@@ -44,6 +59,11 @@ public class Information : MonoBehaviour
         if (panel.activeSelf && currentHealthManager != null && currentTowerSetting != null)
         {
             hp.text = "Hp : " + currentHealthManager.nowTowerHealth + " / " + currentTowerSetting.Health;
+        }
+        
+        else if (panel.activeSelf && currentMoneyTower != null)
+        {
+            str.text = "Delay : " + (currentMoneyTower.TowerSO.Money / currentMoneyTower.TowerSO.WaitTime).ToString() + "/s";
         }
     }
 
