@@ -14,7 +14,7 @@ public class Option : MonoBehaviour
     public void ClickOption()
     {
         panel.transform.DOScaleX(5f, 0.6f);
-        panel.transform.DOScaleY(12f, 0.6f);
+        panel.transform.DOScaleY(15f, 0.6f);
         panel.SetActive(true);
     }
 
