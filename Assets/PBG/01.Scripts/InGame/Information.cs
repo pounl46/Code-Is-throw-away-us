@@ -8,9 +8,10 @@ public class Information : MonoBehaviour
     [SerializeField] private TMP_Text towerName;
     [SerializeField] private TMP_Text delay;
     [SerializeField] private GameObject panel;
-
     [SerializeField] private LayerMask layerMask;
-    // [SerializeField] private TMP_Text delay;
+
+    private TowerHealthManager currentHealthManager;
+    private TowerSetting currentTowerSetting;
 
     void Start()
     {
@@ -26,19 +27,30 @@ public class Information : MonoBehaviour
 
             if (hit.collider != null)
             {
-                panel.SetActive(true);
-                // panel.transform.position = Input.mousePosition;
-                towerName.text = hit.collider.name;
-                TowerSetting _towerSetting = hit.collider.GetComponent<TowerSetting>();
-                str.text = "Str : " + _towerSetting.attackDamage.ToString();
-                hp.text = "Hp : " + _towerSetting.Health.ToString();
-                delay.text = "delay : " + _towerSetting.attackDelay.ToString() + "/s";
+                currentHealthManager = hit.collider.GetComponent<TowerHealthManager>();
+                currentTowerSetting = hit.collider.GetComponent<TowerSetting>();
+
+                if (currentHealthManager != null && currentTowerSetting != null)
+                {
+                    panel.SetActive(true);
+                    towerName.text = hit.collider.name;
+                    str.text = "Str : " + currentTowerSetting.attackDamage.ToString();
+                    delay.text = "delay : " + currentTowerSetting.attackDelay.ToString() + "/s";
+                }
             }
+        }
+
+        // 실시간 hp 갱신
+        if (panel.activeSelf && currentHealthManager != null && currentTowerSetting != null)
+        {
+            hp.text = "Hp : " + currentHealthManager.nowTowerHealth + " / " + currentTowerSetting.Health;
         }
     }
 
     public void CloseStat()
     {
         panel.SetActive(false);
+        currentHealthManager = null;
+        currentTowerSetting = null;
     }
 }
