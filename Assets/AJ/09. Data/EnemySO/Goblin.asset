@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: 50
   enemySpeed: 4
-  Damage: 0
+  Damage: 1
   enemyName: Goblin
   spriteAsset: {fileID: 7108339969198208228, guid: 17f2121e8db487a43a1e32f0c4636dca, type: 3}
   enemyType: 5

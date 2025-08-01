@@ -368,7 +368,7 @@ MonoBehaviour:
   avoidanceForce: 3
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 131072
   coreLayerMask:
     serializedVersion: 2
     m_Bits: 262144
@@ -378,6 +378,7 @@ MonoBehaviour:
   targetSearchRadius: 10
   useUnlimitedRange: 1
   maxSearchDistance: 100
+  stuckPrevention: 0
 --- !u!114 &-3444019680316121142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,7 +393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackingType: 0
   blade: {fileID: 5729181119227025897}
-  attackInterval: 1
+  attackInterval: 2.5
   attackRange: 0.68
 --- !u!114 &5001933902944035953
 MonoBehaviour:
