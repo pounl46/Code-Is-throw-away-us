@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ThrowObjectSO", menuName = "SO/ThrowObjectSO")]
+[CreateAssetMenu(fileName = "ThrowObjectSO", menuName = "enemyTypeSetting/ThrowObjectSO")]
 public class ThrowObjectSO : ScriptableObject
 {
     public string Name;

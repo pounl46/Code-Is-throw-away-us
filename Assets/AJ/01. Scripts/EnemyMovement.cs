@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
@@ -21,17 +22,27 @@ public class EnemyMovement : MonoBehaviour
     public float detectionDistance = 2f;
     public float avoidanceForce = 5f;
     public LayerMask obstacleLayerMask = -1;
-    private GameObject target;
+    
+    [Header("Target Detection")]
+    public LayerMask coreLayerMask = -1;
+    public LayerMask towerLayerMask = -1;
+    public float targetSearchRadius = 10f;
+    
+    [Header("Search Settings")]
+    public bool useUnlimitedRange = true; // 무제한 범위 검색 여부
+    public float maxSearchDistance = 100f; // 최대 검색 거리 (무제한이 아닐 때)
 
+    public GameObject target { get; set; }
     private bool isSkeletonStopped = false;
     private EnemyShoot enemyShoot;
-    private Vector3 avoidanceDirection = Vector3.zero; private Vector3 smoothedDirection = Vector3.zero;
+    private Vector3 avoidanceDirection = Vector3.zero; 
+    private Vector3 smoothedDirection = Vector3.zero;
     private float directionSmoothTime = 0.2f;
-
     private Vector3 originalScale;
+
     private void Start()
     {
-        FindCore();
+        FindTarget();
         enemyShoot = GetComponent<EnemyShoot>();
         originalScale = transform.localScale;
     }
@@ -40,7 +51,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (target == null)
         {
-            FindCore();
+            FindTarget();
             return;
         }
 
@@ -50,6 +61,7 @@ public class EnemyMovement : MonoBehaviour
             if (towerCollider != null)
             {
                 isSkeletonStopped = true;
+                FindTarget();
                 LookAtTarget(target.transform.position);
                 return;
             }
@@ -61,26 +73,142 @@ public class EnemyMovement : MonoBehaviour
 
         if (!isSkeletonStopped)
         {
+            FindTarget();
             ObstacleFrontEnemy();
-            MoveToCore();
+            MoveToTarget();
         }
     }
-
-    private void MoveToCore()
+    public void FindTarget()
     {
-        Vector3 coreDirection = (target.transform.position - transform.position).normalized;
+        GameObject closestTarget = null;
+        float closestDistance = Mathf.Infinity;
 
-        Vector3 targetDirection;
-        if (avoidanceDirection.magnitude > 0.1f)
+        LayerMask targetLayerMask = GetTargetLayerMask();
+
+        if (targetLayerMask == 0)
         {
-            targetDirection = (coreDirection + avoidanceDirection * 0.8f).normalized;
+            Debug.LogWarning($"Invalid attacking type: {attackingType}");
+            return;
+        }
+        
+        if (useUnlimitedRange)
+        {
+            // 전체 씬에서 검색
+            closestTarget = FindTargetInEntireScene(targetLayerMask);
         }
         else
         {
-            targetDirection = coreDirection;
+            // 제한된 범위에서 검색
+            closestTarget = FindTargetInRange(targetLayerMask, maxSearchDistance);
+        }
+        target = closestTarget;
+
+        if (target == null)
+        {
+            Debug.LogWarning($"No target found for {attackingType}!");
+        }
+    }
+    private GameObject FindTargetInEntireScene(LayerMask targetLayerMask)
+    {
+        GameObject[] allGameObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        GameObject closestTarget = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (GameObject obj in allGameObjects)
+        {
+            // 레이어 체크
+            if (((1 << obj.layer) & targetLayerMask) != 0)
+            {
+                float distance = Vector3.Distance(transform.position, obj.transform.position);
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestTarget = obj;
+                }
+            }
         }
 
-        smoothedDirection = Vector3.Lerp(smoothedDirection, targetDirection, directionSmoothTime);
+        return closestTarget;
+    }
+    private GameObject FindTargetInRange(LayerMask targetLayerMask, float searchRange)
+    {
+        Collider2D[] potentialTargets = Physics2D.OverlapCircleAll(transform.position, searchRange, targetLayerMask);
+
+        if (potentialTargets.Length == 0) return null;
+
+        GameObject closestTarget = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Collider2D targetCollider in potentialTargets)
+        {
+            float distance = Vector3.Distance(transform.position, targetCollider.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestTarget = targetCollider.gameObject;
+            }
+        }
+
+        return closestTarget;
+    }
+    private LayerMask GetTargetLayerMask()
+    {
+        switch (attackingType)
+        {
+            case ChooseAttakingType.Core:
+                return coreLayerMask;
+            case ChooseAttakingType.Tower:
+                return towerLayerMask;
+            default:
+                return 0;
+        }
+    }
+    /// <summary>
+    /// 특정 범위 내 타워를 찾는 함수
+    /// </summary>
+    /// <param name="searchRange"></param>
+    /// <returns></returns>
+    public GameObject FindClosestTowerInRange(float searchRange)
+    {
+        Collider2D[] towers = Physics2D.OverlapCircleAll(transform.position, searchRange, towerLayerMask);
+
+        if (towers.Length == 0) return null;
+
+        GameObject closestTower = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Collider2D towerCollider in towers)
+        {
+            float distance = Vector3.Distance(transform.position, towerCollider.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestTower = towerCollider.gameObject;
+            }
+        }
+
+        return closestTower;
+    }
+    private void MoveToTarget()
+    {
+        if (target == null) return;
+
+        Vector3 targetDirection = (target.transform.position - transform.position).normalized;
+
+        Vector3 finalDirection;
+        if (avoidanceDirection.magnitude > 0.1f)
+        {
+            finalDirection = (targetDirection + avoidanceDirection * 0.8f).normalized;
+        }
+        else
+        {
+            finalDirection = targetDirection;
+        }
+
+        smoothedDirection = Vector3.Lerp(smoothedDirection, finalDirection, directionSmoothTime);
 
         if (Vector3.Angle(transform.up, smoothedDirection) > 10f)
         {
@@ -90,14 +218,7 @@ public class EnemyMovement : MonoBehaviour
         transform.position += smoothedDirection * SO.enemySO.enemySpeed * Time.deltaTime;
     }
 
-    public void FindCore()
-    {
-        target = GameObject.FindGameObjectWithTag(attackingType.ToString());
-        if (target == null && attackingType == ChooseAttakingType.None)
-        {
-            Debug.LogWarning($"{attackingType} is null!");
-        }
-    }
+    
     public void SetTarget(GameObject newTarget)
     {
         target = newTarget;
@@ -225,9 +346,16 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.blue;
-        Vector3 forward = (target != null) ? (target.transform.position - transform.position).normalized : transform.right;
-        Gizmos.DrawRay(transform.position, forward * detectionDistance);
+        // 타겟 검색 범위 표시
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, targetSearchRadius);
+
+        if (target != null)
+        {
+            Gizmos.color = Color.blue;
+            Vector3 forward = (target.transform.position - transform.position).normalized;
+            Gizmos.DrawRay(transform.position, forward * detectionDistance);
+        }
 
         if (avoidanceDirection != Vector3.zero)
         {

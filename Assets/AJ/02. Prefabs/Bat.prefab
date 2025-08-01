@@ -374,7 +374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c617982e068d11e4982063478d15bf4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SO: {fileID: 6277461956085959337}
 --- !u!114 &4473691529630805216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,7 +392,16 @@ MonoBehaviour:
   avoidanceForce: 3
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 196608
+    m_Bits: 131072
+  coreLayerMask:
+    serializedVersion: 2
+    m_Bits: 262144
+  towerLayerMask:
+    serializedVersion: 2
+    m_Bits: 65536
+  targetSearchRadius: 10
+  useUnlimitedRange: 1
+  maxSearchDistance: 100
 --- !u!114 &883488879572493834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,3 +448,6 @@ MonoBehaviour:
   attackingType: 1
   stealDuration: 3
   fleeSpeed: 5
+  coinTowerLayer:
+    serializedVersion: 2
+    m_Bits: 0

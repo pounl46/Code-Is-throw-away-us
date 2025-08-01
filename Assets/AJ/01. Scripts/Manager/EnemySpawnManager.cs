@@ -44,6 +44,19 @@ public class EnemySpawnManager : MonoBehaviour
     {
         for (int i = 0; i < _enemyCount; i++)
         {
+            if (_enemyPool[i] == null)
+            {
+                _enemyPool[i] = Instantiate(_enemyPrefab[Random.Range(0, _enemyPrefab.Length)], transform);
+                _enemyPool[i].SetActive(false);
+
+                // 새로 생성된 적에게 체력바 추가
+                Enemy enemy = _enemyPool[i].GetComponent<Enemy>();
+                if (enemy != null && EnemyHpBarManager.Instance != null)
+                {
+                    EnemyHpBarManager.Instance.AddHpBarToEnemy(enemy);
+                }
+            }
+
             if (!_enemyPool[i].activeSelf)
             {
                 int index = Random.Range(0, _spawnPoints.Length);
@@ -55,6 +68,7 @@ public class EnemySpawnManager : MonoBehaviour
                 {
                     coinSteal.SetSpawnPoint(_spawnPoints[index]);
                 }
+                break;
             }
         }
 
@@ -66,6 +80,13 @@ public class EnemySpawnManager : MonoBehaviour
         for (int i = 0; i < _enemyCount; i++)
         {
             _enemyPool[i] = Instantiate(_enemyPrefab[Random.Range(0, _enemyPrefab.Length)], transform);
+
+            Enemy enemy = _enemyPool[i].GetComponent<Enemy>();
+            if (enemy == null && EnemyHpBarManager.Instance == null)
+            {
+                EnemyHpBarManager.Instance.AddHpBarToEnemy(enemy);
+            }
+
             _enemyPool[i].SetActive(false);
         }
     }
@@ -81,6 +102,11 @@ public class EnemySpawnManager : MonoBehaviour
             if (_enemyPool[i] == null)
             {
                 _enemyPool[i] = Instantiate(_enemyPrefab[Random.Range(0, _enemyPrefab.Length)], transform);
+                Enemy enemy = _enemyPool[i].GetComponent<Enemy>();
+                if (enemy != null && EnemyHpBarManager.Instance != null)
+                {
+                    EnemyHpBarManager.Instance.AddHpBarToEnemy(enemy);
+                }
                 _enemyPool[i].SetActive(false);
             }
         }
@@ -97,6 +123,11 @@ public class EnemySpawnManager : MonoBehaviour
                 Destroy(_enemyPool[i]);
             }
             _enemyPool[i] = Instantiate(_enemyPrefab[Random.Range(0, _enemyPrefab.Length)], transform);
+            Enemy enemy = _enemyPool[i].GetComponent<Enemy>();
+            if (enemy != null && EnemyHpBarManager.Instance != null)
+            {
+                EnemyHpBarManager.Instance.AddHpBarToEnemy(enemy);
+            }
             _enemyPool[i].SetActive(false);
         }
     }

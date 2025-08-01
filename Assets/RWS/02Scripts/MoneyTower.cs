@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SpriteRenderer))]
 public class MoneyTower : MonoBehaviour
 {
-    [field : SerializeField, Header("SO")] public MoneyTowerSO TowerSO { get; private set; }
+    [field : SerializeField, Header("enemyTypeSetting")] public MoneyTowerSO TowerSO { get; private set; }
     [SerializeField] private int extraMoney = 0;
     [Header("조건 만족 시 버는 돈 증가")]
     [SerializeField] private bool isMoneyMulty;

@@ -102,13 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8361d8d40a60514282899ab28befdd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 327680
-  enemyShoot: {fileID: 2022462540230621447, guid: 6360d584531e66846bb5f87fbc90f4dd, type: 3}
   bulletSpeed: 10
   rotateSpeed: 2
+  fireRemainingTime: 1
   enemyTypeSetting: {fileID: 6277461956085959337, guid: 6360d584531e66846bb5f87fbc90f4dd, type: 3}
+  enemyShoot: {fileID: 2022462540230621447, guid: 6360d584531e66846bb5f87fbc90f4dd, type: 3}
 --- !u!50 &1996338816678344269
 Rigidbody2D:
   serializedVersion: 5
