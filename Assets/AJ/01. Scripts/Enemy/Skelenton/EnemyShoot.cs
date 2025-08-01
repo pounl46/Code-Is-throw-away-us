@@ -78,19 +78,25 @@ public class EnemyShoot : MonoBehaviour
         {
             if (!_arrowPool[i].activeSelf)
             {
-                _arrowPool[i].SetActive(true);
-                _arrowPool[i].transform.position = firePos.position;
-
-                Arrow arrow = _arrowPool[i].GetComponent<Arrow>();
-                if (arrow != null)
+                if (gameObject.GetComponent<Dead>().isDead)
                 {
-                    // EnemyShoot 참조 설정
-                    arrow.enemyShoot = this;
-                    // 현재 타겟 설정
-                    arrow.SetTarget(currentTarget);
+                    _arrowPool[i].SetActive(false);
+                    break;
+                }
+                else
+                {
+                    _arrowPool[i].SetActive(true);
+                    _arrowPool[i].transform.position = firePos.position;
+
+                    Arrow arrow = _arrowPool[i].GetComponent<Arrow>();
+                    if (arrow != null)
+                    {
+                        arrow.enemyShoot = this;
+                        arrow.SetTarget(currentTarget);
+                    }
+                    break;
                 }
 
-                break;
             }
         }
 

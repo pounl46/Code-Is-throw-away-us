@@ -49,6 +49,7 @@ public class EnemyMovement : MonoBehaviour
     }
     private void Start()
     {
+        gameObject.GetComponent<EnemyMovement>().enabled = true;
         if (enemyCollider != null && stuckPrevention)
         {
             enemyCollider.isTrigger = false;
@@ -260,7 +261,7 @@ public class EnemyMovement : MonoBehaviour
     {
         Vector3 forward = (target.transform.position - transform.position).normalized;
 
-        // 고정된 방향으로 레이캐스트 (월드 좌표 기준)
+        // 글로벌 방향
         Vector3 rightDirection = Vector3.right;
         Vector3 leftDirection = Vector3.left;
         Vector3 upDirection = Vector3.up;
@@ -273,10 +274,10 @@ public class EnemyMovement : MonoBehaviour
         Vector3 localdownDirection = -forward;
 
         // 대각선 방향
-        Vector3 diagonalUR = (localupDirection + localrightDirection).normalized; // 타겟 기준 우상
-        Vector3 diagonalUL = (localupDirection + localleftDirection).normalized;  // 타겟 기준 좌상
-        Vector3 diagonalDR = (localdownDirection + localrightDirection).normalized; // 타겟 기준 우하
-        Vector3 diagonalDL = (localdownDirection + localleftDirection).normalized;  // 타겟 기준 좌하
+        Vector3 diagonalUR = (localupDirection + localrightDirection).normalized; // 우상
+        Vector3 diagonalUL = (localupDirection + localleftDirection).normalized;  // 좌상
+        Vector3 diagonalDR = (localdownDirection + localrightDirection).normalized; // 우하
+        Vector3 diagonalDL = (localdownDirection + localleftDirection).normalized;  // 좌하
 
         RaycastHit2D forwardHit = Physics2D.Raycast(transform.position, forward, detectionDistance, obstacleLayerMask);
 

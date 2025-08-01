@@ -17,7 +17,7 @@ MonoBehaviour:
   <Sprite>k__BackingField: {fileID: 5553306718507138019, guid: 4180322bcf713de4590bd2769f1b5f6e, type: 3}
   <Distance>k__BackingField: 1
   <Cost>k__BackingField: 400
-  <Money>k__BackingField: 70
-  <MoneyMultiplier>k__BackingField: 2.2
-  <ShorterWaitTime>k__BackingField: 6
-  <WaitTime>k__BackingField: 12
+  <Money>k__BackingField: 35
+  <MoneyMultiplier>k__BackingField: 2.8
+  <ShorterWaitTime>k__BackingField: 4
+  <WaitTime>k__BackingField: 8
