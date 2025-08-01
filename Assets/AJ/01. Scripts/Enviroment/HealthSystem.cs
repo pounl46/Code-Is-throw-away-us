@@ -42,7 +42,7 @@ public class HealthSystem : MonoBehaviour, IDamageable
         }
         else
         {
-            gameObject.SetActive(false);
+            gameObject.GetComponent<Dead>().OnDead();
         }
     }
     private void CloneSlime()

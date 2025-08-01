@@ -309,12 +309,12 @@ MonoBehaviour:
   arrowPrefab: {fileID: 9165703823768157684, guid: a619b5256ad4b4d43b019924c016740b, type: 3}
   firePos: {fileID: 762625892239421419}
   arrowParent: {fileID: 5174234439109756251, guid: 859deec50f244a549b2c47ad59e147b3, type: 3}
-  _coolTime: 0.1
-  _bulletCount: 15
+  _coolTime: 0.01
+  _bulletCount: 10
   detectionRange: 1
   towerLayerMask:
     serializedVersion: 2
-    m_Bits: 65536
+    m_Bits: 263168
   coreLayerMask:
     serializedVersion: 2
     m_Bits: 262144
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SO: {fileID: 6277461956085959337}
-  attackingType: 0
+  attackingType: 1
   detectionDistance: 2
   avoidanceForce: 3
   obstacleLayerMask:
@@ -342,7 +342,7 @@ MonoBehaviour:
     m_Bits: 262144
   towerLayerMask:
     serializedVersion: 2
-    m_Bits: 65536
+    m_Bits: 263168
   targetSearchRadius: 10
   useUnlimitedRange: 1
   maxSearchDistance: 100
