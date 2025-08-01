@@ -19,4 +19,5 @@ MonoBehaviour:
   <Cost>k__BackingField: 100
   <Money>k__BackingField: 200
   <MoneyMultiplier>k__BackingField: 1
+  <ShorterWaitTime>k__BackingField: 360
   <WaitTime>k__BackingField: 360

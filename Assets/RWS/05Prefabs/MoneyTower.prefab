@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1909284643818531006}
   - component: {fileID: 4711741724185691519}
   - component: {fileID: 4343677658239460478}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -222,8 +222,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.34580523, g: 0.3584906, b: 0.015557099, a: 1}
-      maxColor: {r: 0.99718523, g: 1, b: 0, a: 1}
+      minColor: {r: 0.9655173, g: 1, b: 0, a: 1}
+      maxColor: {r: 0.67319757, g: 0.6754716, b: 0.09558551, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1367,7 +1367,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 0}
+        key1: {r: 0, g: 0, b: 0, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1375,7 +1375,7 @@ ParticleSystem:
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 65535
+        ctime1: 52968
         ctime2: 0
         ctime3: 0
         ctime4: 0
@@ -1397,7 +1397,7 @@ ParticleSystem:
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 0}
+        key1: {r: 0, g: 0, b: 0, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1405,7 +1405,7 @@ ParticleSystem:
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 65535
+        ctime1: 19506
         ctime2: 0
         ctime3: 0
         ctime4: 0
@@ -4903,7 +4903,7 @@ GameObject:
   - component: {fileID: 4462505632140752582}
   - component: {fileID: 5331455283009617969}
   - component: {fileID: 7638441623236813423}
-  m_Layer: 23
+  m_Layer: 3
   m_Name: MoneyTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4940,12 +4940,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f29b8214cf0d4c43b012a144fe34cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerSO: {fileID: 11400000, guid: aa6800cf10f8fe140bcf87f3eb11ea30, type: 2}
+  <TowerSO>k__BackingField: {fileID: 11400000, guid: aa6800cf10f8fe140bcf87f3eb11ea30, type: 2}
   extraMoney: 9
+  isMoneyMulty: 1
+  isShorterTime: 1
   <Renderer>k__BackingField: {fileID: 5331455283009617969}
   <WhatIsTower>k__BackingField:
     serializedVersion: 2
-    m_Bits: 8388608
+    m_Bits: 8
   OnGainMoney:
     m_PersistentCalls:
       m_Calls:
@@ -4962,7 +4964,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   <CoolTime>k__BackingField: {fileID: 4629499856535200623}
-  <CoolTimeXSize>k__BackingField: 0.8
+  <CoolTimeXSize>k__BackingField: 0.7
+  <IsEnabled>k__BackingField: 0
 --- !u!212 &5331455283009617969
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5004,7 +5007,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: 685285831
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -5122684229198130270, guid: 8f71e25e0f6f5d44a87c87fc0d48cfa6, type: 3}
@@ -5064,7 +5067,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3849348479022312139}
   - component: {fileID: 3000467286681667974}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5080,8 +5083,8 @@ Transform:
   m_GameObject: {fileID: 2616927772715522681}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.3, z: 1}
+  m_LocalPosition: {x: 0, y: 1.35, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3073735697461822424}
@@ -5127,7 +5130,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: 685285831
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -5151,7 +5154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7215631875847052998}
   - component: {fileID: 8937819074431541048}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Real
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5214,11 +5217,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: 685285831
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.430509, g: 0.5245282, b: 0.43286118, a: 1}
+  m_Color: {r: 1, g: 1, b: 0.47058824, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5237,7 +5240,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4629499856535200623}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CoolTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5253,8 +5256,8 @@ Transform:
   m_GameObject: {fileID: 8522186615244953955}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.4, y: 1.5, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.2, z: 1}
+  m_LocalPosition: {x: -0.35, y: 1.35, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7215631875847052998}
