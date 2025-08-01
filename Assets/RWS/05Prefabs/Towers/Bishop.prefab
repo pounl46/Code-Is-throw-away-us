@@ -4905,7 +4905,7 @@ GameObject:
   - component: {fileID: 7638441623236813423}
   m_Layer: 3
   m_Name: Bishop
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4963,9 +4963,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  <Level>k__BackingField: 1
-  <LevelCost>k__BackingField: 
-  <LevelUpMoney>k__BackingField: 0000000000000000000000000000000000000000
+  <Level>k__BackingField: 0
+  <LevelCost>k__BackingField: 1600000035000000450000003b000000
+  <LevelUpExtraMoney>k__BackingField: 000000000b0000000c0000001100000013000000
 --- !u!212 &5331455283009617969
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5051,7 +5051,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
