@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -9,7 +10,6 @@ public class Walk : MonoBehaviour
     public EnemyTypeSetting SO;
 
     private bool isDead = false;
-    private readonly int _DeadHash = Animator.StringToHash("Dead");
 
     private void Awake()
     {
@@ -19,7 +19,6 @@ public class Walk : MonoBehaviour
     private void Update()
     {
         if (isDead) return;
-        
     }
     private void OnValidate()
     {

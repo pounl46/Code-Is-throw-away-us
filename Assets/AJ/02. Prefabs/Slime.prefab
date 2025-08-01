@@ -318,7 +318,7 @@ MonoBehaviour:
     m_Bits: 262144
   towerLayerMask:
     serializedVersion: 2
-    m_Bits: 65536
+    m_Bits: 1024
   targetSearchRadius: 10
   useUnlimitedRange: 1
   maxSearchDistance: 100
