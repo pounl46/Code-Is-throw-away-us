@@ -29,7 +29,7 @@ public class MoneyTower : MonoBehaviour
 
     public int Level { get; private set; } = 0;
     [field: SerializeField] public int[] LevelCost { get; private set; } = new int[4];
-    [field: SerializeField] public int[] LevelUpMoney { get; private set; } = new int[5];
+    [field: SerializeField] public int[] LevelUpExtraMoney { get; private set; } = new int[5];
 
     public bool IsEnabled { get; private set; }
 
@@ -64,6 +64,7 @@ public class MoneyTower : MonoBehaviour
         Gizmos.color = color;
     }
 #endif
+
     [ContextMenu("Detect")]
     public void Detect()
     {
@@ -106,7 +107,7 @@ public class MoneyTower : MonoBehaviour
     public void GainMoney()
     {
         OnGainMoney?.Invoke();
-        MoneyManager.Instance.ModifyMoney(Mathf.FloorToInt((TowerSO.Money + LevelUpMoney[Level]) * (_isDetected && isMoneyMulty ? TowerSO.MoneyMultiplier : 1)));
+        MoneyManager.Instance.ModifyMoney(Mathf.FloorToInt((TowerSO.Money + LevelUpExtraMoney[Level]) * (_isDetected && isMoneyMulty ? TowerSO.MoneyMultiplier : 1)));
     }
 
     public List<Vector2> GetDirectionVectors()
