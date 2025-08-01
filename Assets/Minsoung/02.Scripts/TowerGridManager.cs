@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening; // DOTween 네임스페이스 추가
+using System.Collections;
+using UnityEngine.Tilemaps;
+using Unity.VisualScripting;
+using Unity.Collections;
 
 // 포탑 배치 시스템의 핵심 매니저
 public class TowerGridManager : MonoBehaviour
@@ -14,11 +18,17 @@ public class TowerGridManager : MonoBehaviour
     public bool easyLimit = false;
     public bool hardLimit = false;
 
+    [SerializeField] private Camera _camera;
+    [SerializeField] private Tilemap _boardMap;
+    [SerializeField] private Tile _board1;
+    [SerializeField] private Tile _board2;
+
     bool canMove = false;
 
+
     [Header("Player Control")]
-    public int currentX = 0;
-    public int currentY = 0;
+    public int currentX = 3;
+    public int currentY = 5;
 
     [Header("Animation Settings")]
     public float moveDuration = 0.2f;  // 움직임 시간
@@ -34,8 +44,10 @@ public class TowerGridManager : MonoBehaviour
 
     void Start()
     {
+        _camera = Camera.main;
         InitializeGrid();
-        CreateCursor();
+        cursorObject = Instantiate(cursorPrefab);
+        cursorObject.SetActive(false);
     }
 
     void InitializeGrid()
@@ -50,11 +62,32 @@ public class TowerGridManager : MonoBehaviour
                 gameGrid[x, y] = 0;
             }
         }
+        gameGrid[3, 3] = 1;
+        gameGrid[3, 4] = 1;
+        gameGrid[4, 3] = 1;
+        gameGrid[4, 4] = 1;
+
     }
 
     void Update()
     {
         HandleInput();
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            EasyLimit();
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            HardLimit();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            EasyCreate();
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            HardCreate();
+        }
     }
 
     void HandleInput()
@@ -63,6 +96,7 @@ public class TowerGridManager : MonoBehaviour
         if (isMoving) return;
 
         // 방향키 입력
+        
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             MovePlayer(-1, 0);
@@ -100,6 +134,8 @@ public class TowerGridManager : MonoBehaviour
             if (newX >= 0 && newX < gridWidth && newY >= 0 && newY < gridHeight)
             {
                 canMove = true;
+                currentX = newX;
+                currentY = newY;
             }
         }
         else if (easyLimit && !hardLimit)
@@ -107,6 +143,8 @@ public class TowerGridManager : MonoBehaviour
             if (newX >= 1 && newX < gridWidth - 1 && newY >= 1 && newY < gridHeight - 1)
             {
                 canMove = true;
+                currentX = newX;
+                currentY = newY;
             }
         }
         else if (hardLimit)
@@ -114,21 +152,20 @@ public class TowerGridManager : MonoBehaviour
             if (newX >= 2 && newX < gridWidth - 2 && newY >= 2 && newY < gridHeight - 2)
             {
                 canMove = true;
+                currentX = newX;
+                currentY = newY;
             }
         }
 
         // 움직일 수 있으면 애니메이션으로 이동
         if (canMove)
         {
-            currentX = newX;
-            currentY = newY;
             AnimateToPosition();
         }
     }
 
     void AnimateToPosition()
     {
-        
         if (cursorObject == null) return;
 
         isMoving = true;
@@ -145,19 +182,30 @@ public class TowerGridManager : MonoBehaviour
 
     void TryPlaceTower()
     {
-        // 현재 위치에 이미 무언가 있는지 체크
-        if (CanPlaceTower(currentX, currentY))
+        if (cursorObject.activeSelf)
         {
-            PlaceTower(currentX, currentY);
-            Debug.Log($"포탑 설치 완료: ({currentX}, {currentY})");
-            UpdateCursorColor(); // 포탑 설치 후 커서 색상 업데이트
+            // 현재 위치에 이미 무언가 있는지 체크
+            if (CanPlaceTower(currentX, currentY))
+            {
+                PlaceTower(currentX, currentY);
+                Debug.Log($"포탑 설치 완료: ({currentX}, {currentY})");
+                UpdateCursorColor(); // 포탑 설치 후 커서 색상 업데이트
+                cursorObject.SetActive(false);
+            }
+            else
+            {
+                _camera.DOShakePosition(1f, 0.1f, 5, 90f, true);
+                Debug.Log($"포탑 설치 불가: ({currentX}, {currentY}) - 이미 오브젝트가 있습니다!");
+
+            }
         }
         else
         {
-            Debug.Log($"포탑 설치 불가: ({currentX}, {currentY}) - 이미 오브젝트가 있습니다!");
-
+            Debug.Log("커서 비활성화임");
         }
     }
+
+    
 
     bool CanPlaceTower(int x, int y)
     {
@@ -187,20 +235,27 @@ public class TowerGridManager : MonoBehaviour
         }
     }
 
+    
+
     Vector3 GridToWorldPosition(int x, int y)
     {
         // 그리드 좌표를 월드 좌표로 변환
         // 타일 크기를 1로 가정
-        return new Vector3(x, y, 0);
+        return new Vector3(x+0.5f, y+0.5f, 0);
     }
 
-    void CreateCursor()
+    public void CreateCursor()
     {
         if (cursorPrefab != null)
         {
-            cursorObject = Instantiate(cursorPrefab);
-            cursorObject.transform.position = GridToWorldPosition(currentX, currentY);
-            UpdateCursorColor();
+            if (cursorObject.activeSelf == false)
+            {
+                cursorObject.SetActive(true);
+                currentX = 3;
+                currentY = 5;
+                cursorObject.transform.position = GridToWorldPosition(currentX, currentY);
+                UpdateCursorColor();
+            }
         }
     }
 
@@ -223,4 +278,73 @@ public class TowerGridManager : MonoBehaviour
             }
         }
     }
+
+    public void EasyLimit()
+    {
+        easyLimit = true;
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                if (x == 0 || x == 7 || y == 0 || y == 7)  
+                {
+                    _boardMap.SetTile(new Vector3Int(x, y, 0), null);
+                }
+            }
+        }
+    }
+    public void HardLimit()
+    {
+        hardLimit = true;
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                if (x == 1 || x == 6 || y == 1 || y == 6 || x == 0 || x == 7 || y == 0 || y == 7)
+                {
+                    _boardMap.SetTile(new Vector3Int(x, y, 0), null);
+                }
+            }
+        }
+    }
+    public void EasyCreate()
+    {
+        easyLimit = false; // 제한 해제
+
+        // 경계 부분 타일들을 체스판 패턴으로 재생성
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                if (x == 0 || x == 7 || y == 0 || y == 7)
+                {
+                    // 체스판 패턴 결정 (x + y가 짝수면 _board1, 홀수면 _board2)
+                    Tile tileToUse = (x + y) % 2 == 0 ? _board1 : _board2;
+                    _boardMap.SetTile(new Vector3Int(x, y, 0), tileToUse);
+                }
+            }
+        }
+    }
+
+    public void HardCreate()
+    {
+        hardLimit = false; // 제한 해제
+
+        // 안쪽 경계 부분 타일들만 체스판 패턴으로 재생성 (인덱스 1, 6만)
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                // 안쪽 테두리만 복원 (바깥쪽 경계 0,7은 제외하고 안쪽 경계 1,6만)
+                if ((x == 1 || x == 6) && y >= 1 && y <= 6 ||
+                    (y == 1 || y == 6) && x >= 1 && x <= 6)
+                {
+                    // 체스판 패턴 결정 (x + y가 짝수면 _board1, 홀수면 _board2)
+                    Tile tileToUse = (x + y) % 2 == 0 ? _board1 : _board2;
+                    _boardMap.SetTile(new Vector3Int(x, y, 0), tileToUse);
+                }
+            }
+        }
+    }
+
 }

@@ -5,11 +5,11 @@ public class ThrowScript : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetMask;
     public GameObject hitEffect;
-    private Attack attack;
+    private TowerAttack attack;
     private bool IsAttacking;
     private void Awake()
     {
-        attack = transform.parent.transform.GetComponent<Attack>();
+        attack = transform.parent.transform.GetComponent<TowerAttack>();
         IsAttacking = true;
         StartCoroutine(DeadSelf());
     }
@@ -26,8 +26,7 @@ public class ThrowScript : MonoBehaviour
             Collider2D hit = Physics2D.OverlapCircle(transform.position, 0.25f, _targetMask);
             if (hit)
             {
-                //적 맞췄을떄 이벤트
-
+                GiveDamage.Instance.CallDamage(Mathf.RoundToInt(transform.parent.GetComponent<TowerSetting>().attackDamage),hit.gameObject);
                 IsAttacking = false;
                 Instantiate(hitEffect, transform.parent).transform.position = transform.position;
                 attack.throws.Push(gameObject);

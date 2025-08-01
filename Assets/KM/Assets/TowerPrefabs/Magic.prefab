@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 411224467289154578}
   - component: {fileID: 4843223683032539233}
   - component: {fileID: 6362696199458447828}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Magic
-  m_TagString: Untagged
+  m_TagString: Core
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,13 +97,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: -1219768193615908275, guid: fbb86a542faf48c40a917517bf284611, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: fbb86a542faf48c40a917517bf284611, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.6666667, y: 1.0833334}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

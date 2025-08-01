@@ -16,7 +16,7 @@ MonoBehaviour:
   AttackDamage: 15
   AttackDelay: 0.75
   AttackDistance: 1.75
-  TowerSprite: {fileID: -1219768193615908275, guid: fbb86a542faf48c40a917517bf284611, type: 3}
+  TowerSprite: {fileID: 21300000, guid: fbb86a542faf48c40a917517bf284611, type: 3}
   TowerHealth: 75
   Audio: {fileID: 8300000, guid: f32d118b73918db48b4947da7ba0e4f7, type: 3}
   Cost: 600
