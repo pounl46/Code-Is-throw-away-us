@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ab9fff51cd75141b2eb0f63ae50677, type: 3}
   m_Name: Poison
   m_EditorClassIdentifier: 
+  synergy: 1
   Name: Poison
   AttackDamage: 25
   AttackDelay: 5
@@ -20,3 +21,4 @@ MonoBehaviour:
   TowerHealth: 50
   Audio: {fileID: 8300000, guid: d2c92ed130f44f045ad529478c6d4982, type: 3}
   Cost: 180
+  Synergies: []
