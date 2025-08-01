@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      spr_tower_archer_0: -3386026482259287150
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
