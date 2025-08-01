@@ -4904,7 +4904,7 @@ GameObject:
   - component: {fileID: 5331455283009617969}
   - component: {fileID: 7638441623236813423}
   m_Layer: 3
-  m_Name: Rook
+  m_Name: Horiz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4940,9 +4940,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f29b8214cf0d4c43b012a144fe34cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TowerSO>k__BackingField: {fileID: 11400000, guid: e4acef87a4e826645bdd89039fa1b557, type: 2}
+  <TowerSO>k__BackingField: {fileID: 11400000, guid: 9f72eb030e221aa47a051618adbdef60, type: 2}
   extraMoney: 0
-  isMoneyMulty: 1
+  isMoneyMulty: 0
   isShorterTime: 1
   <Renderer>k__BackingField: {fileID: 5331455283009617969}
   <WhatIsTower>k__BackingField:

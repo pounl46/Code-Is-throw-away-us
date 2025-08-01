@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8966100025532514ea75c7fb05442fac, type: 3}
-  m_Name: Vert
+  m_Name: Horiz
   m_EditorClassIdentifier: 
-  <Direction>k__BackingField: 17
-  <TowerName>k__BackingField: Vert
-  <Sprite>k__BackingField: {fileID: 6412464995154173454, guid: 020b4c3607b055d42a44ed4672b32bc6, type: 3}
+  <Direction>k__BackingField: 68
+  <TowerName>k__BackingField: Horiz
+  <Sprite>k__BackingField: {fileID: -2459645142712448662, guid: dfc06e884ea5e7846a314da425fadccc, type: 3}
   <Distance>k__BackingField: 1
   <Cost>k__BackingField: 100
   <Money>k__BackingField: 20
   <MoneyMultiplier>k__BackingField: 1.2
-  <ShorterWaitTime>k__BackingField: 7
-  <WaitTime>k__BackingField: 4
+  <ShorterWaitTime>k__BackingField: 4
+  <WaitTime>k__BackingField: 7

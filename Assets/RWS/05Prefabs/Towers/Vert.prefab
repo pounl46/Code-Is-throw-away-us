@@ -4942,7 +4942,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TowerSO>k__BackingField: {fileID: 11400000, guid: 0a051e12086a1024a802d74f21c2e7f6, type: 2}
   extraMoney: 0
-  isMoneyMulty: 0
+  isMoneyMulty: 1
   isShorterTime: 0
   <Renderer>k__BackingField: {fileID: 5331455283009617969}
   <WhatIsTower>k__BackingField:
