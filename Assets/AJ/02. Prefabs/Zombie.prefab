@@ -401,6 +401,7 @@ MonoBehaviour:
   targetSearchRadius: 1
   useUnlimitedRange: 1
   maxSearchDistance: 100
+  stuckPrevention: 0
 --- !u!114 &883488879572493834
 MonoBehaviour:
   m_ObjectHideFlags: 0

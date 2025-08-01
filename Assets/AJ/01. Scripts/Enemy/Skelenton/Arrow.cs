@@ -6,6 +6,9 @@ public class Arrow : MonoBehaviour
     public float bulletSpeed = 5f;
     public float rotateSpeed = 2f;
     public float fireRemainingTime = 1f;
+    public float bulletDamage;
+
+    public EnemyMovement enemymv;
 
     public EnemyTypeSetting enemyTypeSetting;
     public EnemyShoot enemyShoot;
@@ -16,6 +19,7 @@ public class Arrow : MonoBehaviour
     private void Awake()
     {
         originalBulletSpeed = bulletSpeed;
+        bulletDamage = enemymv.SO.enemySO.Damage;
     }
 
     private void OnEnable()

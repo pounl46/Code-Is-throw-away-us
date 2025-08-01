@@ -291,6 +291,7 @@ MonoBehaviour:
   targetSearchRadius: 10
   useUnlimitedRange: 1
   maxSearchDistance: 100
+  stuckPrevention: 0
 --- !u!114 &-3444019680316121142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackingType: 0
   blade: {fileID: 0}
-  attackInterval: 1
+  attackInterval: 3
   attackRange: 1
 --- !u!114 &5001933902944035953
 MonoBehaviour:

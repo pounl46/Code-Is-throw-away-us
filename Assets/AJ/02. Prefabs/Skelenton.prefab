@@ -118,7 +118,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1627259601
   m_SortingLayer: 1
-  m_SortingOrder: 3
+  m_SortingOrder: 30
   m_Sprite: {fileID: -7294998419774752113, guid: 0265470b5f104da4ab664b426d429415, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -309,9 +309,9 @@ MonoBehaviour:
   arrowPrefab: {fileID: 6262984811495259783, guid: b4e79017833b29d40a93eb6df016955b, type: 3}
   firePos: {fileID: 762625892239421419}
   arrowParent: {fileID: 5174234439109756251, guid: 859deec50f244a549b2c47ad59e147b3, type: 3}
-  _coolTime: 1
+  _coolTime: 1.5
   _bulletCount: 5
-  detectionRange: 2
+  detectionRange: 1.5
   towerLayerMask:
     serializedVersion: 2
     m_Bits: 65536
@@ -346,6 +346,7 @@ MonoBehaviour:
   targetSearchRadius: 10
   useUnlimitedRange: 1
   maxSearchDistance: 100
+  stuckPrevention: 0
 --- !u!114 &5001933902944035953
 MonoBehaviour:
   m_ObjectHideFlags: 0

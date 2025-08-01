@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     public float HpRatio=> (float)healthSystem.Health / enemyTypeSetting.enemySO.enemyHealth;
     public bool IsAlive => healthSystem.Health > 0;
 
+    
+
     private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
