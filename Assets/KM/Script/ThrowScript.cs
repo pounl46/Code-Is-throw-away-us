@@ -26,8 +26,7 @@ public class ThrowScript : MonoBehaviour
             Collider2D hit = Physics2D.OverlapCircle(transform.position, 0.25f, _targetMask);
             if (hit)
             {
-                //적 맞췄을떄 이벤트
-
+                GiveDamage.Instance.CallDamage(Mathf.RoundToInt(transform.parent.GetComponent<TowerSetting>().attackDamage),hit.gameObject);
                 IsAttacking = false;
                 Instantiate(hitEffect, transform.parent).transform.position = transform.position;
                 attack.throws.Push(gameObject);
