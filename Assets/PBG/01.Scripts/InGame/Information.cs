@@ -35,9 +35,12 @@ public class Information : MonoBehaviour
                 string objName = hit.collider.name;
                 string cleanName = objName.Replace("(Clone)", "");
 
+                Debug.Log(1);
+
                 if (currentHealthManager != null && currentTowerSetting != null)
                 {
                     panel.SetActive(true);
+                    panel.transform.position = Input.mousePosition;
                     // deleyParent.SetActive(true);
                     towerName.text = cleanName;
                     str.text = "Str : " + currentTowerSetting.attackDamage.ToString();
@@ -48,6 +51,7 @@ public class Information : MonoBehaviour
                 else if (currentMoneyTower != null)
                 {
                     panel.SetActive(true);
+                    panel.transform.position = Input.mousePosition;
                     towerName.text = cleanName;
                     hp.text = "Money : " + currentMoneyTower.TowerSO.Money.ToString();
                     deleyParent.SetActive(false);
