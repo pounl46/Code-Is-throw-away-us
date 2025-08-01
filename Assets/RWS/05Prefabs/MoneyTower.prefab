@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1909284643818531006}
   - component: {fileID: 4711741724185691519}
   - component: {fileID: 4343677658239460478}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4903,7 +4903,7 @@ GameObject:
   - component: {fileID: 4462505632140752582}
   - component: {fileID: 5331455283009617969}
   - component: {fileID: 7638441623236813423}
-  m_Layer: 23
+  m_Layer: 3
   m_Name: MoneyTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4947,7 +4947,7 @@ MonoBehaviour:
   <Renderer>k__BackingField: {fileID: 5331455283009617969}
   <WhatIsTower>k__BackingField:
     serializedVersion: 2
-    m_Bits: 8388608
+    m_Bits: 8
   OnGainMoney:
     m_PersistentCalls:
       m_Calls:
@@ -5008,7 +5008,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 685285831
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -5122684229198130270, guid: 8f71e25e0f6f5d44a87c87fc0d48cfa6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5067,7 +5067,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3849348479022312139}
   - component: {fileID: 3000467286681667974}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5131,7 +5131,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 685285831
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.07450981, g: 0.07450981, b: 0.07450981, a: 1}
@@ -5154,7 +5154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7215631875847052998}
   - component: {fileID: 8937819074431541048}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Real
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5218,7 +5218,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 685285831
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 0.47058824, a: 1}
@@ -5240,7 +5240,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4629499856535200623}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CoolTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public class TowerAttack : MonoBehaviour
 {
     [SerializeField] private ThrowObjectSO _objectSO;
     [SerializeField] private GameObject _baseObj;
