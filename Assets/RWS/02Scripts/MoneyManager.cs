@@ -11,7 +11,7 @@ public class MoneyManager : MonoBehaviour
     [field: SerializeField] public TextMeshProUGUI MoneyText { get; private set; }  //test
     [field: SerializeField] public AudioClip MoneySound { get; private set; }
 
-    public bool OnOff { get; private set; } = false;
+    public bool OnOff { get; private set; } = true;
     public List<MoneyTower> MoneyTowers { get; private set; } = new();
 
     private AudioSource _source;

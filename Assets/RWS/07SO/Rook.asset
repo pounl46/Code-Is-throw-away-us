@@ -16,8 +16,8 @@ MonoBehaviour:
   <TowerName>k__BackingField: Rook
   <Sprite>k__BackingField: {fileID: 6498706203496106704, guid: 2376cd96f5c910147b4550bc570252d5, type: 3}
   <Distance>k__BackingField: 1
-  <Cost>k__BackingField: 30
-  <Money>k__BackingField: 3
-  <MoneyMultiplier>k__BackingField: 1.4
-  <ShorterWaitTime>k__BackingField: 3
-  <WaitTime>k__BackingField: 5
+  <Cost>k__BackingField: 100
+  <Money>k__BackingField: 15
+  <MoneyMultiplier>k__BackingField: 1.6
+  <ShorterWaitTime>k__BackingField: 4
+  <WaitTime>k__BackingField: 6

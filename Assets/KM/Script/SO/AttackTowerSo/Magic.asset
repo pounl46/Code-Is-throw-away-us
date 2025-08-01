@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ab9fff51cd75141b2eb0f63ae50677, type: 3}
   m_Name: Magic
   m_EditorClassIdentifier: 
+  synergy: 4
   Name: Magic
   AttackDamage: 15
   AttackDelay: 0.75
@@ -20,3 +21,4 @@ MonoBehaviour:
   TowerHealth: 75
   Audio: {fileID: 8300000, guid: f32d118b73918db48b4947da7ba0e4f7, type: 3}
   Cost: 600
+  Synergies: []

@@ -39,8 +39,10 @@ public class TowerGridManager : MonoBehaviour
     private bool isMoving = false; // 움직임 중인지 체크
 
     [Header("Prefabs")]
-    public GameObject towerPrefab;
+    public GameObject[] towerPrefab;
     public GameObject cursorPrefab;
+
+    public int TowerIndex { get; set; }
 
     private GameObject cursorObject;
 
@@ -260,7 +262,7 @@ public class TowerGridManager : MonoBehaviour
 
         // 실제 게임 오브젝트 생성
         Vector3 worldPosition = GridToWorldPosition(x, y);
-        GameObject tower = Instantiate(towerPrefab, worldPosition, Quaternion.identity);
+        GameObject tower = Instantiate(towerPrefab[TowerIndex], worldPosition, Quaternion.identity);
 
         // 딕셔너리에 포탑 추가
         Vector2Int gridPos = new Vector2Int(x, y);
@@ -438,4 +440,6 @@ public class TowerGridManager : MonoBehaviour
             }
         }
     }
+
+
 }
