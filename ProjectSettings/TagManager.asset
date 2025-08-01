@@ -47,5 +47,8 @@ TagManager:
   - name: Enemy
     uniqueID: 2667707695
     locked: 0
+  - name: MoneyTower
+    uniqueID: 55348775
+    locked: 0
   m_RenderingLayers:
   - Default
