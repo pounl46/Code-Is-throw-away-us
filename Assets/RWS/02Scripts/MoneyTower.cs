@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,8 +11,6 @@ public class MoneyTower : MonoBehaviour
     [field : SerializeField, Header("SO")]
     public MoneyTowerSO TowerSO { get; private set; }
 
-    [SerializeField] private int extraMoney = 0;
-
     [Header("조건 만족 시 버는 돈 증가")]
     [SerializeField] private bool isMoneyMulty;
     [Header("조건 만족 시 쿨타임 감소")]
@@ -23,9 +22,15 @@ public class MoneyTower : MonoBehaviour
     [Header("Event")]
     public UnityEvent OnGainMoney;
 
-    [field: SerializeField, Header("Else")]
+    [field: SerializeField, Header("Else"), Range(0,4)]
     //public Transform CoolTime { get; private set; }
     //[field: SerializeField] public float CoolTimeXSize { get; private set; }
+
+
+    public int Level { get; private set; } = 0;
+    [field: SerializeField] public int[] LevelCost { get; private set; } = new int[4];
+    [field: SerializeField] public int[] LevelUpMoney { get; private set; } = new int[5];
+
     public bool IsEnabled { get; private set; }
 
     public float CurrentTime { get; private set; } = 0;
@@ -33,6 +38,8 @@ public class MoneyTower : MonoBehaviour
     private int _detectCount = 0;
     private bool _isDetected = false;
     private Coroutine _moneyCoroutine;
+    private LineRenderer _line;
+    private List<Transform> _detectedObj = new();
 
     private void OnEnable()
     {
@@ -42,6 +49,7 @@ public class MoneyTower : MonoBehaviour
         _dirs = GetDirectionVectors();
 
         SetEnabled(MoneyManager.Instance.OnOff);
+        _line = GetComponentInChildren<LineRenderer>();
     }
 
 #if UNITY_EDITOR
@@ -56,10 +64,10 @@ public class MoneyTower : MonoBehaviour
         Gizmos.color = color;
     }
 #endif
-
     [ContextMenu("Detect")]
     public void Detect()
     {
+        _detectedObj.Clear();
         _detectCount = 0;
         foreach (Vector2 vector in _dirs)
         {
@@ -69,6 +77,7 @@ public class MoneyTower : MonoBehaviour
             if (hit)
             {
                 _detectCount++;
+                _detectedObj.Add(hit.transform);
             }
 
             Debug.DrawRay(transform.position, vector.normalized * vector.magnitude, Color.red, 2f);
@@ -76,14 +85,29 @@ public class MoneyTower : MonoBehaviour
         _isDetected = _detectCount == TowerSO.GetDirectionCount();
         if (_isDetected)
         {
+            List<Vector3> vs = new();
+            foreach (Transform v in _detectedObj)
+            {
+                vs.Add(Vector3.zero);
+                vs.Add(transform.InverseTransformPoint(v.position));
+
+            }
+            _line.positionCount = vs.Count;
+            _line.SetPositions(vs.ToArray());
             CodexManager.Instance.AddToDict(TowerSO);
         }
+    }
+
+    public void LevelUp()
+    {
+        Level++;
+        Level = Math.Clamp(Level, 0, 4);
     }
 
     public void GainMoney()
     {
         OnGainMoney?.Invoke();
-        MoneyManager.Instance.ModifyMoney(Mathf.FloorToInt((TowerSO.Money + extraMoney) * (_isDetected && isMoneyMulty ? TowerSO.MoneyMultiplier : 1)));
+        MoneyManager.Instance.ModifyMoney(Mathf.FloorToInt((TowerSO.Money + LevelUpMoney[Level]) * (_isDetected && isMoneyMulty ? TowerSO.MoneyMultiplier : 1)));
     }
 
     public List<Vector2> GetDirectionVectors()
