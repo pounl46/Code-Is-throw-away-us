@@ -13,6 +13,8 @@ public class EnemySpawnManager : MonoBehaviour
     private GameObject[] _enemyPool;
     public int _enemyCount = 10;
 
+    public bool isWave = true;
+
     public static EnemySpawnManager Instance { get; private set; }
 
     private void Awake()
@@ -32,11 +34,24 @@ public class EnemySpawnManager : MonoBehaviour
     private void Update()
     {
         _currentTime += Time.deltaTime;
-        if (_currentTime >= _createTime)
+        if (isWave)
         {
-            SpawnEnemyFromPool();
-            _currentTime = 0;
-            _createTime = Random.Range(_minTime, _maxTime);
+            if (_currentTime >= _createTime)
+            {
+                SpawnEnemyFromPool();
+                _currentTime = 0;
+                _createTime = Random.Range(_minTime, _maxTime);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < _enemyCount; i++)
+        {
+            if (_enemyPool[i].activeSelf)
+            {
+                _enemyPool[i].SetActive(false);
+            }
+        }
         }
     }
 
