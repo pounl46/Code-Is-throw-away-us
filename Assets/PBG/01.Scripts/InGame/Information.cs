@@ -8,6 +8,8 @@ public class Information : MonoBehaviour
     [SerializeField] private TMP_Text towerName;
     [SerializeField] private TMP_Text delay;
     [SerializeField] private GameObject panel;
+
+    [SerializeField] private LayerMask layerMask;
     // [SerializeField] private TMP_Text delay;
 
     void Start()
@@ -20,7 +22,7 @@ public class Information : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
+            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, 0f, layerMask);
 
             if (hit.collider != null)
             {
