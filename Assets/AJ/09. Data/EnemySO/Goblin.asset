@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8166afa08ace7f34db7bf5cb02f08a82, type: 3}
   m_Name: Goblin
   m_EditorClassIdentifier: 
-  enemyHealth: 5
+  enemyHealth: 50
   enemySpeed: 4
   Damage: 0
   enemyName: Goblin

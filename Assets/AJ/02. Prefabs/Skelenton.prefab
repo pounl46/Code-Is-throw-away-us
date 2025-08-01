@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 2022462540230621447}
   - component: {fileID: 4473691529630805216}
   - component: {fileID: 5001933902944035953}
-  m_Layer: 20
+  m_Layer: 6
   m_Name: Skelenton
   m_TagString: Untagged
   m_Icon: {fileID: 0}

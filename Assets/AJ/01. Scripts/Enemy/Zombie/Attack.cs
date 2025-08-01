@@ -56,7 +56,7 @@ public class Attack : MonoBehaviour
         while (isAttacking)
         {
             blade.SetActive(true);
-            //여기다가 코어? 타워?의 체력이 닳는 거 넣으셈.
+            //Here is tower health jhonaa a pha
 
             yield return new WaitForSeconds(attackInterval);
 
