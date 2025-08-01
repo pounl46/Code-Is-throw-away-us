@@ -5,11 +5,11 @@ public class ThrowScript : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetMask;
     public GameObject hitEffect;
-    private Attack attack;
+    private TowerAttack attack;
     private bool IsAttacking;
     private void Awake()
     {
-        attack = transform.parent.transform.GetComponent<Attack>();
+        attack = transform.parent.transform.GetComponent<TowerAttack>();
         IsAttacking = true;
         StartCoroutine(DeadSelf());
     }
