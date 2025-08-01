@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,8 +8,9 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SpriteRenderer))]
 public class MoneyTower : MonoBehaviour
 {
-    [field : SerializeField, Header("SO")] public MoneyTowerSO TowerSO { get; private set; }
-    [SerializeField] private int extraMoney = 0;
+    [field : SerializeField, Header("SO")]
+    public MoneyTowerSO TowerSO { get; private set; }
+
     [Header("조건 만족 시 버는 돈 증가")]
     [SerializeField] private bool isMoneyMulty;
     [Header("조건 만족 시 쿨타임 감소")]
@@ -20,15 +22,24 @@ public class MoneyTower : MonoBehaviour
     [Header("Event")]
     public UnityEvent OnGainMoney;
 
-    [field: SerializeField, Header("Else")] public Transform CoolTime { get; private set; }
-    [field: SerializeField] public float CoolTimeXSize { get; private set; }
-    [field: SerializeField] public bool IsEnabled { get; private set; }
+    [field: SerializeField, Header("Else"), Range(0,4)]
+    //public Transform CoolTime { get; private set; }
+    //[field: SerializeField] public float CoolTimeXSize { get; private set; }
+
+
+    public int Level { get; private set; } = 0;
+    [field: SerializeField] public int[] LevelCost { get; private set; } = new int[4];
+    [field: SerializeField] public int[] LevelUpExtraMoney { get; private set; } = new int[5];
+
+    public bool IsEnabled { get; private set; }
 
     public float CurrentTime { get; private set; } = 0;
     private List<Vector2> _dirs = new();
     private int _detectCount = 0;
     private bool _isDetected = false;
     private Coroutine _moneyCoroutine;
+    private LineRenderer _line;
+    private List<Transform> _detectedObj = new();
 
     private void OnEnable()
     {
@@ -36,9 +47,9 @@ public class MoneyTower : MonoBehaviour
 
         InitTower();
         _dirs = GetDirectionVectors();
-        Detect();
 
         SetEnabled(MoneyManager.Instance.OnOff);
+        _line = GetComponentInChildren<LineRenderer>();
     }
 
 #if UNITY_EDITOR
@@ -57,27 +68,46 @@ public class MoneyTower : MonoBehaviour
     [ContextMenu("Detect")]
     public void Detect()
     {
+        _detectedObj.Clear();
         _detectCount = 0;
         foreach (Vector2 vector in _dirs)
         {
-            Vector2 startPos = (Vector2)transform.position + vector.normalized * 0.1f;
-            RaycastHit2D hit = Physics2D.Raycast(startPos, vector.normalized, vector.magnitude - 0.1f, WhatIsTower);
+            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, vector.normalized, vector.magnitude, WhatIsTower);
 
-            if (hit)
+            if (hit[1])
             {
                 _detectCount++;
+                _detectedObj.Add(hit[1].transform);
             }
 
             Debug.DrawRay(transform.position, vector.normalized * vector.magnitude, Color.red, 2f);
         }
         _isDetected = _detectCount == TowerSO.GetDirectionCount();
+        if (_isDetected)
+        {
+            List<Vector3> vs = new();
+            foreach (Transform v in _detectedObj)
+            {
+                vs.Add(Vector3.zero);
+                vs.Add(transform.InverseTransformPoint(v.position));
 
+            }
+            _line.positionCount = vs.Count;
+            _line.SetPositions(vs.ToArray());
+            CodexManager.Instance.AddToDict(TowerSO);
+        }
+    }
+
+    public void LevelUp()
+    {
+        Level++;
+        Level = Math.Clamp(Level, 0, 4);
     }
 
     public void GainMoney()
     {
         OnGainMoney?.Invoke();
-        MoneyManager.Instance.ModifyMoney(Mathf.FloorToInt((TowerSO.Money + extraMoney) * (_isDetected && isMoneyMulty ? TowerSO.MoneyMultiplier : 1)));
+        MoneyManager.Instance.ModifyMoney(Mathf.FloorToInt((TowerSO.Money + LevelUpExtraMoney[Level]) * (_isDetected && isMoneyMulty ? TowerSO.MoneyMultiplier : 1)));
     }
 
     public List<Vector2> GetDirectionVectors()
@@ -105,13 +135,13 @@ public class MoneyTower : MonoBehaviour
         {
             CurrentTime += Time.deltaTime;
 
-            float t = Mathf.InverseLerp(0f, _isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime, CurrentTime);
-            CoolTime.localScale = new Vector3(Mathf.Lerp(0, CoolTimeXSize, t), 0.2f, 1);
+            //float t = Mathf.InverseLerp(0f, _isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime, CurrentTime);
+            //CoolTime.localScale = new Vector3(Mathf.Lerp(0, CoolTimeXSize, t), 0.2f, 1);
 
             if (CurrentTime >= (_isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime))
             {
                 CurrentTime -= _isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime;
-                CoolTime.localScale = Vector3.zero;
+                //CoolTime.localScale = Vector3.zero;
                 GainMoney();
             }
 

@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 5001933902944035953}
   m_Layer: 6
   m_Name: Skelenton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,7 +118,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1627259601
   m_SortingLayer: 1
-  m_SortingOrder: 3
+  m_SortingOrder: 30
   m_Sprite: {fileID: -7294998419774752113, guid: 0265470b5f104da4ab664b426d429415, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -294,7 +294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c617982e068d11e4982063478d15bf4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SO: {fileID: 6277461956085959337}
 --- !u!114 &2022462540230621447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,10 +309,13 @@ MonoBehaviour:
   arrowPrefab: {fileID: 6262984811495259783, guid: b4e79017833b29d40a93eb6df016955b, type: 3}
   firePos: {fileID: 762625892239421419}
   arrowParent: {fileID: 5174234439109756251, guid: 859deec50f244a549b2c47ad59e147b3, type: 3}
-  _coolTime: 1
+  _coolTime: 1.5
   _bulletCount: 5
-  detectionRange: 2
+  detectionRange: 1.5
   towerLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  coreLayerMask:
     serializedVersion: 2
     m_Bits: 262144
 --- !u!114 &4473691529630805216
@@ -329,12 +331,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SO: {fileID: 6277461956085959337}
-  attackingType: 0
+  attackingType: 1
   detectionDistance: 2
   avoidanceForce: 3
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 196608
+    m_Bits: 131072
+  coreLayerMask:
+    serializedVersion: 2
+    m_Bits: 262144
+  towerLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  targetSearchRadius: 10
+  useUnlimitedRange: 1
+  maxSearchDistance: 100
+  stuckPrevention: 0
 --- !u!114 &5001933902944035953
 MonoBehaviour:
   m_ObjectHideFlags: 0

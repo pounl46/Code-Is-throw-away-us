@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8166afa08ace7f34db7bf5cb02f08a82, type: 3}
   m_Name: Slime
   m_EditorClassIdentifier: 
-  enemyHealth: 100
+  enemyHealth: 500
   enemySpeed: 0.5
-  Damage: 0
+  Damage: 30
   enemyName: Slime
   spriteAsset: {fileID: 7108339969198208228, guid: ffaf7dfe9c69b614e99d4a69ca4c1737, type: 3}
   enemyType: 4
