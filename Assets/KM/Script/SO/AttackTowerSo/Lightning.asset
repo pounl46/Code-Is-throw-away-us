@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ab9fff51cd75141b2eb0f63ae50677, type: 3}
+  m_Name: Lightning
+  m_EditorClassIdentifier: 
+  Name: Light
+  AttackDamage: 30
+  AttackDelay: 2
+  AttackDistance: 7
+  TowerSprite: {fileID: 3583947515951447496, guid: f35670da6bb205740b634822aedc719c, type: 3}
+  TowerHealth: 120
+  Audio: {fileID: 8300000, guid: 3328ebe385b5b5e49a546dccd32aac67, type: 3}
+  Cost: 150
