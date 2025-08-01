@@ -14210,7 +14210,7 @@ MonoBehaviour:
   currentY: 5
   moveDuration: 0.2
   moveEase: 6
-  towerPrefab: {fileID: 1129770764354194732, guid: 3465710d1f691834a8b47860ff0ff91b, type: 3}
+  towerPrefab: {fileID: 1129770764354194732, guid: 5a44c7ab263bd0f458d1075f2d62b561, type: 3}
   cursorPrefab: {fileID: 7036901767263856036, guid: c22c7e19994eec8458c7a5ca74a1aa97, type: 3}
 --- !u!4 &1622669496
 Transform:
