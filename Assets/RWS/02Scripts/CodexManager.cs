@@ -28,7 +28,7 @@ public class CodexManager : MonoBehaviour
         bool isInDict = false;
         foreach (CodexStruct @struct in CodexDictionary)
         {
-            if (so == @struct.key)
+            if (so.name == @struct.key.name)
             {
                 isInDict = true;
                 break;

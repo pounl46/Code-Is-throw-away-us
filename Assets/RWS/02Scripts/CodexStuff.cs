@@ -33,14 +33,14 @@ public class CodexStuff : MonoBehaviour
         DownRight.GetComponent<Image>().sprite = SO.Sprite;
         Center.GetComponent<Image>().sprite = SO.Sprite;
 
-        if ((SO.Direction & Direction8.Up) != 0) Up.SetActive(false);
-        if ((SO.Direction & Direction8.UpRight) != 0) UpRight.SetActive(false);
-        if ((SO.Direction & Direction8.Right) != 0) Right.SetActive(false);
-        if ((SO.Direction & Direction8.DownRight) != 0) DownRight.SetActive(false);
-        if ((SO.Direction & Direction8.Down) != 0) Down.SetActive(false);
-        if ((SO.Direction & Direction8.DownLeft) != 0) DownLeft.SetActive(false);
-        if ((SO.Direction & Direction8.Left) != 0) Left.SetActive(false);
-        if ((SO.Direction & Direction8.UpLeft) != 0) UpLeft.SetActive(false);
+        if ((SO.Direction & Direction8.Up) == 0) Up.SetActive(false);
+        if ((SO.Direction & Direction8.UpRight) == 0) UpRight.SetActive(false);
+        if ((SO.Direction & Direction8.Right) == 0) Right.SetActive(false);
+        if ((SO.Direction & Direction8.DownRight) == 0) DownRight.SetActive(false);
+        if ((SO.Direction & Direction8.Down) == 0) Down.SetActive(false);
+        if ((SO.Direction & Direction8.DownLeft) == 0) DownLeft.SetActive(false);
+        if ((SO.Direction & Direction8.Left) == 0) Left.SetActive(false);
+        if ((SO.Direction & Direction8.UpLeft) == 0) UpLeft.SetActive(false);
 
         Name.text = SO.TowerName;
         Cost.text = $"Cost : {SO.Cost}";
