@@ -16,24 +16,37 @@ public class Arrow : MonoBehaviour
     private GameObject target;
     public float originalBulletSpeed { get; private set; }
 
+    private Animator animator;
+    private readonly int isTowerHash = Animator.StringToHash("IsTower");
+
+    public ParticleSystem particle;
     private void Awake()
     {
         originalBulletSpeed = bulletSpeed;
         bulletDamage = enemymv.SO.enemySO.Damage;
+        animator = GetComponent<Animator>();
     }
-
     private void OnEnable()
     {
         if (enemyShoot != null)
         {
             target = enemyShoot.GetCurrentTarget();
         }
+        if (animator != null)
+        {
+            animator.SetBool(isTowerHash, false);
+        }
+        GetComponent<SpriteRenderer>().enabled = true;
     }
 
     private void OnDisable()
     {
         bulletSpeed = originalBulletSpeed;
         target = null;
+        if (animator != null)
+        {
+            animator.SetBool("IsTower", false);
+        }
     }
 
     private void Update()
@@ -62,9 +75,14 @@ public class Arrow : MonoBehaviour
     {
         if (collision.gameObject == target)
         {
-            if (enemyTypeSetting.enemySO.enemyType == EnemyType.Demon)
+            if (enemyTypeSetting.enemySO.enemyType == EnemyType.Demon || enemyTypeSetting.enemySO.enemyType == EnemyType.BombGoblin)
             {
-                StartCoroutine(FireRemaining());
+                if (enemyTypeSetting.enemySO.enemyType == EnemyType.BombGoblin)
+                {
+                    StartCoroutine(BombTiming());
+                }
+                else
+                    StartCoroutine(FireRemaining());
             }
             else
             {
@@ -72,7 +90,33 @@ public class Arrow : MonoBehaviour
             }
         }
     }
+    private IEnumerator BombTiming()
+    {
+        bulletSpeed = 0f;
 
+        if (animator != null)
+        {
+            animator.SetBool(isTowerHash, true);
+        }
+
+        yield return new WaitForSeconds(fireRemainingTime);
+
+        if (animator != null)
+        {
+            animator.SetBool(isTowerHash, false);
+        }
+        
+        GetComponent<SpriteRenderer>().enabled = false;
+
+        if (particle != null)
+        {
+            particle.Stop();
+            particle.Play();
+            yield return new WaitForSeconds(1f);
+        }
+
+        gameObject.SetActive(false);
+    }
     private IEnumerator FireRemaining()
     {
         bulletSpeed = 0f;
