@@ -69,4 +69,35 @@ public class EnemySpawnManager : MonoBehaviour
             _enemyPool[i].SetActive(false);
         }
     }
+    private void LateUpdate()
+    {
+        CheckAndReplenishPool();
+    }
+
+    private void CheckAndReplenishPool()
+    {
+        for (int i = 0; i < _enemyPool.Length; i++)
+        {
+            if (_enemyPool[i] == null)
+            {
+                _enemyPool[i] = Instantiate(_enemyPrefab[Random.Range(0, _enemyPrefab.Length)], transform);
+                _enemyPool[i].SetActive(false);
+            }
+        }
+    }
+
+
+    // 전체 풀을 재생성
+    public void RegenerateAllPool()
+    {
+        for (int i = 0; i < _enemyPool.Length; i++)
+        {
+            if (_enemyPool[i] != null)
+            {
+                Destroy(_enemyPool[i]);
+            }
+            _enemyPool[i] = Instantiate(_enemyPrefab[Random.Range(0, _enemyPrefab.Length)], transform);
+            _enemyPool[i].SetActive(false);
+        }
+    }
 }
