@@ -7,14 +7,11 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SpriteRenderer))]
 public class MoneyTower : MonoBehaviour
 {
-    [field : SerializeField, Header("SO")]
-    public MoneyTowerSO TowerSO { get; private set; }
-
+    [field : SerializeField, Header("SO")] public MoneyTowerSO TowerSO { get; private set; }
     [SerializeField] private int extraMoney = 0;
-
-    [Header("Á¶°Ç ¸¸Á· ½Ã ¹ö´Â µ· Áõ°¡")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private bool isMoneyMulty;
-    [Header("Á¶°Ç ¸¸Á· ½Ã ÄðÅ¸ÀÓ °¨¼Ò")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private bool isShorterTime;
 
     [field : SerializeField, Header("Itself")] public SpriteRenderer Renderer { get; private set; }
@@ -23,10 +20,9 @@ public class MoneyTower : MonoBehaviour
     [Header("Event")]
     public UnityEvent OnGainMoney;
 
-    [field: SerializeField, Header("Else")]
-    //public Transform CoolTime { get; private set; }
-    //[field: SerializeField] public float CoolTimeXSize { get; private set; }
-    public bool IsEnabled { get; private set; }
+    [field: SerializeField, Header("Else")] public Transform CoolTime { get; private set; }
+    [field: SerializeField] public float CoolTimeXSize { get; private set; }
+    [field: SerializeField] public bool IsEnabled { get; private set; }
 
     public float CurrentTime { get; private set; } = 0;
     private List<Vector2> _dirs = new();
@@ -40,6 +36,7 @@ public class MoneyTower : MonoBehaviour
 
         InitTower();
         _dirs = GetDirectionVectors();
+        Detect();
 
         SetEnabled(MoneyManager.Instance.OnOff);
     }
@@ -74,10 +71,7 @@ public class MoneyTower : MonoBehaviour
             Debug.DrawRay(transform.position, vector.normalized * vector.magnitude, Color.red, 2f);
         }
         _isDetected = _detectCount == TowerSO.GetDirectionCount();
-        if (_isDetected)
-        {
-            CodexManager.Instance.AddToDict(TowerSO);
-        }
+
     }
 
     public void GainMoney()
@@ -111,13 +105,13 @@ public class MoneyTower : MonoBehaviour
         {
             CurrentTime += Time.deltaTime;
 
-            //float t = Mathf.InverseLerp(0f, _isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime, CurrentTime);
-            //CoolTime.localScale = new Vector3(Mathf.Lerp(0, CoolTimeXSize, t), 0.2f, 1);
+            float t = Mathf.InverseLerp(0f, _isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime, CurrentTime);
+            CoolTime.localScale = new Vector3(Mathf.Lerp(0, CoolTimeXSize, t), 0.2f, 1);
 
             if (CurrentTime >= (_isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime))
             {
                 CurrentTime -= _isDetected && isShorterTime ? TowerSO.ShorterWaitTime : TowerSO.WaitTime;
-                //CoolTime.localScale = Vector3.zero;
+                CoolTime.localScale = Vector3.zero;
                 GainMoney();
             }
 
