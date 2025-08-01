@@ -71,13 +71,12 @@ public class MoneyTower : MonoBehaviour
         _detectCount = 0;
         foreach (Vector2 vector in _dirs)
         {
-            Vector2 startPos = (Vector2)transform.position + vector.normalized * 0.1f;
-            RaycastHit2D hit = Physics2D.Raycast(startPos, vector.normalized, vector.magnitude - 0.1f, WhatIsTower);
+            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, vector.normalized, vector.magnitude, WhatIsTower);
 
-            if (hit)
+            if (hit[1])
             {
                 _detectCount++;
-                _detectedObj.Add(hit.transform);
+                _detectedObj.Add(hit[1].transform);
             }
 
             Debug.DrawRay(transform.position, vector.normalized * vector.magnitude, Color.red, 2f);
