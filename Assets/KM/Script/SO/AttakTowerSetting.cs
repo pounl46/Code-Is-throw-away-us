@@ -1,15 +1,45 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttakTowerSetting", menuName = "enemyTypeSetting/AttakTowerSetting")]
-public class AttakTowerSetting : ScriptableObject
+namespace Script.SO
 {
-    public string Name;
-    public float AttackDamage;
-    public float AttackDelay;
-    public float AttackDistance;
-    public Sprite TowerSprite;
-    public float TowerHealth;
-    public AudioClip Audio;
+    public enum Synergy
+    {
+        Archer,
+        Poison,
+        Cannon,
+        Light,
+        Magic,
+        Ready
+    }
 
-    public int Cost;
+    [Serializable]
+    public class SynergyGroup
+    {
+        public string SynergyName;
+        public List<Synergy> selectedSynergies;
+        [Header("Multiply Changes")]
+        public float ChangeHealth;
+        public float ChangeDamage;
+        [HideInInspector] public bool IsCompleted = false;
+        public float BulletSpeed;
+        public float AttacingSpeed;
+        public bool Slow;
+    }
+    [CreateAssetMenu(fileName = "AttakTowerSetting", menuName = "SO/AttakTowerSetting")]
+
+    public class AttakTowerSetting : ScriptableObject
+    {
+        public Synergy synergy;
+        public string Name;
+        public float AttackDamage;
+        public float AttackDelay;
+        public float AttackDistance;
+        public Sprite TowerSprite;
+        public float TowerHealth;
+        public AudioClip Audio;
+        public int Cost;
+        public List<SynergyGroup> Synergies;
+    }
 }
