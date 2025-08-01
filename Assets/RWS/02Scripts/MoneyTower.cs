@@ -7,8 +7,11 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SpriteRenderer))]
 public class MoneyTower : MonoBehaviour
 {
-    [field : SerializeField, Header("SO")] public MoneyTowerSO TowerSO { get; private set; }
+    [field : SerializeField, Header("SO")]
+    public MoneyTowerSO TowerSO { get; private set; }
+
     [SerializeField] private int extraMoney = 0;
+
     [Header("조건 만족 시 버는 돈 증가")]
     [SerializeField] private bool isMoneyMulty;
     [Header("조건 만족 시 쿨타임 감소")]
@@ -36,7 +39,6 @@ public class MoneyTower : MonoBehaviour
 
         InitTower();
         _dirs = GetDirectionVectors();
-        Detect();
 
         SetEnabled(MoneyManager.Instance.OnOff);
     }
@@ -71,7 +73,10 @@ public class MoneyTower : MonoBehaviour
             Debug.DrawRay(transform.position, vector.normalized * vector.magnitude, Color.red, 2f);
         }
         _isDetected = _detectCount == TowerSO.GetDirectionCount();
-
+        if (_isDetected)
+        {
+            CodexManager.Instance.AddToDict(TowerSO);
+        }
     }
 
     public void GainMoney()

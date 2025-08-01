@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8966100025532514ea75c7fb05442fac, type: 3}
-  m_Name: Bishop
+  m_Name: Vert
   m_EditorClassIdentifier: 
-  <Direction>k__BackingField: 170
-  <TowerName>k__BackingField: Bishop
-  <Sprite>k__BackingField: {fileID: -5122684229198130270, guid: 8f71e25e0f6f5d44a87c87fc0d48cfa6, type: 3}
+  <Direction>k__BackingField: 17
+  <TowerName>k__BackingField: Vert
+  <Sprite>k__BackingField: {fileID: 2884534533757969471, guid: 7826168e2bb6f5d419722d4598c3902d, type: 3}
   <Distance>k__BackingField: 1
   <Cost>k__BackingField: 100
-  <Money>k__BackingField: 1
-  <MoneyMultiplier>k__BackingField: 2
-  <ShorterWaitTime>k__BackingField: 3
-  <WaitTime>k__BackingField: 5
+  <Money>k__BackingField: 20
+  <MoneyMultiplier>k__BackingField: 1.2
+  <ShorterWaitTime>k__BackingField: 7
+  <WaitTime>k__BackingField: 4
