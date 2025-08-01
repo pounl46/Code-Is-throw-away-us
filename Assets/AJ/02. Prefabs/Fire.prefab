@@ -104,9 +104,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 5
   rotateSpeed: 2
-  attakingType: 0
+  attakingType: 1
   fireRemainingTime: 1.5
   enemyTypeSetting: {fileID: 6277461956085959337, guid: 62ad73ccba2fd494c88eec78bd0daa7b, type: 3}
+  enemyShoot: {fileID: 2022462540230621447, guid: 62ad73ccba2fd494c88eec78bd0daa7b, type: 3}
 --- !u!50 &1697856383320323821
 Rigidbody2D:
   serializedVersion: 5

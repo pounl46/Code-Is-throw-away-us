@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttakTowerSetting", menuName = "SO/AttakTowerSetting")]
+[CreateAssetMenu(fileName = "AttakTowerSetting", menuName = "enemyTypeSetting/AttakTowerSetting")]
 public class AttakTowerSetting : ScriptableObject
 {
     public string Name;

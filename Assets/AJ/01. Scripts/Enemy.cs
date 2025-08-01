@@ -1,37 +1,61 @@
+using System;
+using System.Collections;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
-    public EnemyTypeSetting SO;
+    private HealthSystem healthSystem;
+    private EnemyTypeSetting enemyTypeSetting;
 
-    private EnemyType Type; 
-    private HealthSystem _healthSystem;
+    private EnemyType Type;
+    public float HpRatio=> (float)healthSystem.Health / enemyTypeSetting.enemySO.enemyHealth;
+    public bool IsAlive => healthSystem.Health > 0;
 
     private void Awake()
     {
-        _healthSystem = GetComponent<HealthSystem>();
+        healthSystem = GetComponent<HealthSystem>();
+        if (enemyTypeSetting == null)
+            enemyTypeSetting = GetComponent<EnemyTypeSetting>();
     }
-    //1. 플레이어 체력만큼 UI만들기
     private void Start()
     {
-        _healthSystem.OnDamage += UpdateHealthUI;
+        if (EnemyHpBarManager.Instance != null)
+        {
+            EnemyHpBarManager.Instance.AddHpBarToEnemy(this);
+        }
+        healthSystem.OnDamage += Damaged;
     }
 
-    private void UpdateHealthUI()
+    private void Damaged()
     {
-        //UIManager.Instance.HealthUI.UpdateHealthUI(_healthSystem.Health);
+        StartCoroutine(EnemyColorChange());
     }
-    private void IsDead()
-    {
 
+    private IEnumerator EnemyColorChange()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
+
     private void OnDestroy()
     {
-        _healthSystem.OnDamage -= UpdateHealthUI; 
+        healthSystem.OnDamage -= Damaged;
+        if (EnemyHpBarManager.Instance != null)
+        {
+            EnemyHpBarManager.Instance.RemoveHpBarFromEnemy(this);
+        }
     }
     private void OnValidate()
     {
-        Type = SO.enemySO.enemyType;
+        if (enemyTypeSetting == null)
+            enemyTypeSetting = GetComponent<EnemyTypeSetting>();
+
+        if (enemyTypeSetting != null && enemyTypeSetting.enemySO != null)
+        {
+            Type = enemyTypeSetting.enemySO.enemyType;
+        }
     }
 }

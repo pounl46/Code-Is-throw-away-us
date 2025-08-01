@@ -6,7 +6,7 @@ public class TowerSetting : MonoBehaviour
     [Header("Tower Health")]
     public float Health;
 
-    [Header("Get Tower SO")]
+    [Header("Get Tower enemyTypeSetting")]
     [SerializeField] private AttakTowerSetting _attakTowerSetting;
 
     [Header("Get Tower SpriteRenderer")]
