@@ -84,8 +84,10 @@ public class Arrow : MonoBehaviour
                 {
                     StartCoroutine(BombTiming());
                 }
-                else
+                else if(enemyTypeSetting.enemySO.enemyType == EnemyType.Demon)
+                {
                     StartCoroutine(FireRemaining());
+                }
             }
             else
             {
@@ -125,6 +127,8 @@ public class Arrow : MonoBehaviour
     private IEnumerator FireRemaining()
     {
         bulletSpeed = 0f;
+        if (GetComponent<Fire>() != null)
+            GetComponent<Fire>().FireAttack();
         yield return new WaitForSeconds(fireRemainingTime);
         gameObject.SetActive(false);
     }
