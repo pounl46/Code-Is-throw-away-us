@@ -1,4 +1,4 @@
-using System;
+ï»¿ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -11,9 +11,9 @@ public class MoneyTower : MonoBehaviour
     [field : SerializeField, Header("SO")]
     public MoneyTowerSO TowerSO { get; private set; }
 
-    [Header("Á¶°Ç ¸¸Á· ½Ã ¹ö´Â µ· Áõ°¡")]
+    [Header("ì¡°ê±´ ë§Œì¡± ì‹œ ë²„ëŠ” ëˆ ì¦ê°€")]
     [SerializeField] private bool isMoneyMulty;
-    [Header("Á¶°Ç ¸¸Á· ½Ã ÄğÅ¸ÀÓ °¨¼Ò")]
+    [Header("ì¡°ê±´ ë§Œì¡± ì‹œ ì¿¨íƒ€ì„ ê°ì†Œ")]
     [SerializeField] private bool isShorterTime;
 
     [field : SerializeField, Header("Itself")] public SpriteRenderer Renderer { get; private set; }
