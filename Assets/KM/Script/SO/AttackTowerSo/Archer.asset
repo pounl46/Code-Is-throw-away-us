@@ -12,8 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ab9fff51cd75141b2eb0f63ae50677, type: 3}
   m_Name: Archer
   m_EditorClassIdentifier: 
-  synergy: 0
   Name: Archer
+  LevelUpSetting:
+  - setMaxHealth: 10
+    setAttackDamage: 2
+    setAttackDelay: 1.8
+    NeedMoney: 150
+  - setMaxHealth: 25
+    setAttackDamage: 5
+    setAttackDelay: 1.25
+    NeedMoney: 450
+  - setMaxHealth: 75
+    setAttackDamage: 5
+    setAttackDelay: 1.75
+    NeedMoney: 1250
+  - setMaxHealth: 125
+    setAttackDamage: 25
+    setAttackDelay: 0.45
+    NeedMoney: 4500
   AttackDamage: 10
   AttackDelay: 2
   AttackDistance: 2.5
@@ -21,28 +37,3 @@ MonoBehaviour:
   TowerHealth: 100
   Audio: {fileID: 8300000, guid: 8fed6ecc47337a2468656eede0b13de7, type: 3}
   Cost: 50
-  Synergies:
-  - SynergyName: Archero
-    selectedSynergies: 0000000000000000
-    ChangeHealth: 1.5
-    ChangeDamage: 1
-    IsCompleted: 0
-    BulletSpeed: 1
-    AttacingSpeed: 0.75
-    Slow: 0
-  - SynergyName: PoisonArrow
-    selectedSynergies: 000000000000000001000000
-    ChangeHealth: 1.5
-    ChangeDamage: 1
-    IsCompleted: 0
-    BulletSpeed: 1
-    AttacingSpeed: 0.75
-    Slow: 1
-  - SynergyName: SpeedArrow
-    selectedSynergies: 000000000000000004000000
-    ChangeHealth: 1
-    ChangeDamage: 0.9
-    IsCompleted: 0
-    BulletSpeed: 1
-    AttacingSpeed: 0.25
-    Slow: 0

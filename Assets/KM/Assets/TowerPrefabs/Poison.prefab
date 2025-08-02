@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3797e2b6e8760e748aee3026233bb852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 50
+  Health: 350
   _attakTowerSetting: {fileID: 11400000, guid: 48b474c995ad758408a1f75279ac2582, type: 2}
   _renderer: {fileID: 6159549498522540252}
   fire: {fileID: 9099602299414820601}

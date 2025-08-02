@@ -12,8 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ab9fff51cd75141b2eb0f63ae50677, type: 3}
   m_Name: Magic
   m_EditorClassIdentifier: 
-  synergy: 4
   Name: Magic
+  LevelUpSetting:
+  - setMaxHealth: 25
+    setAttackDamage: 3
+    setAttackDelay: 0.5
+    NeedMoney: 350
+  - setMaxHealth: 15
+    setAttackDamage: 5
+    setAttackDelay: 0.45
+    NeedMoney: 960
+  - setMaxHealth: 35
+    setAttackDamage: 10
+    setAttackDelay: 0.25
+    NeedMoney: 1450
+  - setMaxHealth: 150
+    setAttackDamage: 20
+    setAttackDelay: 0.1
+    NeedMoney: 5670
   AttackDamage: 15
   AttackDelay: 0.75
   AttackDistance: 1.75
@@ -21,4 +37,3 @@ MonoBehaviour:
   TowerHealth: 75
   Audio: {fileID: 8300000, guid: f32d118b73918db48b4947da7ba0e4f7, type: 3}
   Cost: 600
-  Synergies: []

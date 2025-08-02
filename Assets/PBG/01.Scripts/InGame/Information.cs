@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Information : MonoBehaviour
 {
@@ -10,12 +11,15 @@ public class Information : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private GameObject deleyParent;
+    [SerializeField] private Button UpgradeBTN;
 
     private TowerHealthManager currentHealthManager;
     private TowerSetting currentTowerSetting;
     private MoneyTower currentMoneyTower;
-
+    
     private GameObject currentSelectedTower;
+
+    private GameObject SaveNowObj;
 
     void Start()
     {
@@ -24,54 +28,58 @@ public class Information : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (panel.activeSelf && SaveNowObj != null)
         {
-            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, 0f, layerMask);
-
-            if (hit.collider != null)
+            UpgradeBTN.onClick.AddListener(() =>
             {
-                currentSelectedTower = hit.collider.gameObject;
-
-                currentHealthManager = hit.collider.GetComponent<TowerHealthManager>();
-                currentTowerSetting = hit.collider.GetComponent<TowerSetting>();
-                currentMoneyTower = hit.collider.GetComponent<MoneyTower>();
-                string objName = hit.collider.name;
-                string cleanName = objName.Replace("(Clone)", "");
-
-                Debug.Log(1);
-
-                if (currentHealthManager != null && currentTowerSetting != null)
+                if (SaveNowObj.GetComponent<TowerSetting>())
                 {
-                    panel.SetActive(true);
-                    panel.transform.position = pos;
-                    // deleyParent.SetActive(true);
-                    towerName.text = cleanName;
-                    str.text = "Str : " + currentTowerSetting.attackDamage.ToString();
-                    delay.text = "delay : " + currentTowerSetting.attackDelay.ToString() + "/s";
+                    SaveNowObj.GetComponent<UpgradeTower>().OnUpgrde();
                 }
-
-
-                else if (currentMoneyTower != null)
+            });
+        }
+        if (Input.GetMouseButtonDown(0))
+            {
+                Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, 0f, layerMask);
+                if (hit.collider != null)
                 {
-                    panel.SetActive(true);
-                    panel.transform.position = pos;
-                    towerName.text = cleanName;
-                    hp.text = "Money : " + currentMoneyTower.TowerSO.Money.ToString();
-                    deleyParent.SetActive(false);
+                SaveNowObj = hit.collider.gameObject;
+                    currentSelectedTower = hit.collider.gameObject;
+
+                    currentHealthManager = hit.collider.GetComponent<TowerHealthManager>();
+                    currentTowerSetting = hit.collider.GetComponent<TowerSetting>();
+                    currentMoneyTower = hit.collider.GetComponent<MoneyTower>();
+                    string objName = hit.collider.name;
+                    string cleanName = objName.Replace("(Clone)", "");
+                    if (currentHealthManager != null && currentTowerSetting != null)
+                    {
+                        panel.SetActive(true);
+                        // deleyParent.SetActive(true);
+                        towerName.text = cleanName;
+                        str.text = currentTowerSetting.attackDamage.ToString();
+                        delay.text = currentTowerSetting.attackDelay.ToString() + "/s";
+                    }
+
+                    else if (currentMoneyTower != null)
+                    {
+                        panel.SetActive(true);
+                        towerName.text = cleanName;
+                        hp.text = currentMoneyTower.TowerSO.Money.ToString();
+                        deleyParent.SetActive(false);
+                    }
                 }
             }
-        }
 
         // 실시간 hp 갱신
         if (panel.activeSelf && currentHealthManager != null && currentTowerSetting != null)
         {
-            hp.text = "Hp : " + currentHealthManager.nowTowerHealth + " / " + currentTowerSetting.Health;
+            hp.text = currentHealthManager.nowTowerHealth + " / " + currentTowerSetting.Health;
         }
 
         else if (panel.activeSelf && currentMoneyTower != null)
         {
-            str.text = "Delay : " + (currentMoneyTower.TowerSO.Money / currentMoneyTower.TowerSO.WaitTime).ToString() + "/s";
+            str.text = (currentMoneyTower.TowerSO.Money / currentMoneyTower.TowerSO.WaitTime).ToString() + "/s";
         }
     }
 
@@ -85,6 +93,7 @@ public class Information : MonoBehaviour
     }
     public void SellTower() // UI 버튼에서 호출할 메서드
     {
+        //MoneyManager.Instance.ModifyMoney(TowerGridManager.Instance.TowerCostReturn());
         if (currentSelectedTower != null && TowerGridManager.Instance != null)
         {
             Tower tower = currentSelectedTower.GetComponent<Tower>();

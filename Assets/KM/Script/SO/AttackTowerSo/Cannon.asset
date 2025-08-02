@@ -12,8 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ab9fff51cd75141b2eb0f63ae50677, type: 3}
   m_Name: Cannon
   m_EditorClassIdentifier: 
-  synergy: 0
   Name: Cannon
+  LevelUpSetting:
+  - setMaxHealth: 10
+    setAttackDamage: 5
+    setAttackDelay: 3.5
+    NeedMoney: 450
+  - setMaxHealth: 25
+    setAttackDamage: 15
+    setAttackDelay: 2.5
+    NeedMoney: 850
+  - setMaxHealth: 150
+    setAttackDamage: 50
+    setAttackDelay: 1
+    NeedMoney: 7500
+  - setMaxHealth: 150
+    setAttackDamage: 50
+    setAttackDelay: 1
+    NeedMoney: 7500
   AttackDamage: 45
   AttackDelay: 4
   AttackDistance: 6
@@ -21,11 +37,3 @@ MonoBehaviour:
   TowerHealth: 80
   Audio: {fileID: 8300000, guid: d3ea1168220f45543a2badba1c2d669a, type: 3}
   Cost: 350
-  Synergies:
-  - SynergyName: 
-    selectedSynergies: 
-    ChangeHealth: 0
-    ChangeDamage: 0
-    BulletSpeed: 0
-    AttacingSpeed: 0
-    Slow: 0

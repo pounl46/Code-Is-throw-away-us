@@ -13,6 +13,23 @@ MonoBehaviour:
   m_Name: Lightning
   m_EditorClassIdentifier: 
   Name: Light
+  LevelUpSetting:
+  - setMaxHealth: 5
+    setAttackDamage: 3
+    setAttackDelay: 1.5
+    NeedMoney: 250
+  - setMaxHealth: 25
+    setAttackDamage: 5
+    setAttackDelay: 1.25
+    NeedMoney: 750
+  - setMaxHealth: 35
+    setAttackDamage: 15
+    setAttackDelay: 1
+    NeedMoney: 2300
+  - setMaxHealth: 125
+    setAttackDamage: 50
+    setAttackDelay: 0.35
+    NeedMoney: 8500
   AttackDamage: 30
   AttackDelay: 2
   AttackDistance: 7

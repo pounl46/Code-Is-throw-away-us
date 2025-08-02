@@ -10,6 +10,7 @@ namespace Script.SO
         public float setMaxHealth;
         public float setAttackDamage;
         public float setAttackDelay;
+        public int NeedMoney;
     }
     [CreateAssetMenu(fileName = "AttakTowerSetting", menuName = "SO/AttakTowerSetting")]
 
