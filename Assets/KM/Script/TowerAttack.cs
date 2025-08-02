@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Script.SO;
 
 public class TowerAttack : MonoBehaviour
 {
-    public static List<TowerAttack> AllTowers = new();
+    public static List<GameObject> AllTowers = new List<GameObject>();
 
     [SerializeField] private ThrowObjectSO _objectSO;
     [SerializeField] private GameObject _baseObj;
@@ -14,10 +13,7 @@ public class TowerAttack : MonoBehaviour
     [SerializeField] private LayerMask towerLayer;
     public AttakTowerSetting attakTower;
     private TowerSetting attakTowerSetting;
-
-    public bool IsAlreadySynergy = false;
-    public bool CanBeUsedAsIngredient = true;
-
+    [SerializeField] private List<SynergyGroup> mySynergyGroups = new();
     private float fireSpeed;
     private float count;
     private string nameObj;
@@ -27,12 +23,9 @@ public class TowerAttack : MonoBehaviour
     public float BulletSpeed;
     public bool isSlow;
 
-    public Stack<GameObject> throws = new();
+    public bool isSynergyAlready = false;
 
-    [SerializeField] private List<SynergyGroup> runtimeSynergies = new();
-    private List<SynergyGroup> originSynergies = new();
-    private Dictionary<TowerAttack, List<(int groupIndex, int synergyIndex)>> givenSynergies = new();
-    private (TowerAttack from, int groupIndex, int synergyIndex)? receivedSynergy = null;
+    public Stack<GameObject> throws = new();
 
     private void Awake()
     {
@@ -43,6 +36,10 @@ public class TowerAttack : MonoBehaviour
         fireSpeed = _objectSO.Speed;
         count = _objectSO.ThrowCount;
         nameObj = _objectSO.Name;
+        AllTowers.Add(gameObject);
+
+        mySynergyGroups = DeepCopySynergyGroups(attakTower.Synergies);
+
         for (int i = 0; i < 10; i++)
         {
             GameObject throwObj = Instantiate(_baseObj, transform);
@@ -51,205 +48,90 @@ public class TowerAttack : MonoBehaviour
             throwObj.GetComponent<SpriteRenderer>().sprite = _objectSO.Sprite;
             throws.Push(throwObj);
         }
-        runtimeSynergies = attakTower.Synergies.Select(g => g.Clone()).ToList();
-        originSynergies = attakTower.Synergies.Select(g => g.Clone()).ToList();
-
-        TryApplySelfSynergy();
     }
 
-    private void OnEnable() => AllTowers.Add(this);
+    private void OnDisable() => AllTowers.Remove(gameObject);
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        AllTowers.Remove(this);
-        ResetGivenSynergies();
-
-        if (receivedSynergy.HasValue)
-        {
-            var (from, groupIdx, synergyIdx) = receivedSynergy.Value;
-            if (from != null && from.runtimeSynergies.Count > groupIdx)
-            {
-                var group = from.runtimeSynergies[groupIdx];
-                var origin = from.originSynergies[groupIdx];
-                group.selectedSynergies[synergyIdx] = origin.selectedSynergies[synergyIdx];
-                group.IsCompleted = false;
-                from.givenSynergies.Remove(this);
-                from.IsAlreadySynergy = false;
-            }
-        }
-        receivedSynergy = null;
-        IsAlreadySynergy = false;
-        CanBeUsedAsIngredient = true;
+        attakTowerSetting._attakTowerSetting.ResetToInitialState();
     }
 
     private void FixedUpdate()
     {
-        ProcessSynergy();
-
         Collider2D hits = Physics2D.OverlapCircle(transform.position, attakTowerSetting.attackDistance, _targetMask);
         if (hits && isCanAttack)
         {
             isCanAttack = false;
             StartCoroutine(Attacking(hits));
         }
+
+    //     foreach (var other in AllTowers)
+    //     {
+    //         if (IsInSight(other))
+    //         {
+    //             TowerSetting towerSetOther = other.GetComponent<TowerSetting>();
+    //             TowerAttack otherAttack = other.GetComponent<TowerAttack>();
+
+    //             foreach (var group in mySynergyGroups)
+    //             {
+    //                 if (group.IsCompleted) continue;
+
+    //                 bool containsMyType = group.selectedSynergies.Contains(attakTowerSetting.TowerType);
+    //                 bool containsOtherType = group.selectedSynergies.Contains(towerSetOther.TowerType);
+
+    //                 if (containsMyType && containsOtherType)
+    //                 {
+    //                     for (int i = 0; i < group.selectedSynergies.Count; i++)
+    //                     {
+    //                         if (group.selectedSynergies[i] == attakTowerSetting.TowerType)
+    //                         {
+    //                             group.selectedSynergies[i] = Synergy.Ready;
+    //                             attakTowerSetting.TowerType = Synergy.Ready;
+    //                         }
+    //                         else if (group.selectedSynergies[i] == towerSetOther.TowerType)
+    //                         {
+    //                             group.selectedSynergies[i] = Synergy.Ready;
+    //                             towerSetOther.TowerType = Synergy.Ready;
+    //                         }
+    //                     }
+
+    //                     CheckSynergyComplete(mySynergyGroups);
+    //                 }
+    //             }
+    //         }
+    //     }
     }
 
-    public void ProcessSynergy()
-    {
-        foreach (var other in AllTowers)
-        {
-            if (other == this || !other.CanBeUsedAsIngredient || !IsInSight(other))
-                continue;
+    // private void CheckSynergyComplete(List<SynergyGroup> synergyGroups)
+    // {
+    //     foreach (var group in synergyGroups)
+    //     {
+    //         if (group.IsCompleted) continue;
 
-            if (AllTowers.IndexOf(other) > AllTowers.IndexOf(this))
-                continue;
+    //         bool allReady = true;
 
-            for (int g = 0; g < runtimeSynergies.Count; g++)
-            {
-                var group = runtimeSynergies[g];
-                for (int i = 0; i < group.selectedSynergies.Count; i++)
-                {
-                    if (group.selectedSynergies[i] != Synergy.Ready &&
-                        group.selectedSynergies[i] == other.attakTower.synergy)
-                    {
-                        group.selectedSynergies[i] = Synergy.Ready;
+    //         foreach (var s in group.selectedSynergies)
+    //         {
+    //             if (s != Synergy.Ready)
+    //             {
+    //                 allReady = false;
+    //                 break;
+    //             }
+    //         }
 
-                        if (!givenSynergies.ContainsKey(other))
-                            givenSynergies[other] = new();
-
-                        if (!givenSynergies[other].Contains((g, i)))
-                            givenSynergies[other].Add((g, i));
-
-                        other.receivedSynergy = (this, g, i);
-
-                        bool wasCompleted = group.IsCompleted;
-                        group.IsCompleted = group.selectedSynergies.All(s => s == Synergy.Ready);
-                        if (group.IsCompleted && !wasCompleted)
-                        {
-                            IsAlreadySynergy = true;
-                            ApplySynergyEffect(group);
-                        }
-                    }
-                    else if (group.selectedSynergies[i] == Synergy.Ready &&
-                             group.selectedSynergies[i] != other.attakTower.synergy)
-                    {
-                        if (group.IsCompleted)
-                            RemoveSynergyEffect(group);
-
-                        var origin = originSynergies[g];
-                        group.selectedSynergies[i] = origin.selectedSynergies[i];
-                        group.IsCompleted = false;
-                        IsAlreadySynergy = false;
-                    }
-                }
-            }
-
-            for (int g = 0; g < other.runtimeSynergies.Count; g++)
-            {
-                var group = other.runtimeSynergies[g];
-                for (int i = 0; i < group.selectedSynergies.Count; i++)
-                {
-                    if (group.selectedSynergies[i] != Synergy.Ready &&
-                        group.selectedSynergies[i] == attakTower.synergy)
-                    {
-                        group.selectedSynergies[i] = Synergy.Ready;
-
-                        if (!other.givenSynergies.ContainsKey(this))
-                            other.givenSynergies[this] = new();
-
-                        if (!other.givenSynergies[this].Contains((g, i)))
-                            other.givenSynergies[this].Add((g, i));
-
-                        other.receivedSynergy = (this, g, i);
-
-                        // 완성 체크
-                        bool wasCompleted = group.IsCompleted;
-                        group.IsCompleted = group.selectedSynergies.All(s => s == Synergy.Ready);
-                        if (group.IsCompleted && !wasCompleted)
-                        {
-                            other.IsAlreadySynergy = true;
-                            other.ApplySynergyEffect(group);
-                        }
-                    }
-                    else if (group.selectedSynergies[i] == Synergy.Ready &&
-                             group.selectedSynergies[i] != attakTower.synergy)
-                    {
-                        if (group.IsCompleted)
-                            other.RemoveSynergyEffect(group);
-
-                        var origin = other.originSynergies[g];
-                        group.selectedSynergies[i] = origin.selectedSynergies[i];
-                        group.IsCompleted = false;
-                        other.IsAlreadySynergy = false;
-                    }
-                }
-            }
-        }
-    }
-
-    private void TryApplySelfSynergy()
-    {
-        for (int g = 0; g < runtimeSynergies.Count; g++)
-        {
-            var group = runtimeSynergies[g];
-            bool appliedSelf = false;
-
-            for (int i = 0; i < group.selectedSynergies.Count; i++)
-            {
-                if (group.selectedSynergies[i] != Synergy.Ready && group.selectedSynergies[i] == attakTower.synergy && !appliedSelf)
-                {
-                    group.selectedSynergies[i] = Synergy.Ready;
-                    appliedSelf = true;
-                }
-            }
-
-            if (group.selectedSynergies.All(s => s == Synergy.Ready) && !group.IsCompleted)
-            {
-                group.IsCompleted = true;
-                IsAlreadySynergy = true;
-            }
-        }
-    }
-    private bool IsInSight(TowerAttack target)
-    {
-        Vector2 origin = transform.position;
-        Vector2 targetPos = target.transform.position;
-        float dist = Vector2.Distance(origin, targetPos);
-
-        if (dist > attakTowerSetting.attackDistance)
-            return false;
-
-        Vector2 dir = (targetPos - origin).normalized;
-        RaycastHit2D hit = Physics2D.Raycast(origin, dir, dist, towerLayer);
-        Debug.DrawRay(origin, dir * dist, Color.yellow, 0.2f);
-        return hit && hit.collider.gameObject == target.gameObject;
-    }
-
-    private void ResetGivenSynergies()
-    {
-        var toRemove = new List<TowerAttack>(givenSynergies.Keys);
-        foreach (var target in toRemove)
-        {
-            if (target == null) continue;
-
-            foreach (var (groupIdx, synergyIdx) in givenSynergies[target])
-            {
-                if (target.runtimeSynergies.Count > groupIdx)
-                {
-                    var group = target.runtimeSynergies[groupIdx];
-                    var origin = target.originSynergies[groupIdx];
-                    group.selectedSynergies[synergyIdx] = origin.selectedSynergies[synergyIdx];
-                    group.IsCompleted = false;
-                    target.IsAlreadySynergy = false;
-                    target.receivedSynergy = null;
-                }
-            }
-
-            givenSynergies[target].Clear();
-        }
-
-        givenSynergies.Clear();
-    }
+    //         if (allReady)
+    //         {
+    //             group.IsCompleted = true;
+    //             Debug.Log(group.SynergyName);
+    //             attakTowerSetting.attackDamage *= (1 + group.ChangeDamage);
+    //             attakTowerSetting.attackDelay *= (1 - group.AttacingSpeed);
+    //             BulletSpeed += group.BulletSpeed;
+    //             isSlow |= group.Slow;
+    //         }
+    //     }
+    // }
+    
     private IEnumerator Attacking(Collider2D collider)
     {
         for (int i = 0; i < count; i++)
@@ -270,76 +152,48 @@ public class TowerAttack : MonoBehaviour
         isCanAttack = true;
     }
 
-    [ContextMenu("Synergy/Reset")]
-    public void ResetSynergies()
+    private bool IsInSight(GameObject target)
     {
-        IsAlreadySynergy = false;
-        CanBeUsedAsIngredient = true;
+        if (target == gameObject) return false;
 
-        if (receivedSynergy.HasValue)
+        Vector2 origin = transform.position;
+        Vector2 targetPos = target.transform.position;
+        float dist = Vector2.Distance(origin, targetPos);
+        if (dist > 2)
+            return false;
+
+        Vector2 dir = (targetPos - origin).normalized;
+        RaycastHit2D[] hit = Physics2D.RaycastAll(origin, dir, dist, towerLayer);
+        Debug.DrawRay(origin, dir * dist, Color.yellow, 0.2f);
+
+        for (int i = 0; i < hit.Length; i++)
         {
-            var (from, groupIdx, synergyIdx) = receivedSynergy.Value;
-            if (from != null && from.runtimeSynergies.Count > groupIdx)
+            if (hit[i].collider.gameObject == target && hit[i].distance <= dist)
             {
-                var group = from.runtimeSynergies[groupIdx];
-                var origin = from.originSynergies[groupIdx];
-                group.selectedSynergies[synergyIdx] = origin.selectedSynergies[synergyIdx];
-                group.IsCompleted = false;
-                from.givenSynergies.Remove(this);
-                from.IsAlreadySynergy = false;
+                return true;
             }
         }
+        return false;
+    }
 
-        ResetGivenSynergies();
-        receivedSynergy = null;
-
-        for (int g = 0; g < runtimeSynergies.Count; g++)
+    private List<SynergyGroup> DeepCopySynergyGroups(List<SynergyGroup> original)
+    {
+        List<SynergyGroup> copy = new List<SynergyGroup>();
+        foreach (var group in original)
         {
-            var group = runtimeSynergies[g];
-            var originGroup = originSynergies[g];
-
-            for (int i = 0; i < group.selectedSynergies.Count; i++)
+            SynergyGroup newGroup = new SynergyGroup
             {
-                group.selectedSynergies[i] = originGroup.selectedSynergies[i];
-            }
-
-            group.IsCompleted = false;
+                SynergyName = group.SynergyName,
+                selectedSynergies = new List<Synergy>(group.selectedSynergies),
+                ChangeHealth = group.ChangeHealth,
+                ChangeDamage = group.ChangeDamage,
+                BulletSpeed = group.BulletSpeed,
+                AttacingSpeed = group.AttacingSpeed,
+                Slow = group.Slow,
+                IsCompleted = group.IsCompleted
+            };
+            copy.Add(newGroup);
         }
-    }
-
-    [ContextMenu("Synergy/ForceTest")]
-    public void ForceSynergyTest()
-    {
-        foreach (var group in runtimeSynergies)
-        {
-            for (int i = 0; i < group.selectedSynergies.Count; i++)
-            {
-                group.selectedSynergies[i] = Synergy.Ready;
-            }
-
-            group.IsCompleted = true;
-        }
-
-        IsAlreadySynergy = true;
-    }
-    private void ApplySynergyEffect(SynergyGroup group)
-    {
-        damage *= group.ChangeDamage > 0 ? group.ChangeDamage : 1f;
-        attakTowerSetting.Health *= group.ChangeHealth > 0 ? group.ChangeHealth : 1f;
-        BulletSpeed *= group.BulletSpeed > 0 ? group.BulletSpeed : 1f;
-        attakTowerSetting.attackDelay *= group.AttacingSpeed > 0 ? group.ChangeHealth : 1f;
-        isSlow = group.Slow;
-        Debug.Log(group.SynergyName);
-    }
-    
-    private void RemoveSynergyEffect(SynergyGroup group)
-    {
-        damage = attakTowerSetting._attakTowerSetting.AttackDamage;
-        attakTowerSetting.Health = attakTowerSetting._attakTowerSetting.TowerHealth;
-        BulletSpeed = 1f;
-        if (attakTowerSetting.TowerType == Synergy.Poison) isSlow = true;
-        else isSlow = false;
-        attakTowerSetting.attackDelay = attakTowerSetting._attakTowerSetting.AttackDelay;
-        Debug.Log(group.SynergyName);
+        return copy;
     }
 }

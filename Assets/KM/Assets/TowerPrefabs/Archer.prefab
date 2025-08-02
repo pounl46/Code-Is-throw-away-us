@@ -135,9 +135,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 262144
   attakTower: {fileID: 0}
-  IsAlreadySynergy: 0
-  CanBeUsedAsIngredient: 1
-  runtimeSynergies: []
+  mySynergyGroups: []
+  damage: 0
+  BulletSpeed: 0
+  isSlow: 0
+  isSynergyAlready: 0
 --- !u!114 &1083539633045935539
 MonoBehaviour:
   m_ObjectHideFlags: 0

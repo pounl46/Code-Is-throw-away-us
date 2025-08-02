@@ -22,24 +22,12 @@ namespace Script.SO
         [Header("Multiply Changes")]
         public float ChangeHealth;
         public float ChangeDamage;
-        [HideInInspector] public bool IsCompleted = false;
+        [HideInInspector]
+        public bool IsCompleted;
+
         public float BulletSpeed;
         public float AttacingSpeed;
         public bool Slow;
-        public SynergyGroup Clone()
-        {
-            return new SynergyGroup
-            {
-                SynergyName = this.SynergyName,
-                selectedSynergies = new List<Synergy>(this.selectedSynergies),
-                ChangeHealth = this.ChangeHealth,
-                ChangeDamage = this.ChangeDamage,
-                BulletSpeed = this.BulletSpeed,
-                AttacingSpeed = this.AttacingSpeed,
-                Slow = this.Slow,
-                IsCompleted = false // 항상 false로 초기화
-            };
-        }
     }
     [CreateAssetMenu(fileName = "AttakTowerSetting", menuName = "SO/AttakTowerSetting")]
 
@@ -55,5 +43,35 @@ namespace Script.SO
         public AudioClip Audio;
         public int Cost;
         public List<SynergyGroup> Synergies;
+
+        private List<SynergyGroup> _initialSynergies;
+
+        private void OnEnable()
+        {
+            ResetToInitialState();
+        }
+
+
+        public void ResetToInitialState()
+        {
+            if (_initialSynergies == null) return;
+
+            Synergies = new List<SynergyGroup>();
+            foreach (var group in _initialSynergies)
+            {
+                var newGroup = new SynergyGroup
+                {
+                    SynergyName = group.SynergyName,
+                    selectedSynergies = new List<Synergy>(group.selectedSynergies),
+                    ChangeHealth = group.ChangeHealth,
+                    ChangeDamage = group.ChangeDamage,
+                    BulletSpeed = group.BulletSpeed,
+                    AttacingSpeed = group.AttacingSpeed,
+                    Slow = group.Slow,
+                    IsCompleted = group.IsCompleted
+                };
+                Synergies.Add(newGroup);
+            }
+        }
     }
 }
