@@ -1,7 +1,8 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 
 public class SceneLoadManager : MonoBehaviour
 {
