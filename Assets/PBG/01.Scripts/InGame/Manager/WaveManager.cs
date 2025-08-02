@@ -46,17 +46,19 @@ public class WaveManager : MonoBehaviour
         waveTime = 30;
         skipButton.gameObject.SetActive(false);
 
-        _enemySpawnManager.isWave = true;
-
+        // 웨이브 정보 전달
+        _enemySpawnManager.StartWave(currentWave);
+    
         if (currentWave > 1)
         {
             wavTime += 10;
             waveTime = 30 + wavTime;
         }
-
+    
         Debug.Log("웨이브 시작: " + currentWave);
         StartCoroutine(WaveTimer());
     }
+
 
     public void EndWave()
     {
