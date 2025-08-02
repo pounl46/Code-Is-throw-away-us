@@ -11,12 +11,12 @@ public class PopupShop : MonoBehaviour
     {
         if (!isOpend)
         {
-            popUP.transform.DOMoveY(1, 1f);
+            popUP.GetComponent<RectTransform>().DOMoveY(1, 1f);
             isOpend = true;
         }
         else
         {
-            popUP.transform.DOMoveY(-1f, 1f);
+             popUP.GetComponent<RectTransform>().DOMoveY(-1f, 1f);
             isOpend = false;
         }
     }

@@ -27,6 +27,7 @@ public class Bomb : MonoBehaviour
             if (towerHealth != null)
             {
                 towerHealth.OnDamamge(Mathf.RoundToInt(damage));
+                Debug.Log(towerHealth.nowTowerHealth);
             }
         }
     }
