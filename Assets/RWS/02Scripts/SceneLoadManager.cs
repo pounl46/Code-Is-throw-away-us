@@ -10,6 +10,7 @@ public class SceneLoadManager : MonoBehaviour
     [SerializeField] private GameObject fadePanel;
     [SerializeField] private Transform panelTarget1;
     [SerializeField] private Transform panelTarget2;
+    public float Volume { get; set; }
 
 
     private void Awake()
@@ -84,8 +85,7 @@ public class SceneLoadManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("OnSceneLoaded: " + scene.name);
-        Debug.Log(mode);
+        AudioListener.volume = Volume;
         EndFade();
     }
 
