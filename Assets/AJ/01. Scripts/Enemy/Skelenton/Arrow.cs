@@ -19,12 +19,15 @@ public class Arrow : MonoBehaviour
     private Animator animator;
     private readonly int isTowerHash = Animator.StringToHash("IsTower");
 
+    private Bomb bomb;
+
     public ParticleSystem particle;
     private void Awake()
     {
         originalBulletSpeed = bulletSpeed;
         bulletDamage = enemymv.SO.enemySO.Damage;
         animator = GetComponent<Animator>();
+        bomb = GetComponent<Bomb>();
     }
     private void OnEnable()
     {
@@ -114,6 +117,8 @@ public class Arrow : MonoBehaviour
             particle.Play();
             yield return new WaitForSeconds(1f);
         }
+
+        bomb.Explode();
 
         gameObject.SetActive(false);
     }

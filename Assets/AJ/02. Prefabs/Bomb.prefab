@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1996338816678344269}
   - component: {fileID: 6225790846389030334}
   - component: {fileID: 7608733361129861001}
+  - component: {fileID: 1856148165016779920}
   m_Layer: 19
   m_Name: Bomb
   m_TagString: Untagged
@@ -198,6 +199,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1856148165016779920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6262984811495259783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecdf401f9d760c4cb2c3c16ae6495d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionRange: 2
+  damage: 0
+  towerLayerMask:
+    serializedVersion: 2
+    m_Bits: 263168
+  enemyType: {fileID: 6277461956085959337, guid: 63bd57fb69947b84b8f84120a9e2a264, type: 3}
 --- !u!1001 &1375381985678115288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -260,15 +279,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8651405396383828800, guid: 9ce6253133c30c2459cdd200b6b69e04, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8651405396383828800, guid: 9ce6253133c30c2459cdd200b6b69e04, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8651405396383828800, guid: 9ce6253133c30c2459cdd200b6b69e04, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8651405396383828800, guid: 9ce6253133c30c2459cdd200b6b69e04, type: 3}
       propertyPath: m_LocalPosition.x

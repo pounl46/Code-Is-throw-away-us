@@ -227,7 +227,7 @@ public class EnemyMovement : MonoBehaviour
 
         return closestTower;
     }
-    private void MoveToTarget()
+    public void MoveToTarget()
     {
         if (target == null) return;
 
