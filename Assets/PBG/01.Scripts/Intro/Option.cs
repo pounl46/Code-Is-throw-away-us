@@ -1,33 +1,24 @@
 using UnityEngine;
 using DG.Tweening;
-using System.Runtime.CompilerServices;
 public class Option : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
-    [SerializeField] private GameObject buttons;
-    // private Material material;
-    private void Start()
-    {
-        panel.SetActive(false);
-        // material = GetComponent<Material>();
-    }
+    [SerializeField] private Ease easeOn;
+    [SerializeField] private Ease easeOff;
+
+    private bool _onOff = false;
+
     public void ClickOption()
     {
-        panel.transform.DOScaleX(5f, 0.6f);
-        panel.transform.DOScaleY(12f, 0.6f);
-        panel.SetActive(true);
+        if (_onOff) return;
+        panel.transform.DOScale(Vector2.one, 0.6f).SetEase(easeOn);
+        _onOff = true;
     }
 
     public void ExitOption()
     {
-        panel.transform.DOScaleX(2f, 0.6f);
-        panel.transform.DOScaleY(1f, 0.6f);
-        Invoke("ViewButton", 0.5f);
-    }
-
-    private void ViewButton()
-    {
-        buttons.transform.DOScaleY(1f, 0.5f);
-        panel.SetActive(false);
+        if (!_onOff) return;
+        panel.transform.DOScale(Vector2.zero, 0.6f).SetEase(easeOff);
+        _onOff = false;
     }
 }
