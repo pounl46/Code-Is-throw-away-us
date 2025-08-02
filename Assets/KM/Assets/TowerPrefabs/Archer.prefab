@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 1083539633045935539}
   - component: {fileID: 9099602299414820601}
   - component: {fileID: 2000121287155722681}
-  m_Layer: 18
+  m_Layer: 10
   m_Name: Archer
-  m_TagString: Core
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,6 @@ MonoBehaviour:
   _renderer: {fileID: 6159549498522540252}
   fire: {fileID: 9099602299414820601}
   attackDamage: 10
-  TowerType: 0
   attackDelay: 2
   attackDistance: 2.5
 --- !u!212 &6159549498522540252
@@ -134,7 +133,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 262144
   attakTower: {fileID: 0}
-  mySynergyGroups: []
   damage: 0
   BulletSpeed: 0
   isSlow: 0

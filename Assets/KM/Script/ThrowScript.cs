@@ -23,10 +23,10 @@ public class ThrowScript : MonoBehaviour
     {
         if (IsAttacking)
         {
-            Collider2D hit = Physics2D.OverlapCircle(transform.position, 0.25f, _targetMask);
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.25f,Vector2.zero,1,_targetMask);
             if (hit)
             {
-                GiveDamage.Instance.CallDamage(Mathf.RoundToInt(transform.parent.GetComponent<TowerSetting>().attackDamage),hit.gameObject);
+                GiveDamage.Instance.CallDamage(Mathf.RoundToInt(transform.parent.GetComponent<TowerSetting>().attackDamage),hit.collider.gameObject);
                 IsAttacking = false;
                 Instantiate(hitEffect, transform.parent).transform.position = transform.position;
                 attack.throws.Push(gameObject);

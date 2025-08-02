@@ -29,8 +29,8 @@ public class EnemyMovement : MonoBehaviour
     public float targetSearchRadius = 10f;
     
     [Header("Search Settings")]
-    public bool useUnlimitedRange = true; // ¹«Á¦ÇÑ ¹üÀ§ °Ë»ö ¿©ºÎ
-    public float maxSearchDistance = 100f; // ÃÖ´ë °Ë»ö °Å¸® (¹«Á¦ÇÑÀÌ ¾Æ´Ò ¶§)
+    public bool useUnlimitedRange = true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float maxSearchDistance = 100f; // ï¿½Ö´ï¿½ ï¿½Ë»ï¿½ ï¿½Å¸ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½)
     public bool stuckPrevention;
 
     public GameObject target { get; set; }
@@ -128,12 +128,12 @@ public class EnemyMovement : MonoBehaviour
         
         if (useUnlimitedRange)
         {
-            // ÀüÃ¼ ¾À¿¡¼­ °Ë»ö
+            // ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
             closestTarget = FindTargetInEntireScene(targetLayerMask);
         }
         else
         {
-            // Á¦ÇÑµÈ ¹üÀ§¿¡¼­ °Ë»ö
+            // ï¿½ï¿½ï¿½Ñµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
             closestTarget = FindTargetInRange(targetLayerMask, maxSearchDistance);
         }
         target = closestTarget;
@@ -151,7 +151,7 @@ public class EnemyMovement : MonoBehaviour
 
         foreach (GameObject obj in allGameObjects)
         {
-            // ·¹ÀÌ¾î Ã¼Å©
+            // ï¿½ï¿½ï¿½Ì¾ï¿½ Ã¼Å©
             if (((1 << obj.layer) & targetLayerMask) != 0)
             {
                 float distance = Vector3.Distance(transform.position, obj.transform.position);
@@ -201,7 +201,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
     /// <summary>
-    /// Æ¯Á¤ ¹üÀ§ ³» Å¸¿ö¸¦ Ã£´Â ÇÔ¼ö
+    /// Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Ô¼ï¿½
     /// </summary>
     /// <param name="searchRange"></param>
     /// <returns></returns>
@@ -265,39 +265,39 @@ public class EnemyMovement : MonoBehaviour
     {
         Vector3 forward = (target.transform.position - transform.position).normalized;
 
-        // ±Û·Î¹ú ¹æÇâ
+        // ï¿½Û·Î¹ï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector3 rightDirection = Vector3.right;
         Vector3 leftDirection = Vector3.left;
         Vector3 upDirection = Vector3.up;
         Vector3 downDirection = Vector3.down;
 
-        // ·ÎÄÃ ¹æÇâ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector3 localrightDirection = Vector3.Cross(Vector3.forward, forward).normalized;
         Vector3 localleftDirection = -localrightDirection;
         Vector3 localupDirection = forward;
         Vector3 localdownDirection = -forward;
 
-        // ´ë°¢¼± ¹æÇâ
-        Vector3 diagonalUR = (localupDirection + localrightDirection).normalized; // ¿ì»ó
-        Vector3 diagonalUL = (localupDirection + localleftDirection).normalized;  // ÁÂ»ó
-        Vector3 diagonalDR = (localdownDirection + localrightDirection).normalized; // ¿ìÇÏ
-        Vector3 diagonalDL = (localdownDirection + localleftDirection).normalized;  // ÁÂÇÏ
+        // ï¿½ë°¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Vector3 diagonalUR = (localupDirection + localrightDirection).normalized; // ï¿½ï¿½ï¿½
+        Vector3 diagonalUL = (localupDirection + localleftDirection).normalized;  // ï¿½Â»ï¿½
+        Vector3 diagonalDR = (localdownDirection + localrightDirection).normalized; // ï¿½ï¿½ï¿½ï¿½
+        Vector3 diagonalDL = (localdownDirection + localleftDirection).normalized;  // ï¿½ï¿½ï¿½ï¿½
 
         RaycastHit2D forwardHit = Physics2D.Raycast(transform.position, forward, detectionDistance, obstacleLayerMask);
 
-        // ±Û·Î¹ú
+        // ï¿½Û·Î¹ï¿½
         RaycastHit2D rightHit = Physics2D.Raycast(transform.position, rightDirection, detectionDistance * 0.8f, obstacleLayerMask);
         RaycastHit2D leftHit = Physics2D.Raycast(transform.position, leftDirection, detectionDistance * 0.8f, obstacleLayerMask);
         RaycastHit2D upHit = Physics2D.Raycast(transform.position, upDirection, detectionDistance * 0.8f, obstacleLayerMask);
         RaycastHit2D downHit = Physics2D.Raycast(transform.position, downDirection, detectionDistance * 0.8f, obstacleLayerMask);
         
-        // ·ÎÄÃ
+        // ï¿½ï¿½ï¿½ï¿½
         RaycastHit2D localrightHit = Physics2D.Raycast(transform.position, localrightDirection, detectionDistance * 0.8f, obstacleLayerMask);
         RaycastHit2D localleftHit = Physics2D.Raycast(transform.position, localleftDirection, detectionDistance * 0.8f, obstacleLayerMask);
         RaycastHit2D localupHit = Physics2D.Raycast(transform.position, localupDirection, detectionDistance * 0.8f, obstacleLayerMask);
         RaycastHit2D localdownHit = Physics2D.Raycast(transform.position, localdownDirection, detectionDistance * 0.8f, obstacleLayerMask);
         
-        // ´ë°¢¼±
+        // ï¿½ë°¢ï¿½ï¿½
         RaycastHit2D diagonalURHit = Physics2D.Raycast(transform.position, diagonalUR, detectionDistance * 0.7f, obstacleLayerMask);
         RaycastHit2D diagonalULHit = Physics2D.Raycast(transform.position, diagonalUL, detectionDistance * 0.7f, obstacleLayerMask);
         RaycastHit2D diagonalDRHit = Physics2D.Raycast(transform.position, diagonalDR, detectionDistance * 0.7f, obstacleLayerMask);
@@ -319,10 +319,10 @@ public class EnemyMovement : MonoBehaviour
 
         Vector3 newAvoidDirection = Vector3.zero;
 
-        // ¾Õ¿¡ Àå¾Ö¹°ÀÌ ÀÖÀ» ¶§¸¸ È¸ÇÇ °è»ê
+        // ï¿½Õ¿ï¿½ ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½
         if (forwardHit.collider != null)
         {
-            // ¹æÇâº° ºñ¾îÀÖ´Â ¹æÇâ Ã£±â
+            // ï¿½ï¿½ï¿½âº° ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
             bool rightClear = rightHit.collider == null;
             bool leftClear = leftHit.collider == null;
             bool upClear = upHit.collider == null;
@@ -338,7 +338,7 @@ public class EnemyMovement : MonoBehaviour
             bool diagonalDRClear = diagonalDRHit.collider == null;
             bool diagonalDLClear = diagonalDLHit.collider == null;
 
-            // ¿ì¼±¼øÀ§: ·ÎÄÃ ÁÂ¿ì
+            // ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ ï¿½Â¿ï¿½
             if (localrightClear && !localleftClear)
             {
                 newAvoidDirection = Vector3.right;
@@ -351,7 +351,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 newAvoidDirection = UnityEngine.Random.value > 0.5f ? localrightDirection : localleftDirection;
             }
-            // ¿ì¼±¼øÀ§ 3: ±Û·Î¹ú ÁÂ¿ì
+            // ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ 3: ï¿½Û·Î¹ï¿½ ï¿½Â¿ï¿½
             if (diagonalURClear)
             {
                 newAvoidDirection = diagonalUR;
@@ -376,7 +376,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 newAvoidDirection = leftDirection;
             }
-            // ¿ì¼±¼øÀ§ 4: ±Û·Î¹ú »óÇÏ
+            // ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ 4: ï¿½Û·Î¹ï¿½ ï¿½ï¿½ï¿½ï¿½
             else if (upClear)
             {
                 newAvoidDirection = upDirection;
@@ -387,7 +387,7 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                // ¸ðµç ¹æÇâÀÌ ¸·ÇûÀ¸¸é µÚ·Î
+                // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½
                 newAvoidDirection = -forward;
             }
         }
@@ -437,7 +437,7 @@ public class EnemyMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         }
-        /*//¹«Á¶°Ç ¿ÞÂÊ ¿À¸¥ÂÊ¸¸ º¸°Ô
+        /*//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (angle > 90 || angle < -90)
         {
             transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
@@ -452,7 +452,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        // Å¸°Ù °Ë»ö ¹üÀ§ Ç¥½Ã
+        // Å¸ï¿½ï¿½ ï¿½Ë»ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, targetSearchRadius);
 

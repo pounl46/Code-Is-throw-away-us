@@ -22,13 +22,12 @@ public class Bomb : MonoBehaviour
 
             float distance = Vector3.Distance(transform.position, tower.transform.position);
 
-            Debug.Log($"Å¸¿ö '{tower.name}'¿¡°Ô µ¥¹ÌÁö {damage} Àû¿ë! (°Å¸®: {distance:F2})");
-            // ¿©±â´Ù°¡ Å¸¿ö Ã¼·Â ±ð´Â ÇÔ¼ö ³ÖÀ¸¼À
-            // TowerHealth towerHealth = tower.GetComponent<TowerHealth>();
-            // if (towerHealth != null)
-            // {
-            //     towerHealth.TakeDamage(damage);
-            // }
+            Debug.Log($"Å¸ï¿½ï¿½ '{tower.name}'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ {damage} ï¿½ï¿½ï¿½ï¿½! (ï¿½Å¸ï¿½: {distance:F2})");
+            TowerHealthManager towerHealth = tower.GetComponent<TowerHealthManager>();
+            if (towerHealth != null)
+            {
+                towerHealth.OnDamamge(Mathf.RoundToInt(damage));
+            }
         }
     }
     public int GetTowersInRangeCount()
@@ -54,7 +53,7 @@ public class Bomb : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRange);
 
-        // ¹üÀ§ ³» Å¸¿öµé Ç¥½Ã
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
         Collider2D[] towersInRange = Physics2D.OverlapCircleAll(transform.position, explosionRange, towerLayerMask);
         Gizmos.color = Color.yellow;
 
