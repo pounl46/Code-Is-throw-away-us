@@ -14,11 +14,18 @@ public class Attack : MonoBehaviour
     public float rushToTarget = 2f;
     public float backingTime = 1f;
 
-    private float damage;
+    public float damage;
+
+    private GameObject tower; // 충돌한 타워 저장
+
+    public float findTower;
+
+    public EnemyTypeSetting enemyType;
     private void Start()
     {
         enemyMv = GetComponent<EnemyMovement>();
-        damage = enemyMv.SO.enemySO.Damage;
+        enemyType = GetComponent<EnemyTypeSetting>();
+        damage = enemyType.enemySO.Damage;
         if (enemyMv == null)
         {
             Debug.LogError("EnemyMovement component not found!");
@@ -37,6 +44,9 @@ public class Attack : MonoBehaviour
         if (collision.CompareTag(attackingType.ToString()))
         {
             isAttacking = true;
+            
+            tower = collision.gameObject;
+
             enemyMv.enabled = false;
         }
     }
@@ -46,6 +56,7 @@ public class Attack : MonoBehaviour
         if (collision.CompareTag(attackingType.ToString()))
         {
             isAttacking = false;
+            tower = null;
             StartCoroutine(WaitForAttackEnd());
         }
     }
@@ -57,6 +68,14 @@ public class Attack : MonoBehaviour
         while (isAttacking)
         {
             enemyMv.enabled = false;
+
+            GameObject nearTower = FindNearestTower();
+            TowerHealthManager towerHealth = tower.GetComponent<TowerHealthManager>();
+            if (towerHealth != null)
+            {
+                towerHealth.OnDamamge(Mathf.RoundToInt(damage));
+                Debug.Log(towerHealth.nowTowerHealth);
+            }
 
             Vector3 movementDirection = enemyMv.GetMovementDirection();
             if (movementDirection == Vector3.zero && enemyMv.target != null)
@@ -85,13 +104,39 @@ public class Attack : MonoBehaviour
             enemyMv.speedMagnification = rushToTarget;
             enemyMv.enabled = true;
 
-            
-            Debug.Log($"{gameObject.name}데미지 닳음");
-
             yield return new WaitForSeconds(0.1f);
         }
 
         isAttackCoroutineRunning = false;
+    }
+    private GameObject FindNearestTower()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, findTower);
+
+        GameObject nearestTower = null;
+        float nearestDistance = float.MaxValue;
+
+        foreach (Collider2D col in colliders)
+        {
+            // TowerHealthManager 컴포넌트가 있는지 확인
+            TowerHealthManager towerHealth = col.GetComponent<TowerHealthManager>();
+            if (towerHealth != null)
+            {
+                float distance = Vector3.Distance(transform.position, col.transform.position);
+                if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                    nearestTower = col.gameObject;
+                }
+            }
+        }
+
+        if (nearestTower != null)
+        {
+            Debug.Log($"Found nearest tower: {nearestTower.name} at distance: {nearestDistance}");
+        }
+
+        return nearestTower;
     }
     private IEnumerator WaitForAttackEnd()
     {
@@ -111,11 +156,17 @@ public class Attack : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, 3);
+
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, findTower);
         }
         else
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, 3);
+
+            Gizmos.color = Color.gray;
+            Gizmos.DrawWireSphere(transform.position, findTower);
         }
     }
 }

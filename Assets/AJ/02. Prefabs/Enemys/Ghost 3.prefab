@@ -142,7 +142,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -291,7 +291,7 @@ MonoBehaviour:
   targetSearchRadius: 10
   useUnlimitedRange: 1
   maxSearchDistance: 100
-  stuckPrevention: 0
+  stuckPrevention: 1
   speedMagnification: 1
 --- !u!114 &7444603062164506467
 MonoBehaviour:
