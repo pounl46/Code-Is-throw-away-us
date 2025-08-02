@@ -291,7 +291,7 @@ MonoBehaviour:
   targetSearchRadius: 1
   useUnlimitedRange: 1
   maxSearchDistance: 100
-  stuckPrevention: 0
+  stuckPrevention: 1
   speedMagnification: 1
 --- !u!114 &883488879572493834
 MonoBehaviour:
