@@ -44,7 +44,7 @@ public class Information : MonoBehaviour
                 if (currentHealthManager != null && currentTowerSetting != null)
                 {
                     panel.SetActive(true);
-                    panel.transform.position = Input.mousePosition;
+                    panel.transform.position = pos;
                     // deleyParent.SetActive(true);
                     towerName.text = cleanName;
                     str.text = "Str : " + currentTowerSetting.attackDamage.ToString();
@@ -55,7 +55,7 @@ public class Information : MonoBehaviour
                 else if (currentMoneyTower != null)
                 {
                     panel.SetActive(true);
-                    panel.transform.position = Input.mousePosition;
+                    panel.transform.position = pos;
                     towerName.text = cleanName;
                     hp.text = "Money : " + currentMoneyTower.TowerSO.Money.ToString();
                     deleyParent.SetActive(false);
