@@ -47,7 +47,6 @@ public class Fire : MonoBehaviour
     {
         float elapsedTime = 0f;
 
-        // 총 지속시간 동안 반복
         while (elapsedTime < GetComponent<Arrow>().fireRemainingTime)
         {
             if (tower != null && tower.activeInHierarchy)
@@ -63,17 +62,12 @@ public class Fire : MonoBehaviour
             }
             else
             {
-                // 타워가 파괴되었으면 지속 데미지 중단
-                Debug.Log("타워가 파괴되어 지속 데미지 중단");
                 break;
             }
 
-            // 다음 데미지까지 대기
             yield return new WaitForSeconds(damageInterval);
             elapsedTime += damageInterval;
         }
-
-        Debug.Log($"지속 데미지 종료 (총 {elapsedTime:F1}초)");
     }
 
     private void OnDrawGizmosSelected()
