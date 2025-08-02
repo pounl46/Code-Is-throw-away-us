@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
@@ -6,7 +6,7 @@ using UnityEditor.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
-    public float restTime = 10f; // 쉬는 시간
+    public float restTime = 30f; // 쉬는 시간
     private bool isResting = false;
     [SerializeField] private bool isWaveActive = false;
     private int currentWave = 0;
@@ -28,13 +28,7 @@ public class WaveManager : MonoBehaviour
         StartNextWave();
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            EndWave();
-        }
-    }
+   
 
     public void StartNextWave()
 {

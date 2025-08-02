@@ -51,5 +51,8 @@ TagManager:
   - name: MoneyTower
     uniqueID: 55348775
     locked: 0
+  - name: UI
+    uniqueID: 3046248315
+    locked: 0
   m_RenderingLayers:
   - Default

@@ -17,11 +17,11 @@ public class CoreHp : MonoBehaviour
 
     
 
-    private int hp = 5;
+    private int hp = 500;
 
     void Awake()
     {
-        hp = 5;
+        hp = 500;
         hpImage = defaultHpImage;
         hpImage1 = defaultHpImage;
         hpImage2 = defaultHpImage;
@@ -45,7 +45,7 @@ public class CoreHp : MonoBehaviour
     {
         cam.transform.DOShakePosition(2, 0.2f);
 
-        if (hp == 5)
+        if (hp % 100 == 5)
         {
             TowerGridManager.Instance.EasyCreate();
             TowerGridManager.Instance.HardCreate();
@@ -53,7 +53,7 @@ public class CoreHp : MonoBehaviour
             hp--;
         }
 
-        else if (hp == 4)
+        else if (hp % 100 == 4)
         {
             TowerGridManager.Instance.EasyCreate();
             TowerGridManager.Instance.HardCreate();
@@ -61,7 +61,7 @@ public class CoreHp : MonoBehaviour
             hp--;
         }
 
-        else if (hp == 3)
+        else if (hp % 100 == 3)
         {
             TowerGridManager.Instance.HardCreate();
             TowerGridManager.Instance.EasyLimit();
@@ -69,7 +69,7 @@ public class CoreHp : MonoBehaviour
             hp--;
         }
 
-        else if (hp == 2)
+        else if (hp % 100 == 2)
         {
             TowerGridManager.Instance.HardCreate();
             TowerGridManager.Instance.EasyLimit();
@@ -77,6 +77,13 @@ public class CoreHp : MonoBehaviour
             hp--;
         }
 
+        else if (hp % 100 == 1)
+        {
+            TowerGridManager.Instance.EasyLimit();
+            TowerGridManager.Instance.HardLimit();
+            hpImage = lowHpImage;
+            hp--;
+        }
         else if (hp == 1)
         {
             TowerGridManager.Instance.EasyLimit();
@@ -90,7 +97,7 @@ public class CoreHp : MonoBehaviour
 
     public void End()
     {
-        //엔딩 호출
+        
     }
 
     public void HpAdd()
@@ -98,9 +105,4 @@ public class CoreHp : MonoBehaviour
         hp++;
         CoreHearted();
     }
-
-
-
-
-
 }

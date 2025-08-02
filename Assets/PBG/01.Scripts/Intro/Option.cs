@@ -1,8 +1,10 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 public class Option : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
+    [SerializeField] private Slider volumeSlider;
     [SerializeField] private Ease easeOn;
     [SerializeField] private Ease easeOff;
 
@@ -20,5 +22,16 @@ public class Option : MonoBehaviour
         if (!_onOff) return;
         panel.transform.DOScale(Vector2.zero, 0.6f).SetEase(easeOff);
         _onOff = false;
+    }
+
+    public void ClickExit()
+    {
+        Application.Quit();
+    }
+
+    public void ChangeVolume()
+    {
+        SceneLoadManager.Instance.Volume = volumeSlider.value;
+        AudioListener.volume = SceneLoadManager.Instance.Volume;
     }
 }
