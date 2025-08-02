@@ -115,5 +115,15 @@ public class EnemySpawnManager : MonoBehaviour
             _enemyPool[i].SetActive(false);
         }
     }
+    public void DestroyAllPool()
+    {
+        for (int i = 0; i < _enemyPool.Length; i++)
+        {
+            if (_enemyPool[i] != null)
+            {
+                Destroy(_enemyPool[i]);
+            }
+        }
+    }
 }
 

@@ -24,6 +24,9 @@ public enum EnemyType
     BigSlime,
     Ghost,
     KingSlime,
+    Ghost2,
+    attackGoblin,
+    BombGoblin,
 
     Max,
 }

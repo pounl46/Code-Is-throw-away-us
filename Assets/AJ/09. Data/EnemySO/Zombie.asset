@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zombie
   m_EditorClassIdentifier: 
   enemyHealth: 120
-  enemySpeed: 1
+  enemySpeed: 1.5
   Damage: 50
   enemyName: Zombie
   spriteAsset: {fileID: 7108339969198208228, guid: 1e3cbf9e13eaa994c8ca9bc89f52a95d, type: 3}
