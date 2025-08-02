@@ -44,6 +44,7 @@ public class TowerGridManager : MonoBehaviour
     public GameObject cursorPrefab;
 
     public int TowerIndex { get; set; }
+    public int TowerCost { get; set; }
 
     private GameObject cursorObject;
 
@@ -204,9 +205,11 @@ public class TowerGridManager : MonoBehaviour
             if (CanPlaceTower(currentX, currentY))
             {
                 PlaceTower(currentX, currentY);
+                MoneyManager.Instance.ModifyMoney(-TowerCost);
                 Debug.Log($"포탑 설치 완료: ({currentX}, {currentY})");
                 UpdateCursorColor(); // 포탑 설치 후 커서 색상 업데이트
                 cursorObject.SetActive(false);
+
             }
             else
             {
@@ -448,6 +451,12 @@ public class TowerGridManager : MonoBehaviour
             }
         }
     }
+
+    public int TowerCostReturn()
+    {
+        return TowerCost;
+    }
+
 
 
 }

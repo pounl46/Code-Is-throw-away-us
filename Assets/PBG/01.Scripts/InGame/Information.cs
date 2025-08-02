@@ -90,6 +90,7 @@ public class Information : MonoBehaviour
             Tower tower = currentSelectedTower.GetComponent<Tower>();
             if (tower != null)
             {
+                MoneyManager.Instance.ModifyMoney(TowerGridManager.Instance.TowerCostReturn());
                 Vector2Int gridPos = new Vector2Int(tower.gridX, tower.gridY);
                 TowerGridManager.Instance.SellTowerAtPosition(gridPos);
                 CloseStat();
