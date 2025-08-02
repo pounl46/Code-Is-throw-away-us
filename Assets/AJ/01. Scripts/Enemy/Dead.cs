@@ -23,11 +23,6 @@ public class Dead : MonoBehaviour
         animator.SetBool(_DeadHash, true);
         Debug.Log($"{gameObject.name} Á×À½!");
     }
-    public void ButtonClick()
-    {
-        healthSystem.Damage(100, gameObject);
-        Debug.Log($"{gameObject.name}µ¥¹ÌÁö 100 ´âÀ½");
-    }
     private void OnDestroy()
     {
         healthSystem.OnDead -= OnDead;

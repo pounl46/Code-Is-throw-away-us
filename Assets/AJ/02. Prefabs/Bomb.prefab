@@ -215,7 +215,7 @@ MonoBehaviour:
   damage: 0
   towerLayerMask:
     serializedVersion: 2
-    m_Bits: 263168
+    m_Bits: 1024
   enemyType: {fileID: 6277461956085959337, guid: 63bd57fb69947b84b8f84120a9e2a264, type: 3}
 --- !u!1001 &1375381985678115288
 PrefabInstance:
