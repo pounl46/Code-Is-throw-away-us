@@ -43,10 +43,14 @@ public class EnemyShoot : MonoBehaviour
     private void InitializeArrowPool()
     {
         arrowParent = GameObject.FindGameObjectWithTag("BulletTransform").transform;
+        
         _arrowPool = new GameObject[_bulletCount];
         for (int i = 0; i < _bulletCount; i++)
         {
-            _arrowPool[i] = Instantiate(arrowPrefab, arrowParent);
+            if (arrowParent != null)
+            {
+                _arrowPool[i] = Instantiate(arrowPrefab, arrowParent);
+            }
             _arrowPool[i].SetActive(false);
         }
     }
