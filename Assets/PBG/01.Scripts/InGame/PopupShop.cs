@@ -11,12 +11,12 @@ public class PopupShop : MonoBehaviour
     {
         if (!isOpend)
         {
-            popUP.transform.DOMoveY(250, 1f);
+            popUP.transform.DOMoveY(1, 1f);
             isOpend = true;
         }
         else
         {
-            popUP.transform.DOMoveY(0, 1f);
+            popUP.transform.DOMoveY(-1f, 1f);
             isOpend = false;
         }
     }

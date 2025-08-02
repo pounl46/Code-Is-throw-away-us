@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using UnityEditor.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
@@ -9,15 +10,20 @@ public class WaveManager : MonoBehaviour
     private bool isResting = false;
     [SerializeField] private bool isWaveActive = false;
     private int currentWave = 0;
+    private float waveTime = 30;
+
+    private float wavTime = 0;
 
     public Button skipButton;
     public TMP_Text waveText;
     public TMP_Text timerText;
 
     private Coroutine restCoroutine;
+    public EnemySpawnManager _enemySpawnManager;
 
     void Start()
     {
+        _enemySpawnManager = GetComponent<EnemySpawnManager>();
         skipButton.onClick.AddListener(SkipRestTime);
         StartNextWave();
     }
@@ -37,9 +43,19 @@ public class WaveManager : MonoBehaviour
         isResting = false;
         waveText.text = $"Wave {currentWave}";
         timerText.text = "";
+        waveTime = 30;
         skipButton.gameObject.SetActive(false);
 
+        _enemySpawnManager.isWave = true;
+
+        if (currentWave > 1)
+        {
+            wavTime += 10;
+            waveTime = 30 + wavTime;
+        }
+
         Debug.Log("웨이브 시작: " + currentWave);
+        StartCoroutine(WaveTimer());
     }
 
     public void EndWave()
@@ -48,6 +64,7 @@ public class WaveManager : MonoBehaviour
 
         isWaveActive = false;
         Debug.Log("웨이브 종료");
+        _enemySpawnManager.isWave = false;
 
         StartRestTime();
     }
@@ -73,6 +90,20 @@ public class WaveManager : MonoBehaviour
         timerText.text = "";
         skipButton.gameObject.SetActive(false);
         StartNextWave();
+    }
+
+    private IEnumerator WaveTimer()
+    {
+
+        while (waveTime > 0)
+        {
+            timerText.text = $"Now Wave: {waveTime:F1}s";
+            yield return new WaitForSeconds(0.1f);
+            waveTime -= 0.1f;
+        }
+
+        timerText.text = "";
+        EndWave();
     }
 
     void SkipRestTime()

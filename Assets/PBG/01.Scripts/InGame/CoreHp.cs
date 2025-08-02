@@ -1,4 +1,4 @@
-using Microsoft.Unity.VisualStudio.Editor;
+﻿using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using DG.Tweening;
 
@@ -14,6 +14,8 @@ public class CoreHp : MonoBehaviour
     [SerializeField] private Image defaultHpImage;
 
     [SerializeField] private Camera cam;
+
+    
 
     private int hp = 5;
 
@@ -37,36 +39,48 @@ public class CoreHp : MonoBehaviour
     }
 
 
+
+
     private void CoreHearted()
     {
         cam.transform.DOShakePosition(2, 0.2f);
 
         if (hp == 5)
         {
+            TowerGridManager.Instance.EasyCreate();
+            TowerGridManager.Instance.HardCreate();
             hpImage4 = lowHpImage;
             hp--;
         }
 
         else if (hp == 4)
         {
+            TowerGridManager.Instance.EasyCreate();
+            TowerGridManager.Instance.HardCreate();
             hpImage3 = lowHpImage;
             hp--;
         }
 
         else if (hp == 3)
         {
+            TowerGridManager.Instance.HardCreate();
+            TowerGridManager.Instance.EasyLimit();
             hpImage2 = lowHpImage;
             hp--;
         }
 
         else if (hp == 2)
         {
+            TowerGridManager.Instance.HardCreate();
+            TowerGridManager.Instance.EasyLimit();
             hpImage1 = lowHpImage;
             hp--;
         }
 
         else if (hp == 1)
         {
+            TowerGridManager.Instance.EasyLimit();
+            TowerGridManager.Instance.HardLimit();
             hpImage = lowHpImage;
             hp--;
             End();
@@ -77,6 +91,12 @@ public class CoreHp : MonoBehaviour
     public void End()
     {
         //엔딩 호출
+    }
+
+    public void HpAdd()
+    {
+        hp++;
+        CoreHearted();
     }
 
 
