@@ -17,17 +17,21 @@ public class TowerAttack : MonoBehaviour
 
     public bool IsAlreadySynergy = false;
     public bool CanBeUsedAsIngredient = true;
+
     private float fireSpeed;
     private float count;
     private string nameObj;
     private bool isCanAttack = true;
     private AudioSource fire;
+    public float damage;
+    public float BulletSpeed;
+    public bool isSlow;
 
     public Stack<GameObject> throws = new();
 
     [SerializeField] private List<SynergyGroup> runtimeSynergies = new();
-
-    private Dictionary<TowerAttack, (int groupIndex, int synergyIndex)> givenSynergies = new();
+    private List<SynergyGroup> originSynergies = new();
+    private Dictionary<TowerAttack, List<(int groupIndex, int synergyIndex)>> givenSynergies = new();
     private (TowerAttack from, int groupIndex, int synergyIndex)? receivedSynergy = null;
 
     private void Awake()
@@ -35,10 +39,10 @@ public class TowerAttack : MonoBehaviour
         fire = GetComponent<AudioSource>();
         attakTowerSetting = GetComponent<TowerSetting>();
         attakTower = attakTowerSetting._attakTowerSetting;
+
         fireSpeed = _objectSO.Speed;
         count = _objectSO.ThrowCount;
         nameObj = _objectSO.Name;
-
         for (int i = 0; i < 10; i++)
         {
             GameObject throwObj = Instantiate(_baseObj, transform);
@@ -47,14 +51,8 @@ public class TowerAttack : MonoBehaviour
             throwObj.GetComponent<SpriteRenderer>().sprite = _objectSO.Sprite;
             throws.Push(throwObj);
         }
-
-        runtimeSynergies = attakTower.Synergies
-            .Select(group => new SynergyGroup
-            {
-                SynergyName = group.SynergyName,
-                selectedSynergies = new List<Synergy>(group.selectedSynergies),
-                IsCompleted = false
-            }).ToList();
+        runtimeSynergies = attakTower.Synergies.Select(g => g.Clone()).ToList();
+        originSynergies = attakTower.Synergies.Select(g => g.Clone()).ToList();
 
         TryApplySelfSynergy();
     }
@@ -64,7 +62,6 @@ public class TowerAttack : MonoBehaviour
     private void OnDisable()
     {
         AllTowers.Remove(this);
-
         ResetGivenSynergies();
 
         if (receivedSynergy.HasValue)
@@ -73,13 +70,13 @@ public class TowerAttack : MonoBehaviour
             if (from != null && from.runtimeSynergies.Count > groupIdx)
             {
                 var group = from.runtimeSynergies[groupIdx];
-                group.selectedSynergies[synergyIdx] = from.attakTower.synergy;
+                var origin = from.originSynergies[groupIdx];
+                group.selectedSynergies[synergyIdx] = origin.selectedSynergies[synergyIdx];
                 group.IsCompleted = false;
                 from.givenSynergies.Remove(this);
                 from.IsAlreadySynergy = false;
             }
         }
-
         receivedSynergy = null;
         IsAlreadySynergy = false;
         CanBeUsedAsIngredient = true;
@@ -101,35 +98,90 @@ public class TowerAttack : MonoBehaviour
     {
         foreach (var other in AllTowers)
         {
-            if (other == this) continue;
-            if (givenSynergies.ContainsKey(other)) continue;
-            if (!other.CanBeUsedAsIngredient) continue;
-            if (!IsInSight(other)) continue;
+            if (other == this || !other.CanBeUsedAsIngredient || !IsInSight(other))
+                continue;
+
+            if (AllTowers.IndexOf(other) > AllTowers.IndexOf(this))
+                continue;
 
             for (int g = 0; g < runtimeSynergies.Count; g++)
             {
-                var synergyGroup = runtimeSynergies[g];
-                var synergyList = synergyGroup.selectedSynergies;
-
-                if (synergyList.All(s => s == Synergy.Ready)) continue;
-
-                int matchIndex = synergyList.FindIndex(s => s != Synergy.Ready && s == other.attakTower.synergy);
-
-                if (matchIndex != -1)
+                var group = runtimeSynergies[g];
+                for (int i = 0; i < group.selectedSynergies.Count; i++)
                 {
-                    synergyList[matchIndex] = Synergy.Ready;
-
-                    givenSynergies[other] = (g, matchIndex);
-                    other.receivedSynergy = (this, g, matchIndex);
-                    Debug.Log("AAAAAA");
-                    if (synergyList.All(s => s == Synergy.Ready) && !synergyGroup.IsCompleted)
+                    if (group.selectedSynergies[i] != Synergy.Ready &&
+                        group.selectedSynergies[i] == other.attakTower.synergy)
                     {
-                        synergyGroup.IsCompleted = true;
-                        IsAlreadySynergy = true;
-                        Debug.Log(synergyGroup.SynergyName);
-                    }
+                        group.selectedSynergies[i] = Synergy.Ready;
 
-                    return;
+                        if (!givenSynergies.ContainsKey(other))
+                            givenSynergies[other] = new();
+
+                        if (!givenSynergies[other].Contains((g, i)))
+                            givenSynergies[other].Add((g, i));
+
+                        other.receivedSynergy = (this, g, i);
+
+                        bool wasCompleted = group.IsCompleted;
+                        group.IsCompleted = group.selectedSynergies.All(s => s == Synergy.Ready);
+                        if (group.IsCompleted && !wasCompleted)
+                        {
+                            IsAlreadySynergy = true;
+                            ApplySynergyEffect(group);
+                        }
+                    }
+                    else if (group.selectedSynergies[i] == Synergy.Ready &&
+                             group.selectedSynergies[i] != other.attakTower.synergy)
+                    {
+                        if (group.IsCompleted)
+                            RemoveSynergyEffect(group);
+
+                        var origin = originSynergies[g];
+                        group.selectedSynergies[i] = origin.selectedSynergies[i];
+                        group.IsCompleted = false;
+                        IsAlreadySynergy = false;
+                    }
+                }
+            }
+
+            for (int g = 0; g < other.runtimeSynergies.Count; g++)
+            {
+                var group = other.runtimeSynergies[g];
+                for (int i = 0; i < group.selectedSynergies.Count; i++)
+                {
+                    if (group.selectedSynergies[i] != Synergy.Ready &&
+                        group.selectedSynergies[i] == attakTower.synergy)
+                    {
+                        group.selectedSynergies[i] = Synergy.Ready;
+
+                        if (!other.givenSynergies.ContainsKey(this))
+                            other.givenSynergies[this] = new();
+
+                        if (!other.givenSynergies[this].Contains((g, i)))
+                            other.givenSynergies[this].Add((g, i));
+
+                        other.receivedSynergy = (this, g, i);
+
+                        // 완성 체크
+                        bool wasCompleted = group.IsCompleted;
+                        group.IsCompleted = group.selectedSynergies.All(s => s == Synergy.Ready);
+                        if (group.IsCompleted && !wasCompleted)
+                        {
+                            other.IsAlreadySynergy = true;
+                            other.ApplySynergyEffect(group);
+                        }
+                    }
+                    else if (group.selectedSynergies[i] == Synergy.Ready &&
+                             group.selectedSynergies[i] != attakTower.synergy)
+                    {
+                        if (group.IsCompleted)
+                            other.RemoveSynergyEffect(group);
+
+                        var origin = other.originSynergies[g];
+                        group.selectedSynergies[i] = origin.selectedSynergies[i];
+                        group.IsCompleted = false;
+                        other.IsAlreadySynergy = false;
+                    }
                 }
             }
         }
@@ -140,26 +192,24 @@ public class TowerAttack : MonoBehaviour
         for (int g = 0; g < runtimeSynergies.Count; g++)
         {
             var group = runtimeSynergies[g];
-            var synergyList = group.selectedSynergies;
-
             bool appliedSelf = false;
-            for (int i = 0; i < synergyList.Count; i++)
+
+            for (int i = 0; i < group.selectedSynergies.Count; i++)
             {
-                if (synergyList[i] != Synergy.Ready && synergyList[i] == attakTower.synergy && !appliedSelf)
+                if (group.selectedSynergies[i] != Synergy.Ready && group.selectedSynergies[i] == attakTower.synergy && !appliedSelf)
                 {
-                    synergyList[i] = Synergy.Ready;
+                    group.selectedSynergies[i] = Synergy.Ready;
                     appliedSelf = true;
                 }
             }
 
-            if (synergyList.All(s => s == Synergy.Ready) && !group.IsCompleted)
+            if (group.selectedSynergies.All(s => s == Synergy.Ready) && !group.IsCompleted)
             {
                 group.IsCompleted = true;
                 IsAlreadySynergy = true;
             }
         }
     }
-
     private bool IsInSight(TowerAttack target)
     {
         Vector2 origin = transform.position;
@@ -182,21 +232,24 @@ public class TowerAttack : MonoBehaviour
         {
             if (target == null) continue;
 
-            var (groupIdx, synergyIdx) = givenSynergies[target];
-            if (target.runtimeSynergies.Count > groupIdx)
+            foreach (var (groupIdx, synergyIdx) in givenSynergies[target])
             {
-                var group = target.runtimeSynergies[groupIdx];
-                group.selectedSynergies[synergyIdx] = target.attakTower.synergy;
-                group.IsCompleted = false;
-
-                target.IsAlreadySynergy = false;
-                target.receivedSynergy = null;
+                if (target.runtimeSynergies.Count > groupIdx)
+                {
+                    var group = target.runtimeSynergies[groupIdx];
+                    var origin = target.originSynergies[groupIdx];
+                    group.selectedSynergies[synergyIdx] = origin.selectedSynergies[synergyIdx];
+                    group.IsCompleted = false;
+                    target.IsAlreadySynergy = false;
+                    target.receivedSynergy = null;
+                }
             }
 
-            givenSynergies.Remove(target);
+            givenSynergies[target].Clear();
         }
-    }
 
+        givenSynergies.Clear();
+    }
     private IEnumerator Attacking(Collider2D collider)
     {
         for (int i = 0; i < count; i++)
@@ -213,6 +266,7 @@ public class TowerAttack : MonoBehaviour
             fire.Play();
             yield return new WaitForSeconds(i <= count ? attakTowerSetting.attackDelay / 2 : attakTowerSetting.attackDelay);
         }
+
         isCanAttack = true;
     }
 
@@ -228,7 +282,8 @@ public class TowerAttack : MonoBehaviour
             if (from != null && from.runtimeSynergies.Count > groupIdx)
             {
                 var group = from.runtimeSynergies[groupIdx];
-                group.selectedSynergies[synergyIdx] = from.attakTower.synergy;
+                var origin = from.originSynergies[groupIdx];
+                group.selectedSynergies[synergyIdx] = origin.selectedSynergies[synergyIdx];
                 group.IsCompleted = false;
                 from.givenSynergies.Remove(this);
                 from.IsAlreadySynergy = false;
@@ -238,31 +293,53 @@ public class TowerAttack : MonoBehaviour
         ResetGivenSynergies();
         receivedSynergy = null;
 
-        foreach (var group in runtimeSynergies)
+        for (int g = 0; g < runtimeSynergies.Count; g++)
         {
+            var group = runtimeSynergies[g];
+            var originGroup = originSynergies[g];
+
             for (int i = 0; i < group.selectedSynergies.Count; i++)
             {
-                if (group.selectedSynergies[i] == Synergy.Ready)
-                    group.selectedSynergies[i] = attakTower.synergy;
+                group.selectedSynergies[i] = originGroup.selectedSynergies[i];
             }
 
             group.IsCompleted = false;
         }
     }
 
-    [ContextMenu("Synergy/Test Add Dummy")]
+    [ContextMenu("Synergy/ForceTest")]
     public void ForceSynergyTest()
     {
         foreach (var group in runtimeSynergies)
         {
             for (int i = 0; i < group.selectedSynergies.Count; i++)
             {
-                if (group.selectedSynergies[i] != Synergy.Ready)
-                {
-                    group.selectedSynergies[i] = Synergy.Ready;
-                    break;
-                }
+                group.selectedSynergies[i] = Synergy.Ready;
             }
+
+            group.IsCompleted = true;
         }
+
+        IsAlreadySynergy = true;
+    }
+    private void ApplySynergyEffect(SynergyGroup group)
+    {
+        damage *= group.ChangeDamage > 0 ? group.ChangeDamage : 1f;
+        attakTowerSetting.Health *= group.ChangeHealth > 0 ? group.ChangeHealth : 1f;
+        BulletSpeed *= group.BulletSpeed > 0 ? group.BulletSpeed : 1f;
+        attakTowerSetting.attackDelay *= group.AttacingSpeed > 0 ? group.ChangeHealth : 1f;
+        isSlow = group.Slow;
+        Debug.Log(group.SynergyName);
+    }
+    
+    private void RemoveSynergyEffect(SynergyGroup group)
+    {
+        damage = attakTowerSetting._attakTowerSetting.AttackDamage;
+        attakTowerSetting.Health = attakTowerSetting._attakTowerSetting.TowerHealth;
+        BulletSpeed = 1f;
+        if (attakTowerSetting.TowerType == Synergy.Poison) isSlow = true;
+        else isSlow = false;
+        attakTowerSetting.attackDelay = attakTowerSetting._attakTowerSetting.AttackDelay;
+        Debug.Log(group.SynergyName);
     }
 }
