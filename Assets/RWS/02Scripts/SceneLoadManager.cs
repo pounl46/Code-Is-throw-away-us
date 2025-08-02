@@ -11,6 +11,7 @@ public class SceneLoadManager : MonoBehaviour
     [SerializeField] private Transform panelTarget1;
     [SerializeField] private Transform panelTarget2;
 
+
     private void Awake()
     {
         if (Instance == null)
