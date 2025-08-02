@@ -15,7 +15,6 @@ public class TowerAttack : MonoBehaviour
     [SerializeField] private LayerMask towerLayer;
     public AttakTowerSetting attakTower;
     private TowerSetting attakTowerSetting;
-    [SerializeField] private List<SynergyGroup> mySynergyGroups = new();
     private float fireSpeed;
     private float count;
     private string nameObj;
