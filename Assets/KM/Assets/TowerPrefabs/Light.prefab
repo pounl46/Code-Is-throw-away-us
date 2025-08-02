@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9099602299414820601}
   - component: {fileID: 2000121287155722681}
   m_Layer: 18
-  m_Name: Poison
+  m_Name: Lightning
   m_TagString: Core
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,14 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3797e2b6e8760e748aee3026233bb852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 50
-  _attakTowerSetting: {fileID: 11400000, guid: 48b474c995ad758408a1f75279ac2582, type: 2}
+  Health: 120
+  _attakTowerSetting: {fileID: 11400000, guid: 2921f4563a61ee94485517ca001a1ffa, type: 2}
   _renderer: {fileID: 6159549498522540252}
   fire: {fileID: 9099602299414820601}
-  attackDamage: 25
-  TowerType: 1
-  attackDelay: 5
-  attackDistance: 3
+  attackDamage: 30
+  TowerType: 0
+  attackDelay: 2
+  attackDistance: 7
 --- !u!212 &6159549498522540252
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -102,7 +102,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7af366591a8ed0c4fa4f6df48288982b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f35670da6bb205740b634822aedc719c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c59880fd5786a4ea5ee7ad5b83cc7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectSO: {fileID: 11400000, guid: 9fe0e914a5414674caa9078fcf05ca3f, type: 2}
+  _objectSO: {fileID: 11400000, guid: f766ea4f354903544827d55da6c2e5b9, type: 2}
   _baseObj: {fileID: 6278454369246490398, guid: 7e3ec858443e2444b94eddc521413d68, type: 3}
   _targetMask:
     serializedVersion: 2
@@ -167,8 +167,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d2c92ed130f44f045ad529478c6d4982, type: 3}
-  m_Resource: {fileID: 8300000, guid: d2c92ed130f44f045ad529478c6d4982, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3328ebe385b5b5e49a546dccd32aac67, type: 3}
+  m_Resource: {fileID: 8300000, guid: 3328ebe385b5b5e49a546dccd32aac67, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
