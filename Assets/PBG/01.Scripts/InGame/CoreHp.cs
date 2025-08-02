@@ -90,7 +90,7 @@ public class CoreHp : MonoBehaviour
 
     public void End()
     {
-        //엔딩 호출
+        
     }
 
     public void HpAdd()
