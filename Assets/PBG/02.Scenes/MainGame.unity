@@ -203,7 +203,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 70264876}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: set_TowerIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: CreateCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &70264876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,7 +517,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 73861094}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: set_TowerIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 8
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: CreateCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &73861094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -647,7 +695,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 90559729}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: set_TowerIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: CreateCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &90559729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1890,7 +1962,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 308985072}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: set_TowerIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: CreateCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &308985072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2316,7 +2412,17 @@ MonoBehaviour:
   currentY: 5
   moveDuration: 0.2
   moveEase: 6
-  towerPrefab: {fileID: 152895563321973858, guid: 0b656b9fb44842643a629a53c7a9360a, type: 3}
+  towerPrefab:
+  - {fileID: 152895563321973858, guid: 0b656b9fb44842643a629a53c7a9360a, type: 3}
+  - {fileID: 4211321037663106235, guid: c208a5bedf52c2b4586c32ce598c2b5c, type: 3}
+  - {fileID: 1575412195890434789, guid: 1c81624f450dd9e4480e736121d7ccd8, type: 3}
+  - {fileID: 8274690123827038511, guid: 92c1a06a307c4394f93ffa833b0d17b8, type: 3}
+  - {fileID: 4082972208457773637, guid: 5d3fd064d2251714b806332074ad75ec, type: 3}
+  - {fileID: 1129770764354194732, guid: 484cc2d71a751c14ea6c27ba1e516a5b, type: 3}
+  - {fileID: 1129770764354194732, guid: 3465710d1f691834a8b47860ff0ff91b, type: 3}
+  - {fileID: 1129770764354194732, guid: 5a44c7ab263bd0f458d1075f2d62b561, type: 3}
+  - {fileID: 1129770764354194732, guid: 22d8de4a01982474ab3ce8a1c9f71245, type: 3}
+  - {fileID: 1129770764354194732, guid: 8cad271e5e6ffa948919a01f6e4a27b1, type: 3}
   cursorPrefab: {fileID: 7036901767263856036, guid: c22c7e19994eec8458c7a5ca74a1aa97, type: 3}
 --- !u!4 &518095024
 Transform:
@@ -4169,7 +4275,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 813624901}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: set_TowerIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: CreateCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &813624901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4684,7 +4814,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 879617377}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: set_TowerIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: CreateCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &879617377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6080,7 +6234,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1235031651}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: set_TowerIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 9
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: CreateCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1235031651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6278,7 +6456,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1276124999}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: set_TowerIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: CreateCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1276124999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7941,7 +8143,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1688732190}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: set_TowerIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: CreateCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1688732190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10201,7 +10427,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1932727533}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: set_TowerIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 7
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518095023}
+        m_TargetAssemblyTypeName: TowerGridManager, Assembly-CSharp
+        m_MethodName: CreateCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1932727533
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,53 +3,64 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    private GameObject core;
     public float bulletSpeed = 5f;
     public float rotateSpeed = 2f;
-    public ChooseAttakingType attakingType;
     public float fireRemainingTime = 1f;
-    
-    public EnemyTypeSetting enemyTypeSetting;
+    public float bulletDamage;
 
-    private bool isFired = false;
-    public float originalBulletSpeed { get; private set; } 
+    public EnemyMovement enemymv;
+
+    public EnemyTypeSetting enemyTypeSetting;
+    public EnemyShoot enemyShoot;
+
+    private GameObject target;
+    public float originalBulletSpeed { get; private set; }
+
     private void Awake()
     {
         originalBulletSpeed = bulletSpeed;
+        bulletDamage = enemymv.SO.enemySO.Damage;
     }
+
     private void OnEnable()
     {
-        core = GameObject.FindGameObjectWithTag(attakingType.ToString());
+        if (enemyShoot != null)
+        {
+            target = enemyShoot.GetCurrentTarget();
+        }
     }
+
     private void OnDisable()
     {
         bulletSpeed = originalBulletSpeed;
+        target = null;
     }
+
     private void Update()
     {
-        if (core != null)
+        if (target != null && target.activeInHierarchy)
         {
             MoveBullet();
         }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
-    private IEnumerator FireRemaining()
-    {
-        bulletSpeed = 0f;
-        yield return new WaitForSeconds(fireRemainingTime);
-        gameObject.SetActive(false);
-    }
+
     private void MoveBullet()
     {
-        Vector2 target = (core.transform.position - transform.position);
-        float rotZ = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
+        Vector2 targetDistance = (target.transform.position - transform.position);
+        float rotZ = Mathf.Atan2(targetDistance.y, targetDistance.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotZ);
 
-        Vector3 direction = target.normalized;
+        Vector3 direction = targetDistance.normalized;
         transform.position += direction * bulletSpeed * Time.deltaTime;
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Core"))
+        if (collision.gameObject == target)
         {
             if (enemyTypeSetting.enemySO.enemyType == EnemyType.Demon)
             {
@@ -61,4 +72,17 @@ public class Arrow : MonoBehaviour
             }
         }
     }
+
+    private IEnumerator FireRemaining()
+    {
+        bulletSpeed = 0f;
+        yield return new WaitForSeconds(fireRemainingTime);
+        gameObject.SetActive(false);
+    }
+
+    public void SetTarget(GameObject newTarget)
+    {
+        target = newTarget;
+    }
+
 }

@@ -350,7 +350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c617982e068d11e4982063478d15bf4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SO: {fileID: 6277461956085959337}
 --- !u!114 &4473691529630805216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,7 +368,17 @@ MonoBehaviour:
   avoidanceForce: 3
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 131072
+  coreLayerMask:
+    serializedVersion: 2
+    m_Bits: 262144
+  towerLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  targetSearchRadius: 10
+  useUnlimitedRange: 1
+  maxSearchDistance: 100
+  stuckPrevention: 0
 --- !u!114 &-3444019680316121142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,7 +393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackingType: 0
   blade: {fileID: 5729181119227025897}
-  attackInterval: 1
+  attackInterval: 2.5
   attackRange: 0.68
 --- !u!114 &5001933902944035953
 MonoBehaviour:

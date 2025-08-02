@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8166afa08ace7f34db7bf5cb02f08a82, type: 3}
   m_Name: Ghost
   m_EditorClassIdentifier: 
-  enemyHealth: 100
+  enemyHealth: 200
   enemySpeed: 3.5
-  Damage: 0
+  Damage: 40
   enemyName: Ghost
   spriteAsset: {fileID: 7108339969198208228, guid: 41285035f32700840af3e88d38b256e6, type: 3}
   enemyType: 7

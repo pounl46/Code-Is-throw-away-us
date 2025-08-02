@@ -8,11 +8,15 @@ public class CoinSteal : MonoBehaviour
     public float stealDuration = 10f;
     public float fleeSpeed = 4f;
 
+    [Header("Layer Settings")]
+    public LayerMask coinTowerLayer;
+
     private bool isStealing = false;
     private bool isFleeing = false;
     private GameObject targetTower;
     private Vector3 fleeDirection;
     private EnemyMovement enemyMovement;
+    private EnemyTypeSetting enemyTypeSetting;
     private Vector3 originalScale; 
     private Transform spawnPointTarget; 
 
@@ -20,17 +24,14 @@ public class CoinSteal : MonoBehaviour
     private void Start()
     {
         enemyMovement = GetComponent<EnemyMovement>();
+        enemyTypeSetting = GetComponent<EnemyTypeSetting>();
         if (enemyMovement == null)
         {
             Debug.LogError("EnemyMovement component not found!");
         }
         originalScale = transform.localScale;
 
-        targetTower = FindClosestTower();
-        if (targetTower != null)
-        {
-            enemyMovement.SetTarget(targetTower);
-        }
+        targetTower = enemyMovement.target;
     }
 
     private void Update()
@@ -38,6 +39,10 @@ public class CoinSteal : MonoBehaviour
         if (isFleeing)
         {
             FleeFromTarget();
+        }
+        else if (!isStealing && targetTower == null)
+        {
+            targetTower = enemyMovement.target;
         }
     }
 
@@ -48,7 +53,7 @@ public class CoinSteal : MonoBehaviour
             return;
         }
 
-        if (collision.CompareTag(attackingType.ToString()))
+        if (((1 << collision.gameObject.layer) & coinTowerLayer) != 0)
         {
             if (collision.gameObject == targetTower)
             {
@@ -56,7 +61,7 @@ public class CoinSteal : MonoBehaviour
             }
             else
             {
-                Debug.Log($"다른 타워와 충돌: {collision.gameObject.name}");
+                Debug.LogWarning($"다른 타워와 충돌: {collision.gameObject.name}");
             }
         }
 
@@ -165,7 +170,7 @@ public class CoinSteal : MonoBehaviour
         {
             enemyMovement.enabled = true;
 
-            targetTower = FindClosestTower();
+            targetTower = enemyMovement.target;
             if (targetTower != null)
             {
                 enemyMovement.SetTarget(targetTower);

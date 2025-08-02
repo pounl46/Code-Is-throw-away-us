@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8166afa08ace7f34db7bf5cb02f08a82, type: 3}
   m_Name: Bat
   m_EditorClassIdentifier: 
-  enemyHealth: 100
+  enemyHealth: 60
   enemySpeed: 5
-  Damage: 0
+  Damage: 15
   enemyName: Bat
   spriteAsset: {fileID: 7108339969198208228, guid: 14df28f515e901045998d02f7193525a, type: 3}
   enemyType: 2

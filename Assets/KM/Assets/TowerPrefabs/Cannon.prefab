@@ -52,6 +52,7 @@ MonoBehaviour:
   _renderer: {fileID: 7257673271388049062}
   fire: {fileID: 4398202167124733736}
   attackDamage: 45
+  TowerType: 0
   attackDelay: 4
   attackDistance: 6
 --- !u!212 &7257673271388049062
@@ -126,6 +127,13 @@ MonoBehaviour:
   _targetMask:
     serializedVersion: 2
     m_Bits: 64
+  towerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attakTower: {fileID: 0}
+  IsAlreadySynergy: 0
+  CanBeUsedAsIngredient: 1
+  runtimeSynergies: []
 --- !u!82 &4398202167124733736
 AudioSource:
   m_ObjectHideFlags: 0

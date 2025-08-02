@@ -39,7 +39,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.64, y: 0.6, z: 0}
   m_LocalScale: {x: 0.6, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -262,7 +262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c617982e068d11e4982063478d15bf4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SO: {fileID: 8660735664660965548}
 --- !u!114 &5683474745456134438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +281,16 @@ MonoBehaviour:
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 131072
+  coreLayerMask:
+    serializedVersion: 2
+    m_Bits: 262144
+  towerLayerMask:
+    serializedVersion: 2
+    m_Bits: 65536
+  targetSearchRadius: 10
+  useUnlimitedRange: 1
+  maxSearchDistance: 100
+  stuckPrevention: 0
 --- !u!114 &7444603062164506467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +306,9 @@ MonoBehaviour:
   attackingType: 1
   stealDuration: 1
   fleeSpeed: 4
+  coinTowerLayer:
+    serializedVersion: 2
+    m_Bits: 65536
 --- !u!114 &7997870235246812051
 MonoBehaviour:
   m_ObjectHideFlags: 0

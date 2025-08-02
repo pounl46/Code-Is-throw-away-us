@@ -26,6 +26,20 @@ namespace Script.SO
         public float BulletSpeed;
         public float AttacingSpeed;
         public bool Slow;
+        public SynergyGroup Clone()
+        {
+            return new SynergyGroup
+            {
+                SynergyName = this.SynergyName,
+                selectedSynergies = new List<Synergy>(this.selectedSynergies),
+                ChangeHealth = this.ChangeHealth,
+                ChangeDamage = this.ChangeDamage,
+                BulletSpeed = this.BulletSpeed,
+                AttacingSpeed = this.AttacingSpeed,
+                Slow = this.Slow,
+                IsCompleted = false // 항상 false로 초기화
+            };
+        }
     }
     [CreateAssetMenu(fileName = "AttakTowerSetting", menuName = "SO/AttakTowerSetting")]
 

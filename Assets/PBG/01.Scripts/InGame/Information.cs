@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class Information : MonoBehaviour
@@ -15,6 +15,8 @@ public class Information : MonoBehaviour
     private TowerSetting currentTowerSetting;
     private MoneyTower currentMoneyTower;
 
+    private GameObject currentSelectedTower;
+
     void Start()
     {
         panel.SetActive(false);
@@ -29,6 +31,8 @@ public class Information : MonoBehaviour
 
             if (hit.collider != null)
             {
+                currentSelectedTower = hit.collider.gameObject;
+
                 currentHealthManager = hit.collider.GetComponent<TowerHealthManager>();
                 currentTowerSetting = hit.collider.GetComponent<TowerSetting>();
                 currentMoneyTower = hit.collider.GetComponent<MoneyTower>();
@@ -64,7 +68,7 @@ public class Information : MonoBehaviour
         {
             hp.text = "Hp : " + currentHealthManager.nowTowerHealth + " / " + currentTowerSetting.Health;
         }
-        
+
         else if (panel.activeSelf && currentMoneyTower != null)
         {
             str.text = "Delay : " + (currentMoneyTower.TowerSO.Money / currentMoneyTower.TowerSO.WaitTime).ToString() + "/s";
@@ -76,5 +80,21 @@ public class Information : MonoBehaviour
         panel.SetActive(false);
         currentHealthManager = null;
         currentTowerSetting = null;
+        currentMoneyTower = null;
+        currentSelectedTower = null;
+    }
+    public void SellTower() // UI 버튼에서 호출할 메서드
+    {
+        if (currentSelectedTower != null && TowerGridManager.Instance != null)
+        {
+            Tower tower = currentSelectedTower.GetComponent<Tower>();
+            if (tower != null)
+            {
+                Vector2Int gridPos = new Vector2Int(tower.gridX, tower.gridY);
+                TowerGridManager.Instance.SellTowerAtPosition(gridPos);
+                CloseStat();
+                Debug.Log($"포탑 판매 완료: {currentSelectedTower.name} at ({gridPos.x}, {gridPos.y})");
+            }
+        }
     }
 }
