@@ -128,7 +128,7 @@ public class CoinSteal : MonoBehaviour
     {
         if (targetTower == null) return;
 
-        // CoinTower 코인 훔치기
+        MoneyManager.Instance.ModifyMoney(-1);
         Debug.Log($"{gameObject.name}가 코인을 훔침!");
     }
 

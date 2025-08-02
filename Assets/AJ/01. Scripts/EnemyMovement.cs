@@ -51,11 +51,11 @@ public class EnemyMovement : MonoBehaviour
     private void Start()
     {
         gameObject.GetComponent<EnemyMovement>().enabled = true;
-        if (enemyCollider != null && stuckPrevention)
+        if (enemyCollider != null && !stuckPrevention)
         {
             enemyCollider.isTrigger = false;
         }
-        if (!stuckPrevention) enemyCollider.isTrigger = true;
+        if (stuckPrevention) enemyCollider.isTrigger = true;
 
         FindTarget();
         enemyShoot = GetComponent<EnemyShoot>();
@@ -107,7 +107,7 @@ public class EnemyMovement : MonoBehaviour
         if (!isSkeletonStopped)
         {
             FindTarget();
-            if (stuckPrevention)
+            if (!stuckPrevention)
             {
                 ObstacleFrontEnemy();
             }

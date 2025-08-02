@@ -23,12 +23,13 @@ public class Bomb : MonoBehaviour
             float distance = Vector3.Distance(transform.position, tower.transform.position);
 
             Debug.Log($"타워 '{tower.name}'에게 데미지 {damage} 적용! (거리: {distance:F2})");
-            // 여기다가 타워 체력 깎는 함수 넣으셈
-            // TowerHealth towerHealth = tower.GetComponent<TowerHealth>();
-            // if (towerHealth != null)
-            // {
-            //     towerHealth.TakeDamage(damage);
-            // }
+
+            TowerHealthManager towerHealth = tower.GetComponent<TowerHealthManager>();
+            if (towerHealth != null)
+            {
+                towerHealth.OnDamamge(Mathf.RoundToInt(damage));
+                Debug.Log(towerHealth.nowTowerHealth);
+            }
         }
     }
     public int GetTowersInRangeCount()

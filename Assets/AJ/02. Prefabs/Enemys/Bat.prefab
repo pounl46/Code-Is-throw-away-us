@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4473691529630805216}
   - component: {fileID: 883488879572493834}
   - component: {fileID: 5001933902944035953}
+  - component: {fileID: -7557492480498083463}
   m_Layer: 6
   m_Name: Bat
   m_TagString: Enemy
@@ -141,7 +142,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -307,7 +308,10 @@ MonoBehaviour:
   attackingType: 1
   attackRange: 0.5
   rushToTarget: 3
-  backingTime: 1
+  backingTime: 2
+  damage: 0
+  findTower: 100
+  enemyType: {fileID: 0}
 --- !u!114 &5001933902944035953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,3 +327,15 @@ MonoBehaviour:
   <Health>k__BackingField: 0
   enemyTypeSetting: {fileID: 6277461956085959337}
   slimePrefab: {fileID: 0}
+--- !u!114 &-7557492480498083463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7191856211952930755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d86ececaf2c74c4db916e550cb6f295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
