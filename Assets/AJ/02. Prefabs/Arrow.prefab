@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 3, y: 1.4, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -78,13 +78,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1627259601
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -3198619865601037842, guid: b74ff7b2d752bbb47bd325f75318ef74, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.09, y: 0.05}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -109,6 +109,7 @@ MonoBehaviour:
   enemymv: {fileID: 4473691529630805216, guid: 6360d584531e66846bb5f87fbc90f4dd, type: 3}
   enemyTypeSetting: {fileID: 6277461956085959337, guid: 6360d584531e66846bb5f87fbc90f4dd, type: 3}
   enemyShoot: {fileID: 2022462540230621447, guid: 6360d584531e66846bb5f87fbc90f4dd, type: 3}
+  blinkInterval: 0.1
 --- !u!50 &1996338816678344269
 Rigidbody2D:
   serializedVersion: 5

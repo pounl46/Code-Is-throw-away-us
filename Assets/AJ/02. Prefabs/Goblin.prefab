@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 5683474745456134438}
   - component: {fileID: 7444603062164506467}
   - component: {fileID: 7997870235246812051}
+  - component: {fileID: 2987978419109600224}
   m_Layer: 6
   m_Name: Goblin
   m_TagString: Enemy
@@ -87,12 +88,12 @@ SpriteRenderer:
   m_SortingLayerID: -1627259601
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1348310311444785571, guid: 240ab6b51d0f094428c5d3653df17cb6, type: 3}
+  m_Sprite: {fileID: -9157334687261562558, guid: 1100982762abfcf42b41e5d3a2fdc037, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.08, y: 0.07}
+  m_Size: {x: 1.375, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -145,17 +146,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.007202089, y: -0.06481284}
+  m_Offset: {x: 0.009013236, y: -0.12133947}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.375, y: 1}
-    newSize: {x: 0.08, y: 0.07}
+    oldSize: {x: 1.25, y: 1}
+    newSize: {x: 1.375, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.475294, y: 0.8703743}
+  m_Size: {x: 1.0223571, y: 0.75732106}
   m_EdgeRadius: 0
 --- !u!50 &7915732995657546023
 Rigidbody2D:
@@ -291,6 +292,7 @@ MonoBehaviour:
   useUnlimitedRange: 1
   maxSearchDistance: 100
   stuckPrevention: 0
+  speedMagnification: 1
 --- !u!114 &7444603062164506467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,3 +326,15 @@ MonoBehaviour:
   <Health>k__BackingField: 0
   enemyTypeSetting: {fileID: 8660735664660965548}
   slimePrefab: {fileID: 0}
+--- !u!114 &2987978419109600224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5927622615705922981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d86ececaf2c74c4db916e550cb6f295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

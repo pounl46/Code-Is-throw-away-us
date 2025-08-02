@@ -42,6 +42,7 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 originalScale;
 
     private Collider2D enemyCollider;
+    public float speedMagnification = 1f;
 
     private void Awake()
     {
@@ -69,7 +70,7 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        if (SO.enemySO.enemyType == EnemyType.Skelenton || SO.enemySO.enemyType == EnemyType.Demon)
+        if (SO.enemySO.enemyType == EnemyType.Skelenton || SO.enemySO.enemyType == EnemyType.Demon || SO.enemySO.enemyType == EnemyType.BombGoblin)
         {
             if (attackingType == ChooseAttakingType.Tower)
             {
@@ -226,7 +227,7 @@ public class EnemyMovement : MonoBehaviour
 
         return closestTower;
     }
-    private void MoveToTarget()
+    public void MoveToTarget()
     {
         if (target == null) return;
 
@@ -249,10 +250,13 @@ public class EnemyMovement : MonoBehaviour
             LookAtTarget(transform.position + smoothedDirection);
         }
 
-        transform.position += smoothedDirection * SO.enemySO.enemySpeed * Time.deltaTime;
+        transform.position += smoothedDirection * (SO.enemySO.enemySpeed + speedMagnification) * Time.deltaTime;
     }
 
-    
+    public Vector3 GetMovementDirection()
+    {
+        return smoothedDirection;
+    }
     public void SetTarget(GameObject newTarget)
     {
         target = newTarget;
@@ -422,10 +426,10 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            if (angle > 45 && angle < 135) 
+            if (angle > 45 && angle < 135)
             {
                 transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
-                transform.rotation = Quaternion.Euler(0, 0, 0); 
+                transform.rotation = Quaternion.Euler(0, 0, 0);
             }
             else if (angle > 225 && angle < 315)
             {
@@ -433,8 +437,8 @@ public class EnemyMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         }
-        //무조건 왼쪽 오른쪽만 보게
-        /*if (angle > 90 || angle < -90)
+        /*//무조건 왼쪽 오른쪽만 보게
+        if (angle > 90 || angle < -90)
         {
             transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
             transform.rotation = Quaternion.Euler(0, 0, angle + 180);

@@ -5,6 +5,7 @@ using System.Collections;
 using UnityEngine.Tilemaps;
 using Unity.VisualScripting;
 using Unity.Collections;
+using DG.Tweening.Core.Easing;
 
 // 포탑 배치 시스템의 핵심 매니저
 public class TowerGridManager : MonoBehaviour
@@ -46,12 +47,19 @@ public class TowerGridManager : MonoBehaviour
 
     private GameObject cursorObject;
 
-    // 싱글톤 패턴 추가 (Information 클래스에서 접근하기 위해)
-    public static TowerGridManager Instance;
+    public static TowerGridManager Instance { get; private set; }
 
-    void Awake()
+    private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
